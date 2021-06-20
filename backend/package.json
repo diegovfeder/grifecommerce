@@ -20,6 +20,7 @@
     "@keystone-next/types": "^12.0.0",
     "@keystonejs/server-side-graphql-client": "^1.1.2",
     "@types/jest": "^26.0.23",
+    "cloudinary": "^1.26.0",
     "dotenv": "^8.2.0",
     "nodemailer": "^6.4.17"
   },
