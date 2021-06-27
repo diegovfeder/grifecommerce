@@ -23,7 +23,7 @@ const StyledHeader = styled.header`
 		display: grid;
 		grid-template-columns: auto 1fr;
 		justify-content: space-between;
-		align-items: center;
+		align-items: stretch;
 	}
 
 	.sub-bar {
@@ -33,19 +33,19 @@ const StyledHeader = styled.header`
 	}
 `;
 
-const HeaderComponent : React.FC = () => {
+const HeaderComponent: React.FC = () => {
 	return (
 		<StyledHeader>
 			<div className="bar">
 				<Logo>
 					<Link href="/">GRIFE</Link>
 				</Logo>
+				<NavComponent />
 			</div>
 			<div className="sub-bar">
 				{/* TODO: Create Search Component */}
 				<p>TODO: Search</p>
 			</div>
-			<NavComponent />
 		</StyledHeader>
 	);
 };
