@@ -11,9 +11,7 @@
     "dev": "keystone-next",
     "build": "keystone-next build",
     "start": "keystone-next start",
-    "seed-data": "keystone-next --seed-data",
-		"postinstall": "keystone-next postinstall",
-		"deploy": "keystone-next build && keystone-next prisma migrate deploy"
+    "seed-data": "keystone-next --seed-data"
   },
   "dependencies": {
     "@keystone-next/admin-ui": "^8.0.1",
