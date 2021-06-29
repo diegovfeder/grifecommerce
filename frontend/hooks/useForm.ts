@@ -49,7 +49,12 @@ export default function useForm(initial: IFormInput) {
 		const blankState = Object.fromEntries(
 			Object.entries(inputs).map(([key, _]) => [key, '']),
 		);
-		setInputs(blankState);
+
+		// FIXME: How to clear inputs with Typescript? This blankState isn't properly typed
+		setInputs(
+			blankState,
+			// || { name: '', description: '', price: '', image: '' }
+		);
 	}
 
 	return {

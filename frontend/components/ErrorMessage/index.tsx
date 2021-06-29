@@ -17,16 +17,20 @@ const StyledErrorMessage = styled.div`
 	}
 `;
 
+// FIXME: Properly type this
+interface IErrorMessage {
+	error: any;
+}
 
-
-const ErrorMessage = ({ error }) => {
+const ErrorMessage = ({ error }: IErrorMessage) => {
 	if (!error || !error.message) return null;
 	if (
 		error.networkError &&
 		error.networkError.result &&
 		error.networkError.result.errors.length
 	) {
-		return error.networkError.result.errors.map((error, i) => (
+		// FIXME: Properly type this
+		return error.networkError.result.errors.map((error: any, i: number) => (
 			<StyledErrorMessage key={i}>
 				<p data-test="graphql-error">
 					<strong>Shoot!</strong>
