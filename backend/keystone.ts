@@ -10,6 +10,7 @@ import { Product } from './schemas/Product';
 import { ProductImage } from './schemas/ProductImage';
 import { insertSeedData } from './seed-data';
 
+// TODO: isProduction or isDevelopment>
 const databaseURL = process.env.DATABASE_URL || 'mongodb://localhost/keystone';
 
 const sessionConfig = {
