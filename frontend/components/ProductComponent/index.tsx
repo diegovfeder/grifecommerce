@@ -1,10 +1,14 @@
-import StyledItem from '../styles/StyledItem';
-import StyledTitle from '../styles/StyledTitle';
+/* eslint-disable @next/next/link-passhref */
+import StyledProduct from '../styled/StyledProduct';
+import StyledTitle from '../styled/StyledTitle';
 import { Container } from './styles';
 import Image from 'next/image';
 import Link from 'next/link';
-import StyledPriceTag from '../styles/StyledPriceTag';
+import StyledPriceTag from '../styled/StyledPriceTag';
 import formatMoney from 'util/formatMoney';
+import React from 'react';
+import DeleteProduct from 'components/DeleteProduct';
+// import DeleteProduct from 'components/DeleteProduct';
 
 interface ProductComponentProps {
 	product: {
@@ -23,7 +27,7 @@ interface ProductComponentProps {
 function ProductComponent({ product }: ProductComponentProps) {
 	return (
 		<Container>
-			<StyledItem>
+			<StyledProduct>
 				<Image
 					src={product?.photo?.image?.publicUrlTransformed}
 					alt={product.name}
@@ -36,7 +40,35 @@ function ProductComponent({ product }: ProductComponentProps) {
 				<StyledPriceTag>{formatMoney(product.price)}</StyledPriceTag>
 				<p>{product.description}</p>
 				{/* TODO: Add button for edit and delete item */}
-			</StyledItem>
+				<div className="buttonList">
+					<Link
+						href={{
+							pathname: 'update',
+							query: {
+								id: product.id,
+							},
+						}}
+					>
+						Edit 📝
+					</Link>
+					{/* <Link
+						href={{
+							pathname: 'delete',
+							query: {
+								id: product.id,
+							},
+						}}
+					> */}
+					{/* Delete ❎ */}
+					{/* <DeleteProduct></DeleteProduct> */}
+					{/* </Link> */}
+					{/* TODO: Create Shopping Cart */}
+					{/* <AddToCart id={product.id} /> */}
+					{/* FIXME: When I delete a Product, a ProductImage stays in db. Shouldn't I...
+					 clean that image if it isn't being used in another Product?  */}
+					<DeleteProduct id={product.id}>Delete</DeleteProduct>
+				</div>
+			</StyledProduct>
 		</Container>
 	);
 }

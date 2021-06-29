@@ -1,9 +1,15 @@
 import { useMutation } from '@apollo/client';
 import { gql } from 'graphql-tag';
+import Router from 'next/router';
 import useForm from 'hooks/useForm';
-import StyledForm from 'components/styles/StyledForm';
 import ErrorMessage from 'components/ErrorMessage';
+import StyledForm from 'components/styled/StyledForm';
 import { Container } from './styles';
+import { ALL_PRODUCTS_QUERY } from 'components/ProductGridComponent';
+
+interface IEvent {
+	preventDefault: () => void;
+}
 
 const CREATE_PRODUCT_MUTATION = gql`
 	mutation CREATE_PRODUCT_MUTATION(
@@ -29,38 +35,39 @@ const CREATE_PRODUCT_MUTATION = gql`
 	}
 `;
 
-function CreateProduct() {
+const CreateProduct = () => {
 	const { inputs, handleChange, clearForm, resetForm } = useForm({
 		name: '',
-		price: undefined,
 		description: '',
+		price: undefined,
+		image: '',
 	});
 
 	const [createProduct, { loading, error, data }] = useMutation(
 		CREATE_PRODUCT_MUTATION,
 		{
 			variables: inputs,
-			// refetchQueries: [{ query: ALL_PRODUCTS_QUERY }],
+			refetchQueries: [{ query: ALL_PRODUCTS_QUERY }],
 		},
 	);
 
 	return (
 		<Container>
 			<StyledForm
-				onSubmit={async (e: { preventDefault: () => void }) => {
+				onSubmit={async (e: IEvent) => {
 					e.preventDefault();
-					console.log(inputs);
 					// Submit inputFields to backend
 					const res = await createProduct();
 					clearForm();
-					// Router.push({
-					//   pathname: `/product/${res.data.createProduct.id}`,
-					// });
+					// Go to that product's page!
+					Router.push({
+						pathname: `/product/${res.data.createProduct.id}`,
+					});
 				}}
 			>
 				<ErrorMessage error={error} />
 				<fieldset disabled={loading} aria-busy={loading}>
-					<label htmlFor="name">
+					<label htmlFor="image">
 						Image
 						<input
 							type="file"
@@ -86,7 +93,7 @@ function CreateProduct() {
 							type="text"
 							id="description"
 							name="description"
-							placeholder="description"
+							placeholder="Description"
 							value={inputs.description}
 							onChange={handleChange}
 						/>
@@ -107,6 +114,6 @@ function CreateProduct() {
 			</StyledForm>
 		</Container>
 	);
-}
+};
 
 export default CreateProduct;

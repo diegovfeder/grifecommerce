@@ -1,7 +1,8 @@
-import ProductsComponent from '../../components/ProductsComponent';
+import ProductsComponent from '../../components/ProductGridComponent';
 
+// TODO: Should I create a footer here? or for index.tsx another
 const Home = () => {
-	return <ProductsComponent>Home</ProductsComponent>;
+	return <ProductsComponent />;
 };
 
 export default Home;

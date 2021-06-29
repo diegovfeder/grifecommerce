@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface IEvent {
 	target: {
@@ -13,13 +13,19 @@ interface IEvent {
 // Is there a way to define types Dynamically? Pass as props maybe?
 interface IFormInput {
 	name: string;
-	price: number | undefined;
 	description: string;
+	price: number | undefined;
 	image?: any;
 }
 
 export default function useForm(initial: IFormInput) {
 	const [inputs, setInputs] = useState(initial);
+	const initialValues = Object.values(initial).join('');
+
+	useEffect(() => {
+		setInputs(initial);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [initialValues]);
 
 	function handleChange(e: IEvent) {
 		let { value, name, type } = e.target;

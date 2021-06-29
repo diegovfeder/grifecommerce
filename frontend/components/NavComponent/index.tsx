@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import StyledNav from '../styles/StyledNav';
+import StyledNav from '../styled/StyledNav';
 
 const NavComponent: React.FC = () => {
 	return (
