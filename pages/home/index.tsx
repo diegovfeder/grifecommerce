@@ -1,14 +1,17 @@
 import ProductsGridComponent from '../../components/ProductsGridComponent';
 import Head from 'next/head';
+import Pagination from 'components/Pagination';
 
-// TODO: Should I create a footer here? or for index.tsx another
+// TODO: Render a footer component?
 const Home = () => {
 	return (
 		<>
-			<Head>
+			<Pagination page={1} />
+			{/* <Head>
 				<title>GRIFE | Home</title>
-			</Head>
+			</Head> */}
 			<ProductsGridComponent />
+			<Pagination page={1} />
 		</>
 	);
 };
