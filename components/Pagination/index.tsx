@@ -11,7 +11,7 @@ interface PaginationProps {
 	page: any;
 }
 
-const PAGINATION_QUERY = gql`
+export const PAGINATION_QUERY = gql`
 	query PAGINATION_QUERY {
 		productsCount
 	}
@@ -19,8 +19,8 @@ const PAGINATION_QUERY = gql`
 
 const Pagination = ({ page }: PaginationProps) => {
 	const { loading, data, error } = useQuery(PAGINATION_QUERY);
-	const productsTotal = data?.productsCount;
-	const pagesTotal = Math.ceil(productsTotal / perPage);
+	const productsCount = data?.productsCount;
+	const pagesTotal = Math.ceil(productsCount / perPage);
 
 	if (loading) {
 		return <p>Loading...</p>;
@@ -37,14 +37,14 @@ const Pagination = ({ page }: PaginationProps) => {
 					GRIFE | Page {page} of {pagesTotal}
 				</title>
 			</Head>
-			<Link href={`/products/${page - 1}`}>
+			<Link href={`/home/${page - 1}`}>
 				<a aria-disabled={page === 1}>← Prev</a>
 			</Link>
 			<p>
 				Page {page} of {pagesTotal}
 			</p>
-			<p>{productsTotal} Products Total</p>
-			<Link href={`/products/${page + 1}`}>
+			<p>{productsCount} Products Total</p>
+			<Link href={`/home/${page + 1}`}>
 				<a aria-disabled={page === pagesTotal}>Next →</a>
 			</Link>
 		</StyledPagination>

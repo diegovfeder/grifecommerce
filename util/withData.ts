@@ -4,7 +4,7 @@ import { getDataFromTree } from '@apollo/client/react/ssr';
 import { createUploadLink } from 'apollo-upload-client';
 import withApollo from 'next-with-apollo';
 import { devEndpoint, prodEndpoint } from '../config';
-// import paginationField from './paginationField';
+import PaginationField from './paginationField';
 
 // TODO: remove any, properly type this
 function createClient({ headers, initialState } : any) {

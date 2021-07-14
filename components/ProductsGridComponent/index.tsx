@@ -4,9 +4,11 @@ import gql from 'graphql-tag';
 import { useQuery } from '@apollo/client';
 import styled from 'styled-components';
 import ProductComponent from '../ProductComponent';
+import { perPage } from 'config';
 
 interface IProductsGridComponent {
 	children?: ReactNode;
+	page: any;
 }
 
 // Get Type of Product, use a common type import
@@ -17,8 +19,8 @@ interface IProductsGridComponent {
 // }
 
 export const ALL_PRODUCTS_QUERY = gql`
-	query ALL_PRODUCTS_QUERY {
-		allProducts {
+	query ALL_PRODUCTS_QUERY($skip: Int = 0, $first: Int) {
+		allProducts(skip: $skip, first: $first) {
 			id
 			name
 			price
@@ -39,8 +41,13 @@ const StyledProductsGrid = styled.div`
 	grid-gap: 60px;
 `;
 
-const ProductsGridComponent = ({ children }: IProductsGridComponent) => {
-	const { data, error, loading } = useQuery(ALL_PRODUCTS_QUERY);
+const ProductsGridComponent = ({ page, children }: IProductsGridComponent) => {
+	const { data, error, loading } = useQuery(ALL_PRODUCTS_QUERY, {
+		variables: {
+			skip: page * perPage - perPage,
+			first: perPage,
+		},
+	});
 	console.log(data, error, loading);
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error: {error.message}</p>;
