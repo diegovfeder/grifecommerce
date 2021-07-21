@@ -1,12 +1,8 @@
-name: Node.js CI
-
+name: Github Actions
 on: [push]
-
 jobs:
-  build:
-
+  node:
     runs-on: ubuntu-latest
-
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
