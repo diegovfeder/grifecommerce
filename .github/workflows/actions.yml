@@ -5,6 +5,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       COOKIE_SECRET: ARandomSecretWithMoreThan32Characters
+      CLOUDINARY_CLOUD_NAME: grifemusic
+      CLOUDINARY_KEY: 597576948711519
+      CLOUDINARY_SECRET: q4M0ekcpgmfQnH53E4aBg76MlpQ
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
