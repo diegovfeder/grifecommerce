@@ -7,3 +7,5 @@ export interface IRFC {
 export interface IEvent {
 	preventDefault: () => void;
 }
+
+// TODO: Add Product Type here?

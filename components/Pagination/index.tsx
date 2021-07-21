@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import ErrorMessage from 'components/ErrorMessage';
 import StyledPagination from 'components/styled/StyledPagination';
