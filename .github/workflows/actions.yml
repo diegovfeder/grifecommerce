@@ -3,6 +3,8 @@ on: [push]
 jobs:
   node:
     runs-on: ubuntu-latest
+    env:
+      COOKIE_SECRET: ARandomSecretWithMoreThan32Characters
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
