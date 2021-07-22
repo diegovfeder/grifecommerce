@@ -7,7 +7,7 @@ jobs:
       COOKIE_SECRET: ARandomSecretWithMoreThan32Characters
       CLOUDINARY_CLOUD_NAME: grifemusic
       CLOUDINARY_KEY: 597576948711519
-      CLOUDINARY_SECRET: ${{ secrets.CLOUDYNARY_SECRET }}
+      CLOUDINARY_SECRET: ${{secrets.CLOUDINARY_SECRET}}
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
