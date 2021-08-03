@@ -1,4 +1,4 @@
-import ProductsGridComponent from '../../components/ProductsGridComponent';
+import ProductsGridComponent from 'components/ProductsGridComponent';
 import Pagination from 'components/Pagination';
 import { useRouter } from 'next/router';
 

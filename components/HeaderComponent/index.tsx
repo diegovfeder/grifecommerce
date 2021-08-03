@@ -44,7 +44,7 @@ const HeaderComponent: React.FC = () => {
 			</div>
 			<div className="sub-bar">
 				{/* TODO: Create Search Component */}
-				<p>TODO: Search</p>
+				<p style={{ marginLeft: '8px' }}>TODO: Input / SearchBar</p>
 			</div>
 		</StyledHeader>
 	);
