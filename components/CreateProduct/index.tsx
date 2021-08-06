@@ -52,20 +52,20 @@ const CreateProduct = () => {
 		},
 	);
 
+	const onSubmit = async (e: IEvent) => {
+		e.preventDefault();
+		// Submit inputFields to backend
+		const res = await createProduct();
+		clearForm();
+		// Go to that product's page!
+		Router.push({
+			pathname: `/product/${res.data.createProduct.id}`,
+		});
+	};
+
 	return (
 		<Container>
-			<StyledForm
-				onSubmit={async (e: IEvent) => {
-					e.preventDefault();
-					// Submit inputFields to backend
-					const res = await createProduct();
-					clearForm();
-					// Go to that product's page!
-					Router.push({
-						pathname: `/product/${res.data.createProduct.id}`,
-					});
-				}}
-			>
+			<StyledForm onSubmit={onSubmit}>
 				<ErrorMessage error={error} />
 				<fieldset disabled={loading} aria-busy={loading}>
 					<label htmlFor="name">

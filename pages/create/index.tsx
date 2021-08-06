@@ -1,10 +1,10 @@
 import CreateProduct from 'components/CreateProduct';
 import Head from 'next/head';
 
-const Sell = () => {
+const Create = () => {
 	return (
 		<>
-			{/* TODO: This page should show in NavBar only if role is admin */}
+			{/* TODO: This path should be accessible only if userRole is admin */}
 			<Head>
 				<title>GRIFE | Create Product</title>
 			</Head>
@@ -13,4 +13,4 @@ const Sell = () => {
 	);
 };
 
-export default Sell;
+export default Create;

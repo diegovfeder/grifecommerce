@@ -9,8 +9,9 @@ const Home = () => {
 	const pageNumber = parseInt(query.page);
 	return (
 		<>
+			{/* TODO: pagination last-of-type className should have margin-top and no margin-bottom */}
 			<Pagination page={pageNumber || 1} />
-			<ProductsGridComponent  page={pageNumber || 1}/>
+			<ProductsGridComponent page={pageNumber || 1} />
 			<Pagination page={pageNumber || 1} />
 		</>
 	);

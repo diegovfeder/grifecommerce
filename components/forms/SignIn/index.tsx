@@ -1,9 +1,10 @@
-import useForm from 'hooks/useForm';
-import StyledForm from '../../styled/StyledForm';
-import { IEvent, ISignInFormInput } from 'types/commonTypes';
-import { CURRENT_USER_QUERY } from 'components/UserComponent';
 import { gql, useMutation } from '@apollo/client';
+import Router from 'next/router';
+import useForm from 'hooks/useForm';
+import StyledForm from 'components/styled/StyledForm';
 import ErrorMessage from 'components/ErrorMessage';
+import { CURRENT_USER_QUERY } from 'components/UserComponent';
+import { IEvent, ISignInFormInput } from 'types/commonTypes';
 
 // TODO:SignIn Route to Home or Shop Page (ProductsGrid)
 // TODO: When logged in, how to re-render page (do we need?) to show updated Header/NavBar
@@ -42,8 +43,12 @@ const SignIn = () => {
 		console.log(inputs);
 		// Send the email and password to our GraphQL API
 		const res = await signin();
+		// TODO: error handling
 		console.log(res);
 		resetForm();
+		Router.push({
+			pathname: `/`,
+		});
 	};
 
 	const error =

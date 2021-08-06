@@ -3,9 +3,8 @@ import type { AppProps } from 'next/app';
 import PageComponent from '../components/PageComponent';
 import Router from 'next/router';
 import NProgress from 'nprogress';
-// TODO: Change to custom nprogress styles
-// import '../components/styles/nprogress.css'
 import 'nprogress/nprogress.css';
+import 'styles/customNProgress.css';
 import { ApolloClient, ApolloProvider } from '@apollo/client';
 import withData from '../util/withData';
 

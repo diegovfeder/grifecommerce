@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { useQuery } from '@apollo/client';
 import styled from 'styled-components';
 import ProductComponent from '../ProductComponent';
-import { perPage } from 'config';
+import { totalProductsPerPage } from 'config';
 
 interface IProductsGridComponent {
 	children?: ReactNode;
@@ -44,8 +44,8 @@ const StyledProductsGrid = styled.div`
 const ProductsGridComponent = ({ page, children }: IProductsGridComponent) => {
 	const { data, error, loading } = useQuery(ALL_PRODUCTS_QUERY, {
 		variables: {
-			skip: page * perPage - perPage,
-			first: perPage,
+			skip: page * totalProductsPerPage - totalProductsPerPage,
+			first: totalProductsPerPage,
 		},
 	});
 	console.log(data, error, loading);
@@ -53,7 +53,6 @@ const ProductsGridComponent = ({ page, children }: IProductsGridComponent) => {
 	if (error) return <p>Error: {error.message}</p>;
 	return (
 		<Container>
-			<h1>ProductsGrid</h1>
 			<div>
 				<StyledProductsGrid>
 					{data.allProducts.map(

@@ -21,7 +21,7 @@ const GlobalStyles = createGlobalStyle`
     --lightGrey: #e1e1e1;
     --lightGray: var(--lightGrey);
     --offWhite: #ededed;
-    --maxWidth: 1000px;
+    --maxWidth: 1080px;
     --bs: 0 12px 24px 0 rgba(0,0,0,0.09);
     box-sizing: border-box;
     font-size: 62.5%;
@@ -52,6 +52,8 @@ const InnerStyles = styled.div`
 	max-width: var(--maxWidth);
 	margin: 0 auto;
 	padding: 2rem;
+	/* display: flex; */
+	/* justify-content: center; */
 `;
 
 const PageComponent = ({ children }: IPageComponent) => {

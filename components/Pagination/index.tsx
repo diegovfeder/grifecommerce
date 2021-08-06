@@ -1,10 +1,12 @@
 import { useQuery } from '@apollo/client';
 import ErrorMessage from 'components/ErrorMessage';
+import StyledContainer from 'components/styled/StyledContainer';
 import StyledPagination from 'components/styled/StyledPagination';
-import { perPage } from 'config';
+import { totalProductsPerPage } from 'config';
 import gql from 'graphql-tag';
 import Head from 'next/head';
 import Link from 'next/link';
+import styles from './styles.module.css';
 
 interface PaginationProps {
 	page: any;
@@ -19,7 +21,7 @@ export const PAGINATION_QUERY = gql`
 const Pagination = ({ page }: PaginationProps) => {
 	const { loading, data, error } = useQuery(PAGINATION_QUERY);
 	const productsCount = data?.productsCount;
-	const pagesTotal = Math.ceil(productsCount / perPage);
+	const pagesTotal = Math.ceil(productsCount / totalProductsPerPage);
 
 	if (loading) {
 		return <p>Loading...</p>;
@@ -30,23 +32,25 @@ const Pagination = ({ page }: PaginationProps) => {
 	}
 
 	return (
-		<StyledPagination>
-			<Head>
-				<title>
-					GRIFE | Page {page} of {pagesTotal}
-				</title>
-			</Head>
-			<Link href={`/home/${page - 1}`}>
-				<a aria-disabled={page === 1}>← Prev</a>
-			</Link>
-			<p>
-				Page {page} of {pagesTotal}
-			</p>
-			<p>{productsCount} Products Total</p>
-			<Link href={`/home/${page + 1}`}>
-				<a aria-disabled={page === pagesTotal}>Next →</a>
-			</Link>
-		</StyledPagination>
+		<StyledContainer>
+			<StyledPagination>
+				<Head>
+					<title>
+						GRIFE | Page {page} of {pagesTotal}
+					</title>
+				</Head>
+				<Link href={`/home/${page - 1}`}>
+					<a aria-disabled={page === 1}>← Prev</a>
+				</Link>
+				<p>
+					Page {page} of {pagesTotal}
+				</p>
+				<p>Total Products: {productsCount}</p>
+				<Link href={`/home/${page + 1}`}>
+					<a aria-disabled={page === pagesTotal}>Next →</a>
+				</Link>
+			</StyledPagination>
+		</StyledContainer>
 	);
 };
 

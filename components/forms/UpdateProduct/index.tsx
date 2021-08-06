@@ -1,11 +1,12 @@
 import React from 'react';
-import gql from 'graphql-tag';
 import { useMutation, useQuery } from '@apollo/client';
+import gql from 'graphql-tag';
+import { useRouter } from 'next/router';
 import ErrorMessage from 'components/ErrorMessage';
 import StyledForm from 'components/styled/StyledForm';
 import useForm from 'hooks/useForm';
 import { IEvent, IProductFormInput } from 'types/commonTypes';
-// import Router from 'next/router';
+import ProductComponent from 'components/ProductComponent';
 
 interface IUpdateProduct {
 	id: String;
@@ -46,6 +47,7 @@ const UpdateProduct = ({ id }: IUpdateProduct) => {
 	const { data, loading, error } = useQuery(SINGLE_PRODUCT_QUERY, {
 		variables: { id },
 	});
+	const router = useRouter();
 
 	// 2. Mutation to update product
 	const [updateProduct, updateMutation] = useMutation(UPDATE_PRODUCT_MUTATION);
@@ -61,14 +63,31 @@ const UpdateProduct = ({ id }: IUpdateProduct) => {
 
 	if (loading) return <p>Loading...</p>;
 
+	// const productData = {
+	// 	id: '',
+	// 	name: '',
+	// 	price: 0,
+	// 	description: '',
+	// 	photo: {
+	// 		image: {
+	// 			publicUrlTransformed: '',
+	// 		},
+	// 	},
+	// };
+
 	return (
 		<>
+			{console.log('re-render')}
+			{console.log({ data })}
+			{/* <ProductComponent key={data.Product.id} product={productData} /> */}
+
 			<StyledForm
 				onSubmit={async (e: IEvent) => {
 					e.preventDefault();
 					// Submit inputFields to backend
-					// TODO: Type the following const. If updateProduct is return something
-					// I'd like to safely check / know what it is...
+					// TODO: Type the following (res) const.
+					// Think about this way: If the updateProduct mutation is returning something
+					// I'd like to safely check using code, or at least know what it is...
 					const res = await updateProduct({
 						variables: {
 							id,
@@ -76,12 +95,13 @@ const UpdateProduct = ({ id }: IUpdateProduct) => {
 							description: inputs.description,
 							price: inputs.price,
 						},
-					}).catch(console.error);
-					clearForm();
-					// TODO: Go to that product's page!
-					// Router.push({
-					// 	pathname: `/product/${res.data.createProduct.id}`,
-					// });
+					}).catch(error => console.error({ error }));
+					// TODO: If res responds success show something to the user?...
+					// console.table(res);
+					clearForm(); // only when succesful?
+					router.push({
+						pathname: `/product/${res?.data?.updateProduct?.id}`,
+					});
 				}}
 			>
 				<ErrorMessage error={error || updateMutation.error} />

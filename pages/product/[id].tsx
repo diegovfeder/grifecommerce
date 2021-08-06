@@ -5,7 +5,12 @@ interface ISingleProductPage {
 }
 
 const SingleProductPage = ({ query }: ISingleProductPage) => {
-	return <SingleProduct id={query.id} />;
+	return (
+		<>
+			<h1>TODO: Style this page</h1>
+			<SingleProduct id={query.id} />
+		</>
+	);
 };
 
 export default SingleProductPage;

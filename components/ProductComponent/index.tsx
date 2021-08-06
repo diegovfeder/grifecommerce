@@ -38,14 +38,10 @@ const ProductComponent = ({ product }: IProductComponent) => {
 				</StyledTitle>
 				<StyledPriceTag>{formatMoney(product.price)}</StyledPriceTag>
 				<p>{product.description}</p>
-				{/* TODO: Add button for edit and delete item */}
 				<div className="buttonList">
 					<Link
 						href={{
-							pathname: 'update',
-							query: {
-								id: product.id,
-							},
+							pathname: `/update/${product.id}`,
 						}}
 					>
 						Edit 📝
