@@ -1,13 +1,15 @@
 import useForm from 'hooks/useForm';
-import StyledForm from '../styled/StyledForm';
-
-import { IEvent } from 'types/commonTypes';
+import StyledForm from '../../styled/StyledForm';
+import { IEvent, ISignInFormInput } from 'types/commonTypes';
 import { CURRENT_USER_QUERY } from 'components/UserComponent';
 import { gql, useMutation } from '@apollo/client';
 import ErrorMessage from 'components/ErrorMessage';
 
+// TODO:SignIn Route to Home or Shop Page (ProductsGrid)
+// TODO: When logged in, how to re-render page (do we need?) to show updated Header/NavBar
+// and route to Shop...
 const SIGN_IN_MUTATION = gql`
-	mutation SIGNON_MUTATION($email: String!, $password: String!) {
+	mutation SIGN_IN_MUTATION($email: String!, $password: String!) {
 		authenticateUserWithPassword(email: $email, password: $password) {
 			... on UserAuthenticationWithPasswordSuccess {
 				item {
@@ -24,16 +26,13 @@ const SIGN_IN_MUTATION = gql`
 	}
 `;
 
-// FIXME: 2 options
-// - pass genertics into useForm and so dinamically type that component on declaration.
-// - create two forms with static interfaces
 const SignIn = () => {
-	const { inputs, handleChange, resetForm } = useForm({
+	const { inputs, handleChange, resetForm } = useForm<ISignInFormInput>({
 		email: '',
 		password: '',
 	});
 
-	const [signin, { data, loading }] = useMutation(SIGN_IN_MUTATION, {
+	const [signin, { data }] = useMutation(SIGN_IN_MUTATION, {
 		variables: inputs,
 		refetchQueries: [{ query: CURRENT_USER_QUERY }],
 	});
@@ -57,7 +56,6 @@ const SignIn = () => {
 		<StyledForm method="POST" onSubmit={handleSubmit}>
 			<h2>Sign Into Your Account</h2>
 			<ErrorMessage error={error} />
-			{/* <ErrorMessage error={data?.authenticateUserWithPassword?.message} /> */}
 			<fieldset>
 				<label htmlFor="email">Email</label>
 				<input

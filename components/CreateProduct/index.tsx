@@ -6,6 +6,7 @@ import ErrorMessage from 'components/ErrorMessage';
 import StyledForm from 'components/styled/StyledForm';
 import { Container } from './styles';
 import { ALL_PRODUCTS_QUERY } from 'components/ProductsGridComponent';
+import { IProductFormInput } from 'types/commonTypes';
 
 interface IEvent {
 	preventDefault: () => void;
@@ -36,7 +37,7 @@ const CREATE_PRODUCT_MUTATION = gql`
 `;
 
 const CreateProduct = () => {
-	const { inputs, handleChange, clearForm, resetForm } = useForm({
+	const { inputs, handleChange, clearForm } = useForm<IProductFormInput>({
 		name: '',
 		description: '',
 		price: undefined,
@@ -67,15 +68,6 @@ const CreateProduct = () => {
 			>
 				<ErrorMessage error={error} />
 				<fieldset disabled={loading} aria-busy={loading}>
-					<label htmlFor="image">
-						Image
-						<input
-							type="file"
-							id="image"
-							name="image"
-							onChange={handleChange}
-						/>
-					</label>
 					<label htmlFor="name">
 						Name
 						<input
@@ -106,6 +98,15 @@ const CreateProduct = () => {
 							name="price"
 							placeholder="Price"
 							value={inputs.price}
+							onChange={handleChange}
+						/>
+					</label>
+					<label htmlFor="image">
+						Image
+						<input
+							type="file"
+							id="image"
+							name="image"
 							onChange={handleChange}
 						/>
 					</label>

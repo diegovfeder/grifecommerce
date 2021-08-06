@@ -1,7 +1,6 @@
 import useForm from 'hooks/useForm';
-import StyledForm from '../styled/StyledForm';
-import { IEvent } from 'types/commonTypes';
-// import { CURRENT_USER_QUERY } from 'components/UserComponent';
+import StyledForm from '../../styled/StyledForm';
+import { IEvent, IRedeemPasswordResetFormInput } from 'types/commonTypes';
 import { gql, useMutation } from '@apollo/client';
 import ErrorMessage from 'components/ErrorMessage';
 
@@ -22,16 +21,15 @@ const RESET_MUTATION = gql`
 	}
 `;
 
-// TODO: Create GENERIC type useForm
-// FIXME: properly type this
 const Reset = ({ token }: any) => {
-	const { inputs, handleChange, resetForm } = useForm({
-		email: '',
-		password: '',
-		token,
-	});
+	const { inputs, handleChange, resetForm } =
+		useForm<IRedeemPasswordResetFormInput>({
+			email: '',
+			password: '',
+			token,
+		});
 
-	const [reset, { data, loading, error }] = useMutation(RESET_MUTATION, {
+	const [reset, { data, error }] = useMutation(RESET_MUTATION, {
 		variables: inputs,
 	});
 
@@ -43,14 +41,14 @@ const Reset = ({ token }: any) => {
 		e.preventDefault();
 		console.log(inputs);
 		// Send the email and password to our GraphQL API
-		const res = await reset().catch(console.error);
-		console.log(res);
+		const res = await reset().catch(error => console.error({ error }));
+		console.log({ res });
 		resetForm();
 	};
 
 	return (
 		<StyledForm method="POST" onSubmit={handleSubmit}>
-			<h2>Reset Your Password</h2>
+			<h2>Update your Password</h2>
 			<ErrorMessage error={error || tokenError} />
 			<fieldset>
 				{data?.redeemUserPasswordResetToken === null && (
@@ -65,7 +63,7 @@ const Reset = ({ token }: any) => {
 					value={inputs.email}
 					onChange={handleChange}
 				/>
-				<label htmlFor="password">New Password</label>
+				<label htmlFor="password">Password</label>
 				<input
 					type="password"
 					name="password"
@@ -74,7 +72,7 @@ const Reset = ({ token }: any) => {
 					value={inputs.password}
 					onChange={handleChange}
 				/>
-				<button type="submit">Reset Password!</button>
+				<button type="submit">Set New Password!</button>
 			</fieldset>
 		</StyledForm>
 	);

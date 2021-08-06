@@ -4,7 +4,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import ErrorMessage from 'components/ErrorMessage';
 import StyledForm from 'components/styled/StyledForm';
 import useForm from 'hooks/useForm';
-import { IEvent } from 'types/commonTypes';
+import { IEvent, IProductFormInput } from 'types/commonTypes';
 // import Router from 'next/router';
 
 interface IUpdateProduct {
@@ -51,7 +51,7 @@ const UpdateProduct = ({ id }: IUpdateProduct) => {
 	const [updateProduct, updateMutation] = useMutation(UPDATE_PRODUCT_MUTATION);
 
 	// 3. A form to handle the update
-	const { inputs, handleChange, clearForm, resetForm } = useForm(
+	const { inputs, handleChange, clearForm } = useForm<IProductFormInput>(
 		data?.Product || {
 			name: '',
 			description: '',

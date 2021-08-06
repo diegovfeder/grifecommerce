@@ -4,6 +4,7 @@ import { CURRENT_USER_QUERY } from 'components/UserComponent';
 
 // TODO: Create tests
 //  Show error message in some dialog if exists
+// TODO: After signOut 
 
 const SIGN_OUT_MUTATION = gql`
 	mutation {

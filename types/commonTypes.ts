@@ -8,4 +8,26 @@ export interface IEvent {
 	preventDefault: () => void;
 }
 
-// TODO: Add Product Type here?
+export interface ISignInFormInput {
+	email: string;
+	password: string;
+}
+
+export interface ISignUpFormInput extends ISignInFormInput {
+	name: string;
+}
+
+export interface IRequestPasswordResetFormInput {
+	email: string;
+}
+
+export interface IRedeemPasswordResetFormInput extends ISignInFormInput {
+	token: string;
+}
+
+export interface IProductFormInput {
+	name: string;
+	description: string;
+	price: number | undefined;
+	image?: any;
+}

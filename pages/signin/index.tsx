@@ -1,9 +1,9 @@
 import { ReactNode } from 'react';
 import Head from 'next/head';
-import SignIn from 'components/SignIn';
-import SignUp from 'components/SignUp';
+import SignIn from 'components/forms/SignIn';
+import SignUp from 'components/forms/SignUp';
 import styled from 'styled-components';
-import RequestReset from 'components/RequestReset';
+import RequestReset from 'components/forms/RequestPasswordReset';
 
 interface ISignInPage {
 	children: ReactNode;
@@ -21,13 +21,12 @@ const SignInPage = ({ children }: ISignInPage) => {
 			<Head>
 				<title>GRIFE | Sign In</title>
 			</Head>
-			<h1>Sign In / Sign Up</h1>
-			{children}
 			<StyledGrid>
 				<SignIn />
 				<SignUp />
 				<RequestReset />
 			</StyledGrid>
+			{children}
 		</>
 	);
 };

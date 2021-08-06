@@ -10,33 +10,7 @@ interface IEvent {
 	};
 }
 
-//FIXME: Use generics to pass different interfaces to useForm hook.
-interface ISignInFormInput {
-	email: string;
-	password: string;
-}
-interface IPasswordReset extends ISignInFormInput {
-	token: string;
-}
-
-interface ISignUpFormInput extends ISignInFormInput {
-	name: string;
-}
-interface IProductFormInput {
-	name: string;
-	description: string;
-	price: number | undefined;
-	image?: any;
-}
-
-interface IFormInput {
-	name: string;
-	description: string;
-	price: number | undefined;
-	image?: any;
-}
-
-const useForm = (initial: IPasswordReset) => {
+const useForm = <T>(initial: T) => {
 	const [inputs, setInputs] = useState(initial);
 	const initialValues = Object.values(initial).join('');
 

@@ -1,6 +1,6 @@
 import useForm from 'hooks/useForm';
-import StyledForm from '../styled/StyledForm';
-import { IEvent } from 'types/commonTypes';
+import StyledForm from '../../styled/StyledForm';
+import { IEvent, ISignUpFormInput } from 'types/commonTypes';
 import { gql, useMutation } from '@apollo/client';
 import ErrorMessage from 'components/ErrorMessage';
 
@@ -18,16 +18,14 @@ const SIGN_UP_MUTATION = gql`
 	}
 `;
 
-// FIXME:
-// - pass genertics into useForm and so dinamically type that component on declaration.
 const SignUp = () => {
-	const { inputs, handleChange, resetForm } = useForm({
+	const { inputs, handleChange, resetForm } = useForm<ISignUpFormInput>({
 		name: '',
 		email: '',
 		password: '',
 	});
 
-	const [signup, { data, loading, error }] = useMutation(SIGN_UP_MUTATION, {
+	const [signup, { data, error }] = useMutation(SIGN_UP_MUTATION, {
 		variables: inputs,
 	});
 
@@ -42,9 +40,11 @@ const SignUp = () => {
 
 	return (
 		<StyledForm method="POST" onSubmit={handleSubmit}>
-			<h2>Sign Up for an Account</h2>
+			<h2>Create an Account!</h2>
 			<ErrorMessage error={error} />
 			<fieldset>
+				{/* TODO: Is this message really useful as UI flow?
+				Could we just signIn directly after user create account?  */}
 				{data?.createUser && (
 					<p>
 						Signed up with {data.createUser.email} - Please go ahead and Sign
@@ -78,7 +78,7 @@ const SignUp = () => {
 					value={inputs.password}
 					onChange={handleChange}
 				/>
-				<button type="submit">Sign In!</button>
+				<button type="submit">Sign Up!</button>
 			</fieldset>
 		</StyledForm>
 	);

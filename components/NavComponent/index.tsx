@@ -7,7 +7,8 @@ const NavComponent = () => {
 	const user = useUser();
 	return (
 		<StyledNav>
-			<Link href="/">Home</Link>
+			{/* TODO: Myabe have a Home with some of our current info and then a Shop path for the products */}
+			<Link href="/">Buy</Link>
 			{user ? (
 				<>
 					<Link href="/sell">Sell</Link>
@@ -15,11 +16,12 @@ const NavComponent = () => {
 					<Link href="/account">Account</Link>
 					<Link href="/mycart">My Cart</Link>
 					<SignOut />
+					{/* FIXME: Should SignOut be a link? or this is ok?  */}
 					{/* <Link href="/signout">Sign Out</Link> */}
 				</>
 			) : (
-				<Link href="/signin">Sign In</Link>
 				// TODO: Route to home after success
+				<Link href="/signin">Sign In</Link>
 			)}
 		</StyledNav>
 	);

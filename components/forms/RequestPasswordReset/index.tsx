@@ -1,31 +1,26 @@
 import useForm from 'hooks/useForm';
-import StyledForm from '../styled/StyledForm';
-
-import { IEvent } from 'types/commonTypes';
-// import { CURRENT_USER_QUERY } from 'components/UserComponent';
+import { IEvent, IRequestPasswordResetFormInput } from 'types/commonTypes';
 import { gql, useMutation } from '@apollo/client';
 import ErrorMessage from 'components/ErrorMessage';
+import StyledForm from 'components/styled/StyledForm';
 
-const REQUEST_RESET_MUTATION = gql`
-	mutation REQUEST_RESET_MUTATION($email: String!) {
+const REQUEST_PASSWORD_RESET_MUTATION = gql`
+	mutation REQUEST_PASSWORD_RESET_MUTATION($email: String!) {
 		sendUserPasswordResetLink(email: $email) {
-			id
-			name
-			email
+			code
+			message
 		}
 	}
 `;
 
-// TODO: Create GENERIC type useForm
-const RequestReset = () => {
-	const { inputs, handleChange, resetForm } = useForm({
-		name: '',
-		email: '',
-		password: '',
-	});
+const RequestPasswordReset = () => {
+	const { inputs, handleChange, resetForm } =
+		useForm<IRequestPasswordResetFormInput>({
+			email: '',
+		});
 
-	const [resetPassword, { data, loading, error }] = useMutation(
-		REQUEST_RESET_MUTATION,
+	const [resetPassword, { data, error }] = useMutation(
+		REQUEST_PASSWORD_RESET_MUTATION,
 		{
 			variables: inputs,
 			// refetchQueries: [{ query: CURRENT_USER_QUERY }],
@@ -37,7 +32,7 @@ const RequestReset = () => {
 		console.log(inputs);
 		// Send the email and password to our GraphQL API
 		const res = await resetPassword().catch(console.error);
-		console.log(res);
+		console.log({ res });
 		resetForm();
 	};
 
@@ -64,4 +59,4 @@ const RequestReset = () => {
 	);
 };
 
-export default RequestReset;
+export default RequestPasswordReset;
