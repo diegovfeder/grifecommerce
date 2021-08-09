@@ -77,8 +77,8 @@ const UpdateProduct = ({ id }: IUpdateProduct) => {
 
 	return (
 		<>
-			{console.log('re-render')}
-			{console.log({ data })}
+			{/* {console.log('re-render')} */}
+			{/* {console.log({ data })} */}
 			{/* <ProductComponent key={data.Product.id} product={productData} /> */}
 
 			<StyledForm

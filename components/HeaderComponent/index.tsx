@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import NavComponent from '../NavComponent';
 import styled from 'styled-components';
+import Cart from 'components/Cart';
 
 const Logo = styled.h1`
 	font-size: 4rem;
@@ -46,6 +47,7 @@ const HeaderComponent: React.FC = () => {
 				{/* TODO: Create Search Component */}
 				<p style={{ marginLeft: '8px' }}>TODO: Input / SearchBar</p>
 			</div>
+			<Cart />
 		</StyledHeader>
 	);
 };

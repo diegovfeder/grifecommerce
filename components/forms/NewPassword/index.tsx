@@ -39,10 +39,10 @@ const Reset = ({ token }: any) => {
 
 	const handleSubmit = async (e: IEvent) => {
 		e.preventDefault();
-		console.log(inputs);
+		// console.log(inputs);
 		// Send the email and password to our GraphQL API
 		const res = await reset().catch(error => console.error({ error }));
-		console.log({ res });
+		// console.log({ res });
 		resetForm();
 	};
 

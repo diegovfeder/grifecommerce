@@ -40,11 +40,11 @@ const SignIn = () => {
 
 	const handleSubmit = async (e: IEvent) => {
 		e.preventDefault();
-		console.log(inputs);
+		// console.log(inputs);
 		// Send the email and password to our GraphQL API
 		const res = await signin();
 		// TODO: error handling
-		console.log(res);
+		// console.log(res);
 		resetForm();
 		Router.push({
 			pathname: `/`,

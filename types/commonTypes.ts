@@ -4,6 +4,20 @@ export interface IRFC {
 	children?: ReactNode;
 }
 
+// fromModel...
+// Q: Can I import some auto-generated typescript interface (model) from prisma or keystone?
+export interface IUserModel {}
+
+export interface IProductModel {
+	name: string;
+	price: number;
+	photo: {
+		image: {
+			publicUrlTransformed: string;
+		};
+	};
+}
+
 export interface IEvent {
 	preventDefault: () => void;
 }

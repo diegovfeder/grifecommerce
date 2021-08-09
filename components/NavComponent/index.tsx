@@ -2,9 +2,11 @@ import Link from 'next/link';
 import { useUser } from 'components/UserComponent';
 import SignOut from 'components/SignOut';
 import StyledNav from '../styled/StyledNav';
+import { useLocalState } from 'hooks/cartState';
 
 const NavComponent = () => {
 	const user = useUser();
+	const { openCart } = useLocalState();
 	return (
 		<StyledNav>
 			{/* TODO: Myabe have a Home with some of our current info and then a Shop path for the products */}
@@ -14,8 +16,12 @@ const NavComponent = () => {
 					<Link href="/sell">SELL</Link>
 					<Link href="/orders">ORDERS</Link>
 					<Link href="/account">ACCOUNT</Link>
-					<Link href="/mycart">MY CART</Link>
+					{/* <Link href="/mycart">MY CART</Link> */}
+					<button type="button" onClick={openCart}>
+						My Cart
+					</button>
 					<SignOut />
+
 					{/* FIXME: Should SignOut be a link? or this is ok?  */}
 					{/* <Link href="/signout">Sign Out</Link> */}
 				</>

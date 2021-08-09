@@ -6,6 +6,28 @@ type User {
   name: String
   email: String
   password: PasswordState
+  cart(
+    where: CartItemWhereInput! = {}
+    search: String
+    sortBy: [SortCartItemsBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [CartItemOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): [CartItem!]
+  _cartMeta(
+    where: CartItemWhereInput! = {}
+    search: String
+    sortBy: [SortCartItemsBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [CartItemOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use cartCount instead."
+    )
+  cartCount(where: CartItemWhereInput! = {}): Int
   passwordResetToken: PasswordState
   passwordResetIssuedAt: String
   passwordResetRedeemedAt: String
@@ -13,6 +35,10 @@ type User {
 
 type PasswordState {
   isSet: Boolean!
+}
+
+type _QueryMeta {
+  count: Int
 }
 
 input UserWhereInput {
@@ -63,6 +89,21 @@ input UserWhereInput {
   email_in: [String]
   email_not_in: [String]
   password_is_set: Boolean
+
+  """
+   condition must be true for all nodes
+  """
+  cart_every: CartItemWhereInput
+
+  """
+   condition must be true for at least 1 node
+  """
+  cart_some: CartItemWhereInput
+
+  """
+   condition must be false for all nodes
+  """
+  cart_none: CartItemWhereInput
   passwordResetToken_is_set: Boolean
   passwordResetIssuedAt: String
   passwordResetIssuedAt_not: String
@@ -117,9 +158,17 @@ input UserUpdateInput {
   name: String
   email: String
   password: String
+  cart: CartItemRelateToManyInput
   passwordResetToken: String
   passwordResetIssuedAt: String
   passwordResetRedeemedAt: String
+}
+
+input CartItemRelateToManyInput {
+  create: [CartItemCreateInput]
+  connect: [CartItemWhereUniqueInput]
+  disconnect: [CartItemWhereUniqueInput]
+  disconnectAll: Boolean
 }
 
 input UsersUpdateInput {
@@ -131,6 +180,7 @@ input UserCreateInput {
   name: String
   email: String
   password: String
+  cart: CartItemRelateToManyInput
   passwordResetToken: String
   passwordResetIssuedAt: String
   passwordResetRedeemedAt: String
@@ -418,16 +468,91 @@ input ProductImagesCreateInput {
 }
 
 """
+ A keystone list
+"""
+type CartItem {
+  id: ID!
+  quantity: Int
+  product: Product
+  user: User
+}
+
+input CartItemWhereInput {
+  AND: [CartItemWhereInput!]
+  OR: [CartItemWhereInput!]
+  id: ID
+  id_not: ID
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  quantity: Int
+  quantity_not: Int
+  quantity_lt: Int
+  quantity_lte: Int
+  quantity_gt: Int
+  quantity_gte: Int
+  quantity_in: [Int]
+  quantity_not_in: [Int]
+  product: ProductWhereInput
+  product_is_null: Boolean
+  user: UserWhereInput
+  user_is_null: Boolean
+}
+
+input CartItemWhereUniqueInput {
+  id: ID
+}
+
+enum SortCartItemsBy {
+  id_ASC
+  id_DESC
+  quantity_ASC
+  quantity_DESC
+}
+
+input CartItemOrderByInput {
+  id: OrderDirection
+  quantity: OrderDirection
+}
+
+input CartItemUpdateInput {
+  quantity: Int
+  product: ProductRelateToOneInput
+  user: UserRelateToOneInput
+}
+
+input UserRelateToOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  disconnect: UserWhereUniqueInput
+  disconnectAll: Boolean
+}
+
+input CartItemsUpdateInput {
+  id: ID!
+  data: CartItemUpdateInput
+}
+
+input CartItemCreateInput {
+  quantity: Int
+  product: ProductRelateToOneInput
+  user: UserRelateToOneInput
+}
+
+input CartItemsCreateInput {
+  data: CartItemCreateInput
+}
+
+"""
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
 scalar JSON
   @specifiedBy(
     url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf"
   )
-
-type _QueryMeta {
-  count: Int
-}
 
 type Mutation {
   """
@@ -519,6 +644,36 @@ type Mutation {
    Delete multiple ProductImage items by ID.
   """
   deleteProductImages(ids: [ID!]): [ProductImage]
+
+  """
+   Create a single CartItem item.
+  """
+  createCartItem(data: CartItemCreateInput): CartItem
+
+  """
+   Create multiple CartItem items.
+  """
+  createCartItems(data: [CartItemsCreateInput]): [CartItem]
+
+  """
+   Update a single CartItem item by ID.
+  """
+  updateCartItem(id: ID!, data: CartItemUpdateInput): CartItem
+
+  """
+   Update multiple CartItem items by ID.
+  """
+  updateCartItems(data: [CartItemsUpdateInput]): [CartItem]
+
+  """
+   Delete a single CartItem item by ID.
+  """
+  deleteCartItem(id: ID!): CartItem
+
+  """
+   Delete multiple CartItem items by ID.
+  """
+  deleteCartItems(ids: [ID!]): [CartItem]
   authenticateUserWithPassword(
     email: String!
     password: String!
@@ -700,6 +855,41 @@ type Query {
       reason: "This query will be removed in a future version. Please use productImagesCount instead."
     )
   productImagesCount(where: ProductImageWhereInput! = {}): Int
+
+  """
+   Search for all CartItem items which match the where clause.
+  """
+  allCartItems(
+    where: CartItemWhereInput! = {}
+    search: String
+    sortBy: [SortCartItemsBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [CartItemOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): [CartItem!]
+
+  """
+   Search for the CartItem item with the matching ID.
+  """
+  CartItem(where: CartItemWhereUniqueInput!): CartItem
+
+  """
+   Perform a meta-query on all CartItem items which match the where clause.
+  """
+  _allCartItemsMeta(
+    where: CartItemWhereInput! = {}
+    search: String
+    sortBy: [SortCartItemsBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [CartItemOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use cartItemsCount instead."
+    )
+  cartItemsCount(where: CartItemWhereInput! = {}): Int
   authenticatedItem: AuthenticatedItem
   validateUserPasswordResetToken(
     email: String!

@@ -9,7 +9,7 @@ interface IUpdateProductPage {
 const UpdateProductPage = ({ query }: IUpdateProductPage) => {
 	const router = useRouter();
 	const { id } = router.query;
-	console.log({ id });
+	// console.log({ id });
 	return (
 		<>
 			<Head>

@@ -10,7 +10,21 @@ const CURRENT_USER_QUERY = gql`
 				id
 				email
 				name
-				# TODO: Query the cart once we have it
+				cart {
+					id
+					quantity
+					product {
+						id
+						price
+						name
+						description
+						photo {
+							image {
+								publicUrlTransformed
+							}
+						}
+					}
+				}
 			}
 		}
 	}
@@ -22,13 +36,3 @@ const useUser = () => {
 };
 
 export { CURRENT_USER_QUERY, useUser };
-
-// function UserComponent({}: UserComponentProps) {
-// 	return (
-// 		<>
-// 			<h1>UserComponent</h1>
-// 		</>
-// 	);
-// }
-
-// export default UserComponent;
