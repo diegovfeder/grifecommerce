@@ -3,6 +3,7 @@ import { useUser } from 'components/UserComponent';
 import SignOut from 'components/SignOut';
 import StyledNav from '../styled/StyledNav';
 import { useLocalState } from 'hooks/cartState';
+import CartQuantityLabel from 'components/CartQuantityLabel';
 
 const NavComponent = () => {
 	const user = useUser();
@@ -19,6 +20,12 @@ const NavComponent = () => {
 					{/* <Link href="/mycart">MY CART</Link> */}
 					<button type="button" onClick={openCart}>
 						My Cart
+						<CartQuantityLabel
+							count={user.cart.reduce(
+								(tally, cartItem) => tally + cartItem.quantity,
+								0,
+							)}
+						/>
 					</button>
 					<SignOut />
 

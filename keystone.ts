@@ -4,6 +4,7 @@ import { statelessSessions } from '@keystone-next/keystone/session';
 import { createAuth } from '@keystone-next/auth';
 import { lists } from './schema';
 import { sendPasswordResetEmail } from './util/mail';
+import { extendGraphqlSchema } from './mutations/index';
 
 const databaseURL = process.env.DATABASE_URL;
 
@@ -45,6 +46,7 @@ export default withAuth(
 			// useMigrations: true,
 		},
 		lists,
+		extendGraphqlSchema: extendGraphqlSchema,
 		ui: {
 			// TODO: Update this with roles
 			// Show the UI only for people who pass this test

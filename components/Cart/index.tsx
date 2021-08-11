@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import StyledCart from 'components/styled/StyledCart';
 import Supreme from 'components/styled/Supreme';
 import { useUser } from 'components/UserComponent';
@@ -9,6 +9,7 @@ import formatMoney from 'util/formatMoney';
 import calcTotalPrice from 'util/calcTotalPrice';
 import { useLocalState } from 'hooks/cartState';
 import StyledCloseButton from 'components/styled/StyledCloseButton';
+import RemoveFromCartButton from 'components/RemoveFromCartButton';
 
 interface ICartItem {
 	id: string;
@@ -47,6 +48,7 @@ const CartItem = ({ id, quantity, product, user }: ICartItem) => {
 					</em>
 				</p>
 			</div>
+			<RemoveFromCartButton id={id} />
 		</StyledCartItem>
 	);
 };
@@ -57,28 +59,26 @@ const Cart = () => {
 	const { cartOpen, closeCart } = useLocalState();
 
 	return (
-		<>
-			<StyledCart open={cartOpen}>
-				<header>
-					<Supreme>{user?.name}'s Cart</Supreme>
-					<StyledCloseButton onClick={closeCart}>&times;</StyledCloseButton>
-				</header>
-				<ul>
-					{user?.cart?.map((cartItem: ICartItem) => (
-						<CartItem
-							key={cartItem?.id}
-							id={cartItem.id}
-							quantity={cartItem.quantity}
-							product={cartItem.product}
-							user={cartItem.user}
-						/>
-					))}
-				</ul>
-				<footer>
-					<p>{formatMoney(calcTotalPrice(user?.cart))}</p>
-				</footer>
-			</StyledCart>
-		</>
+		<StyledCart open={cartOpen}>
+			<header>
+				<Supreme>{user?.name}'s Cart</Supreme>
+				<StyledCloseButton onClick={closeCart}>&times;</StyledCloseButton>
+			</header>
+			<ul>
+				{user?.cart?.map((cartItem: ICartItem) => (
+					<CartItem
+						key={cartItem?.id}
+						id={cartItem.id}
+						quantity={cartItem.quantity}
+						product={cartItem.product}
+						user={cartItem.user}
+					/>
+				))}
+			</ul>
+			<footer>
+				<p>{formatMoney(calcTotalPrice(user?.cart))}</p>
+			</footer>
+		</StyledCart>
 	);
 };
 

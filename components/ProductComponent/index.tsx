@@ -8,6 +8,7 @@ import StyledTitle from '../styled/StyledTitle';
 import StyledPriceTag from '../styled/StyledPriceTag';
 import formatMoney from 'util/formatMoney';
 import DeleteProduct from 'components/DeleteProduct';
+import AddToCartButton from 'components/AddToCartButton';
 
 interface IProductComponent {
 	product: {
@@ -39,6 +40,7 @@ const ProductComponent = ({ product }: IProductComponent) => {
 				<StyledPriceTag>{formatMoney(product.price)}</StyledPriceTag>
 				<p>{product.description}</p>
 				<div className="buttonList">
+					{/* TODO: Ternary render by Roles (adm or customer) should show different actions / buttons below */}
 					<Link
 						href={{
 							pathname: `/update/${product.id}`,
@@ -46,8 +48,7 @@ const ProductComponent = ({ product }: IProductComponent) => {
 					>
 						Edit 📝
 					</Link>
-					{/* TODO: Create Shopping Cart */}
-					{/* <AddToCart id={product.id} /> */}
+					<AddToCartButton id={product.id}>Add To Cart</AddToCartButton>
 					{/* FIXME: When I delete a Product, a ProductImage stays in db. Shouldn't I...
 					 clean that image if it isn't being used in another Product?  */}
 					<DeleteProduct id={product.id}>Delete</DeleteProduct>

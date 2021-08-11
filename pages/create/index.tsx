@@ -1,4 +1,4 @@
-import CreateProduct from 'components/CreateProduct';
+import CreateProduct from 'components/forms/CreateProduct';
 import Head from 'next/head';
 
 const Create = () => {

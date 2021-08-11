@@ -55,7 +55,7 @@ const ProductsGridComponent = ({ page, children }: IProductsGridComponent) => {
 		<Container>
 			<div>
 				<StyledProductsGrid>
-					{data.allProducts.map(
+					{data?.allProducts?.map(
 						(
 							// FIXME: remove any, type this properly
 							product: any,
