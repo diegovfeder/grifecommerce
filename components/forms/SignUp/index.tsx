@@ -31,10 +31,8 @@ const SignUp = () => {
 
 	const handleSubmit = async (e: IEvent) => {
 		e.preventDefault();
-		// console.log(inputs);
 		// Send the email and password to our GraphQL API
 		const res = await signup().catch(console.error);
-		// console.log(res);
 		resetForm();
 	};
 
@@ -43,8 +41,7 @@ const SignUp = () => {
 			<h2>Create an Account!</h2>
 			<ErrorMessage error={error} />
 			<fieldset>
-				{/* TODO: Is this message really useful as UI flow?
-				Could we just signIn directly after user create account?  */}
+				{/* TODO: Change UX: After SignIn, route directly to Home */}
 				{data?.createUser && (
 					<p>
 						Signed up with {data.createUser.email} - Please go ahead and Sign

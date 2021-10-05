@@ -1,8 +1,21 @@
-import { createContext, useContext, useState } from 'react';
+import {
+	createContext,
+	useContext,
+	useState,
+	Dispatch,
+	SetStateAction,
+} from 'react';
+
+interface LocalStateProps {
+	cartOpen: boolean;
+	setCartOpen: Dispatch<SetStateAction<boolean>>;
+	closeCart: () => void;
+	openCart: () => void;
+	toggleCart: () => void;
+}
 
 // TODO: Refactor this file to be a localState provider
-// TODO: pass defautlValue to createContext
-const LocalStateContext = createContext();
+const LocalStateContext = createContext<LocalStateProps | null>(null);
 const LocalStateProvider = LocalStateContext.Provider;
 
 const CartStateProvider = ({ children }: any) => {

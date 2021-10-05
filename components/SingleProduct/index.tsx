@@ -51,9 +51,7 @@ const SingleProduct = ({ id }: ISingleProduct) => {
 	if (error) return <ErrorMessage error={error} />;
 
 	const { Product } = data;
-	// TODO: Update component styles and functionality,
-	// make the component responsive taking more of the available screen space
-	// add more functionaly?
+
 	return (
 		<>
 			<Head>

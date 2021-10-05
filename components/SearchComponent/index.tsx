@@ -29,15 +29,14 @@ const SEARCH_PRODUCTS_QUERY = gql`
 const Search = () => {
 	const router = useRouter();
 
-	const [findItems, { data, loading, error }] = useLazyQuery(
-		SEARCH_PRODUCTS_QUERY,
-		{ fetchPolicy: 'no-cache' },
-	);
+	const [findItems, { data, loading }] = useLazyQuery(SEARCH_PRODUCTS_QUERY, {
+		fetchPolicy: 'no-cache',
+	});
 	const items = data?.searchTerms || [];
 	const findItemsWithDebounce = debounce(findItems, 350);
 
 	resetIdCounter();
-	// FIXME:
+
 	const {
 		isOpen,
 		inputValue,

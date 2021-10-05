@@ -10,7 +10,7 @@ const NavComponent = () => {
 	const { openCart } = useLocalState();
 	return (
 		<StyledNav>
-			{/* TODO: Myabe have a Home with some of our current info and then a Shop path for the products */}
+			{/* TODO: Maybe have a Home with some of our current info and then a Shop path for the products */}
 			<Link href="/">SHOP</Link>
 			{user ? (
 				<>
@@ -22,15 +22,13 @@ const NavComponent = () => {
 						My Cart
 						<CartQuantityLabel
 							count={user.cart.reduce(
-								(tally, cartItem) => tally + cartItem.quantity,
+								(tally: number, cartItem: { quantity: number }) =>
+									tally + cartItem.quantity,
 								0,
 							)}
 						/>
 					</button>
 					<SignOut />
-
-					{/* FIXME: Should SignOut be a link? or this is ok?  */}
-					{/* <Link href="/signout">Sign Out</Link> */}
 				</>
 			) : (
 				// TODO: Route to home after success

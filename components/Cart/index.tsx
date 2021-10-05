@@ -61,7 +61,7 @@ const Cart = () => {
 	return (
 		<StyledCart open={cartOpen}>
 			<header>
-				<Supreme>{user?.name}'s Cart</Supreme>
+				<Supreme>{user?.name}&lsquo;s Cart</Supreme>
 				<StyledCloseButton onClick={closeCart}>&times;</StyledCloseButton>
 			</header>
 			<ul>

@@ -5,18 +5,12 @@ import { useQuery } from '@apollo/client';
 import styled from 'styled-components';
 import ProductComponent from '../ProductComponent';
 import { totalProductsPerPage } from 'config';
+import { ProductProps } from 'types/commonTypes';
 
-interface IProductsGridComponent {
+interface ProductsGridComponentProps {
 	children?: ReactNode;
 	page: any;
 }
-
-// Get Type of Product, use a common type import
-// TODO: Create a folder with exporting types to use when we encouter common logic at different files
-// interface IProduct {
-// 	id: any;
-// 	product: any;
-// }
 
 export const ALL_PRODUCTS_QUERY = gql`
 	query ALL_PRODUCTS_QUERY($skip: Int = 0, $first: Int) {
@@ -41,7 +35,10 @@ const StyledProductsGrid = styled.div`
 	grid-gap: 60px;
 `;
 
-const ProductsGridComponent = ({ page, children }: IProductsGridComponent) => {
+const ProductsGridComponent = ({
+	page,
+	children,
+}: ProductsGridComponentProps) => {
 	const { data, error, loading } = useQuery(ALL_PRODUCTS_QUERY, {
 		variables: {
 			skip: page * totalProductsPerPage - totalProductsPerPage,
@@ -55,15 +52,9 @@ const ProductsGridComponent = ({ page, children }: IProductsGridComponent) => {
 		<Container>
 			<div>
 				<StyledProductsGrid>
-					{data?.allProducts?.map(
-						(
-							// FIXME: remove any, type this properly
-							product: any,
-							// : IProduct
-						) => (
-							<ProductComponent key={product.id} product={product} />
-						),
-					)}
+					{data?.allProducts?.map((product: ProductProps) => (
+						<ProductComponent key={product.id} product={product} />
+					))}
 				</StyledProductsGrid>
 			</div>
 			{children}

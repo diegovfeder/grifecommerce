@@ -2,10 +2,6 @@ import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
 import { useRouter } from 'next/router';
 import { CURRENT_USER_QUERY } from 'components/UserComponent';
-import { IEvent } from 'types/commonTypes';
-// TODO: Create tests
-//  Show error message in some dialog if exists
-// TODO: After signOut
 
 const SIGN_OUT_MUTATION = gql`
 	mutation {
@@ -27,7 +23,6 @@ const SignOut = () => {
 	};
 
 	return (
-		// FIXME: does arrow function work here?
 		<button type="button" onClick={resolveSignOut}>
 			SIGN OUT
 		</button>

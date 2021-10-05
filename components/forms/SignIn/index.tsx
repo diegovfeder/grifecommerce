@@ -6,9 +6,6 @@ import ErrorMessage from 'components/ErrorMessage';
 import { CURRENT_USER_QUERY } from 'components/UserComponent';
 import { IEvent, ISignInFormInput } from 'types/commonTypes';
 
-// TODO:SignIn Route to Home or Shop Page (ProductsGrid)
-// TODO: When logged in, how to re-render page (do we need?) to show updated Header/NavBar
-// and route to Shop...
 const SIGN_IN_MUTATION = gql`
 	mutation SIGN_IN_MUTATION($email: String!, $password: String!) {
 		authenticateUserWithPassword(email: $email, password: $password) {
@@ -38,13 +35,11 @@ const SignIn = () => {
 		refetchQueries: [{ query: CURRENT_USER_QUERY }],
 	});
 
+	// TODO: Proper Error Handling
 	const handleSubmit = async (e: IEvent) => {
 		e.preventDefault();
-		// console.log(inputs);
 		// Send the email and password to our GraphQL API
-		const res = await signin();
-		// TODO: error handling
-		// console.log(res);
+		const res = await signin().catch(console.error);
 		resetForm();
 		Router.push({
 			pathname: `/`,

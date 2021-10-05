@@ -6,7 +6,7 @@ import ErrorMessage from 'components/ErrorMessage';
 import StyledForm from 'components/styled/StyledForm';
 import useForm from 'hooks/useForm';
 import { IEvent, IProductFormInput } from 'types/commonTypes';
-import ProductComponent from 'components/ProductComponent';
+// import ProductComponent from 'components/ProductComponent';
 
 interface IUpdateProduct {
 	id: String;
@@ -77,8 +77,6 @@ const UpdateProduct = ({ id }: IUpdateProduct) => {
 
 	return (
 		<>
-			{/* {console.log('re-render')} */}
-			{/* {console.log({ data })} */}
 			{/* <ProductComponent key={data.Product.id} product={productData} /> */}
 
 			<StyledForm
@@ -95,10 +93,9 @@ const UpdateProduct = ({ id }: IUpdateProduct) => {
 							description: inputs.description,
 							price: inputs.price,
 						},
-					}).catch(error => console.error({ error }));
-					// TODO: If res responds success show something to the user?...
-					// console.table(res);
-					clearForm(); // only when succesful?
+					}).catch(console.error);
+					// TODO: Update UX: When success, show something as feedback to the user
+					clearForm();
 					router.push({
 						pathname: `/product/${res?.data?.updateProduct?.id}`,
 					});

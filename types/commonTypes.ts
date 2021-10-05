@@ -45,3 +45,15 @@ export interface IProductFormInput {
 	price: number | undefined;
 	image?: any;
 }
+
+export interface ProductProps {
+	id: string;
+	name: string;
+	price: number;
+	description: string;
+	photo: {
+		image: {
+			publicUrlTransformed: string;
+		};
+	};
+}

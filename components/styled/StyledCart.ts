@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const StyledCart = styled.div`
+const StyledCart = styled('div')<{ open: boolean }>`
 	padding: 20px;
 	position: relative;
 	background: white;
@@ -27,8 +27,8 @@ const StyledCart = styled.div`
 		border-top: 10px double var(--black);
 		margin-top: 2rem;
 		padding-top: 2rem;
-		/* display: grid;
-    grid-template-columns: auto auto; */
+		display: grid;
+		grid-template-columns: auto auto;
 		align-items: center;
 		font-size: 3rem;
 		font-weight: 900;
