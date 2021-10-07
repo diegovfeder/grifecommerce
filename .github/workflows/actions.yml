@@ -18,6 +18,7 @@ jobs:
           cache: 'yarn'
       - name: Install dependencies
         run: yarn --frozen-lockfile
-      - name: Build Packages
-        run: yarn build
-      - run: yarn jest
+      # - name: Build Packages
+        # run: yarn next:build
+      - name: Run Tests
+      - run: yarn test

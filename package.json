@@ -12,9 +12,9 @@
     "keystone:dev": "keystone-next dev",
     "keystone:build": "keystone-next build",
     "keystone:start": "keystone-next start",
-    "storybook": "start-storybook -p 6006",
-    "storybook:build": "build-storybook",
-    "test": "jest --watch",
+    "sb:dev": "start-storybook -p 6006",
+    "sb:build": "build-storybook",
+    "test": "jest",
     "lint": "next lint"
   },
   "dependencies": {

@@ -15,6 +15,9 @@
 # keystone.js
 /.keystone/
 
+# storybook
+storybook-static
+
 # production
 /build
 
