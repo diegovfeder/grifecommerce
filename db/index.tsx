@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 
-// add prisma to the NodeJS global type
+// Sets prisma as part of NodeJS Global type
 interface CustomNodeJSGlobal extends NodeJS.Global {
 	prisma: PrismaClient;
 }
