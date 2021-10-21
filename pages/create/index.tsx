@@ -6,6 +6,7 @@ const Create = () => {
 		<>
 			{/* TODO: This path should be accessible only if userRole is admin */}
 			<Head>
+				{/* <script async src="https://cdn.splitbee.io/sb.js"></script> */}{' '}
 				<title>GRIFE | Create Product</title>
 			</Head>
 			<CreateProduct />

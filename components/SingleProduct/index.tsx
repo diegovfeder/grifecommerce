@@ -55,6 +55,7 @@ const SingleProduct = ({ id }: ISingleProduct) => {
 	return (
 		<>
 			<Head>
+				{/* <script async src="https://cdn.splitbee.io/sb.js"></script> */}{' '}
 				<title>GRIFE | {Product.name}</title>
 			</Head>
 			<StyledProduct className="details">

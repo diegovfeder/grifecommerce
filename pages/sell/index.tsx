@@ -6,6 +6,7 @@ const Sell = () => {
 		<>
 			{/* TODO: This page should show in NavBar only if role is admin */}
 			<Head>
+				{/* <script async src="https://cdn.splitbee.io/sb.js"></script> */}{' '}
 				<title>GRIFE | Create Product</title>
 			</Head>
 			<CreateProduct />

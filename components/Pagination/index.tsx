@@ -6,8 +6,6 @@ import { totalProductsPerPage } from 'config';
 import gql from 'graphql-tag';
 import Head from 'next/head';
 import Link from 'next/link';
-import styles from './styles.module.css';
-
 interface PaginationProps {
 	page: any;
 }
@@ -28,13 +26,14 @@ const Pagination = ({ page }: PaginationProps) => {
 	}
 
 	if (error) {
-		return <ErrorMessage error />;
+		return <ErrorMessage error={error} />;
 	}
 
 	return (
 		<StyledContainer>
 			<StyledPagination>
 				<Head>
+					{/* <script async src="https://cdn.splitbee.io/sb.js"></script> */}{' '}
 					<title>
 						GRIFE | Page {page} of {pagesTotal}
 					</title>

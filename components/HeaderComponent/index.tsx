@@ -35,7 +35,7 @@ const StyledHeader = styled.header`
 	}
 `;
 
-const HeaderComponent: React.FC = () => {
+const HeaderComponent = () => {
 	return (
 		<StyledHeader>
 			<div className="bar">
@@ -45,7 +45,7 @@ const HeaderComponent: React.FC = () => {
 				<NavComponent />
 			</div>
 			<div className="sub-bar">
-				<Search/>
+				<Search />
 			</div>
 			<Cart />
 		</StyledHeader>

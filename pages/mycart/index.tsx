@@ -9,6 +9,7 @@ const MyCartPage = ({ children }: IMyCartPage) => {
 	return (
 		<>
 			<Head>
+				{/* <script async src="https://cdn.splitbee.io/sb.js"></script> */}{' '}
 				<title>GRIFE | My Cart</title>
 			</Head>
 			<h1>My Cart</h1>

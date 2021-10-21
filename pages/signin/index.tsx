@@ -19,6 +19,7 @@ const SignInPage = ({ children }: ISignInPage) => {
 	return (
 		<>
 			<Head>
+				{/* <script async src="https://cdn.splitbee.io/sb.js"></script> */}{' '}
 				<title>GRIFE | Sign In</title>
 			</Head>
 			<StyledGrid>

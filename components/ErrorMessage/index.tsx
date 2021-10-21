@@ -36,7 +36,9 @@ const ErrorMessage = (props: { error: ApolloError | undefined }) => {
 		);
 	}
 	return (
-		<StyledErrorMessage>
+		<StyledErrorMessage
+			data-test-id="ErrorMessage"
+		>
 			<p data-test="graphql-error">
 				<strong>Shoot!</strong>
 				{props.error.message.replace('GraphQL error: ', '')}

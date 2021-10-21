@@ -11,7 +11,7 @@ import {
 	NormalizedCacheObject,
 } from '@apollo/client';
 import withData from '../util/withData';
-import { CartStateProvider } from 'hooks/cartState';
+import { CartStateProvider } from 'providers/cartState';
 
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());

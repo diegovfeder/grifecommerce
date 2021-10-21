@@ -7,7 +7,7 @@ import { IUserModel, IProductModel } from 'types/commonTypes';
 import Image from 'next/image';
 import formatMoney from 'util/formatMoney';
 import calcTotalPrice from 'util/calcTotalPrice';
-import { useLocalState } from 'hooks/cartState';
+import { useLocalState } from 'providers/cartState';
 import StyledCloseButton from 'components/styled/StyledCloseButton';
 import RemoveFromCartButton from 'components/RemoveFromCartButton';
 

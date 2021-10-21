@@ -13,6 +13,7 @@ const UpdateProductPage = ({ query }: IUpdateProductPage) => {
 	return (
 		<>
 			<Head>
+				{/* <script async src="https://cdn.splitbee.io/sb.js"></script> */}{' '}
 				<title>GRIFE | Update Product</title>
 			</Head>
 			{/* TODO: Render image of product here */}
