@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/link-passhref */
-import React, { Component } from 'react';
+import React from 'react';
 import { Container } from './styles';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -34,6 +34,7 @@ const ProductComponent = (props: ProductComponentProps) => {
 				<p>{props.product.description}</p>
 				<div className="buttonList">
 					{/* TODO: Ternary render by Roles (adm or customer) should show different actions / buttons below */}
+
 					<Link
 						href={{
 							pathname: `/update/${props.product.id}`,

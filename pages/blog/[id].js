@@ -7,6 +7,12 @@ import styles from './post.module.css';
 import Text from 'components/Notion/text'
 import renderBlock from 'util/renderBlock';
 
+// TODO: If contains a page inside, then its clickable.
+// In [id].js, only getStaticPaths for the db_posts that do have a page inside `body`
+// TODO: Filter and show blogs by role.
+// todo, doing - admin only
+// release - all users
+
 export default function Post({ page, blocks }) {
   if (!page || !blocks) {
     return <div />;
@@ -14,13 +20,13 @@ export default function Post({ page, blocks }) {
   return (
     <div>
       <Head>
-        <title>{page.properties.title.title[0].plain_text}</title>
+        <title>{page.properties.body.title[0].plain_text}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <article className={styles.container}>
         <h1 className={styles.name}>
-          <Text text={page.properties.title.title} />
+          <Text text={page.properties.body.title} />
         </h1>
         <section>
           {blocks.map((block) => (

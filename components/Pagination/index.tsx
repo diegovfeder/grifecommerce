@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client';
 import ErrorMessage from 'components/ErrorMessage';
-import StyledContainer from 'components/styled/StyledContainer';
+import StyledPaginationContainer from 'components/styled/StyledPaginationContainer';
 import StyledPagination from 'components/styled/StyledPagination';
 import { totalProductsPerPage } from 'config';
 import gql from 'graphql-tag';
@@ -30,7 +30,7 @@ const Pagination = ({ page }: PaginationProps) => {
 	}
 
 	return (
-		<StyledContainer>
+		<StyledPaginationContainer>
 			<StyledPagination>
 				<Head>
 					{/* <script async src="https://cdn.splitbee.io/sb.js"></script> */}{' '}
@@ -49,7 +49,7 @@ const Pagination = ({ page }: PaginationProps) => {
 					<a aria-disabled={page === pagesTotal}>Next →</a>
 				</Link>
 			</StyledPagination>
-		</StyledContainer>
+		</StyledPaginationContainer>
 	);
 };
 

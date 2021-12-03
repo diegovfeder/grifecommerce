@@ -28,6 +28,7 @@ type User {
       reason: "This query will be removed in a future version. Please use cartCount instead."
     )
   cartCount(where: CartItemWhereInput! = {}): Int
+  role: Role
   passwordResetToken: PasswordState
   passwordResetIssuedAt: String
   passwordResetRedeemedAt: String
@@ -104,6 +105,8 @@ input UserWhereInput {
    condition must be false for all nodes
   """
   cart_none: CartItemWhereInput
+  role: RoleWhereInput
+  role_is_null: Boolean
   passwordResetToken_is_set: Boolean
   passwordResetIssuedAt: String
   passwordResetIssuedAt_not: String
@@ -159,6 +162,7 @@ input UserUpdateInput {
   email: String
   password: String
   cart: CartItemRelateToManyInput
+  role: RoleRelateToOneInput
   passwordResetToken: String
   passwordResetIssuedAt: String
   passwordResetRedeemedAt: String
@@ -168,6 +172,13 @@ input CartItemRelateToManyInput {
   create: [CartItemCreateInput]
   connect: [CartItemWhereUniqueInput]
   disconnect: [CartItemWhereUniqueInput]
+  disconnectAll: Boolean
+}
+
+input RoleRelateToOneInput {
+  create: RoleCreateInput
+  connect: RoleWhereUniqueInput
+  disconnect: RoleWhereUniqueInput
   disconnectAll: Boolean
 }
 
@@ -181,6 +192,7 @@ input UserCreateInput {
   email: String
   password: String
   cart: CartItemRelateToManyInput
+  role: RoleRelateToOneInput
   passwordResetToken: String
   passwordResetIssuedAt: String
   passwordResetRedeemedAt: String
@@ -547,6 +559,124 @@ input CartItemsCreateInput {
 }
 
 """
+ A keystone list
+"""
+type Role {
+  id: ID!
+  name: String
+  assignedTo(
+    where: UserWhereInput! = {}
+    search: String
+    sortBy: [SortUsersBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [UserOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): [User!]
+  _assignedToMeta(
+    where: UserWhereInput! = {}
+    search: String
+    sortBy: [SortUsersBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [UserOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use assignedToCount instead."
+    )
+  assignedToCount(where: UserWhereInput! = {}): Int
+}
+
+input RoleWhereInput {
+  AND: [RoleWhereInput!]
+  OR: [RoleWhereInput!]
+  id: ID
+  id_not: ID
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  name: String
+  name_not: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  name_i: String
+  name_not_i: String
+  name_contains_i: String
+  name_not_contains_i: String
+  name_starts_with_i: String
+  name_not_starts_with_i: String
+  name_ends_with_i: String
+  name_not_ends_with_i: String
+  name_in: [String]
+  name_not_in: [String]
+
+  """
+   condition must be true for all nodes
+  """
+  assignedTo_every: UserWhereInput
+
+  """
+   condition must be true for at least 1 node
+  """
+  assignedTo_some: UserWhereInput
+
+  """
+   condition must be false for all nodes
+  """
+  assignedTo_none: UserWhereInput
+}
+
+input RoleWhereUniqueInput {
+  id: ID
+}
+
+enum SortRolesBy {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+input RoleOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+}
+
+input RoleUpdateInput {
+  name: String
+  assignedTo: UserRelateToManyInput
+}
+
+input UserRelateToManyInput {
+  create: [UserCreateInput]
+  connect: [UserWhereUniqueInput]
+  disconnect: [UserWhereUniqueInput]
+  disconnectAll: Boolean
+}
+
+input RolesUpdateInput {
+  id: ID!
+  data: RoleUpdateInput
+}
+
+input RoleCreateInput {
+  name: String
+  assignedTo: UserRelateToManyInput
+}
+
+input RolesCreateInput {
+  data: RoleCreateInput
+}
+
+"""
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
 scalar JSON
@@ -674,6 +804,36 @@ type Mutation {
    Delete multiple CartItem items by ID.
   """
   deleteCartItems(ids: [ID!]): [CartItem]
+
+  """
+   Create a single Role item.
+  """
+  createRole(data: RoleCreateInput): Role
+
+  """
+   Create multiple Role items.
+  """
+  createRoles(data: [RolesCreateInput]): [Role]
+
+  """
+   Update a single Role item by ID.
+  """
+  updateRole(id: ID!, data: RoleUpdateInput): Role
+
+  """
+   Update multiple Role items by ID.
+  """
+  updateRoles(data: [RolesUpdateInput]): [Role]
+
+  """
+   Delete a single Role item by ID.
+  """
+  deleteRole(id: ID!): Role
+
+  """
+   Delete multiple Role items by ID.
+  """
+  deleteRoles(ids: [ID!]): [Role]
   authenticateUserWithPassword(
     email: String!
     password: String!
@@ -891,6 +1051,41 @@ type Query {
       reason: "This query will be removed in a future version. Please use cartItemsCount instead."
     )
   cartItemsCount(where: CartItemWhereInput! = {}): Int
+
+  """
+   Search for all Role items which match the where clause.
+  """
+  allRoles(
+    where: RoleWhereInput! = {}
+    search: String
+    sortBy: [SortRolesBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [RoleOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): [Role!]
+
+  """
+   Search for the Role item with the matching ID.
+  """
+  Role(where: RoleWhereUniqueInput!): Role
+
+  """
+   Perform a meta-query on all Role items which match the where clause.
+  """
+  _allRolesMeta(
+    where: RoleWhereInput! = {}
+    search: String
+    sortBy: [SortRolesBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [RoleOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use rolesCount instead."
+    )
+  rolesCount(where: RoleWhereInput! = {}): Int
   authenticatedItem: AuthenticatedItem
   validateUserPasswordResetToken(
     email: String!

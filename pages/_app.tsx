@@ -12,6 +12,7 @@ import {
 } from '@apollo/client';
 import withData from '../util/withData';
 import { CartStateProvider } from 'providers/cartState';
+import StyledAppContainer from '../components/styled/StyledAppContainer';
 
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
@@ -21,20 +22,27 @@ interface MyAppProps extends AppProps {
 	apollo: ApolloClient<NormalizedCacheObject>;
 }
 
+// TODO: Remove any, properly type this
+interface GetInitialProps {
+	Component: any;
+	ctx: any;
+}
+
 function MyApp({ Component, pageProps, apollo }: MyAppProps) {
 	return (
-		<ApolloProvider client={apollo}>
-			<CartStateProvider>
-				<PageComponent>
-					<Component {...pageProps} />
-				</PageComponent>
-			</CartStateProvider>
-		</ApolloProvider>
+		<StyledAppContainer>
+			<ApolloProvider client={apollo}>
+				<CartStateProvider>
+					<PageComponent>
+						<Component {...pageProps} />
+					</PageComponent>
+				</CartStateProvider>
+			</ApolloProvider>
+		</StyledAppContainer>
 	);
 }
 
-// TODO: Remove any, properly type this
-MyApp.getInitialProps = async function ({ Component, ctx }: any) {
+MyApp.getInitialProps = async function ({ Component, ctx }: GetInitialProps) {
 	let pageProps = { query: undefined };
 	if (Component.getInitialProps) {
 		pageProps = await Component.getInitialProps(ctx);

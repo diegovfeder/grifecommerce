@@ -3,10 +3,14 @@ import {Fragment} from 'react'
 import Text from 'components/Notion/text'
 import Image from 'next/image';
 
-// TODO: Create tests for this function
+// TODO: Create tests for this renderBlock / switch function
 const renderBlock = (block) => {
   const { type, id } = block;
   const value = block[type];
+
+	console.log('renderBlock();')
+	console.log({type, id})
+	console.log({value})
 
   switch (type) {
     case "paragraph":

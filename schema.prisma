@@ -14,9 +14,13 @@ model User {
   email                   String?    @unique
   password                String?
   cart                    CartItem[] @relation("CartItem_user")
+  role                    Role?      @relation("User_role", fields: [roleId], references: [id])
+  roleId                  String?    @map("role")
   passwordResetToken      String?
   passwordResetIssuedAt   DateTime?
   passwordResetRedeemedAt DateTime?
+
+  @@index([roleId])
 }
 
 model Product {
@@ -47,4 +51,10 @@ model CartItem {
 
   @@index([productId])
   @@index([userId])
+}
+
+model Role {
+  id         String  @id @default(cuid())
+  name       String?
+  assignedTo User[]  @relation("User_role")
 }

@@ -17,5 +17,10 @@ export const User = list({
 			},
 		}),
 		// TODO: add roles, cart and orders
+		// orders
+		role: relationship({
+			ref: 'Role.assignedTo'
+			// TODO: Add access control
+		})
 	},
 });

@@ -13,12 +13,12 @@ const NavComponent = () => {
 		<StyledNav>
 			{/* <Head> */}
 			<Link href="/">SHOP</Link>
+			<Link href="/blog">BLOG</Link>
 			{user ? (
 				<>
 					<Link href="/sell">SELL</Link>
 					<Link href="/orders">ORDERS</Link>
 					<Link href="/account">ACCOUNT</Link>
-					<Link href="/blog">BLOG</Link>
 					{/* <Link href="/mycart">MY CART</Link> */}
 					<button type="button" onClick={localState?.openCart}>
 						My Cart
