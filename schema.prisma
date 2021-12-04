@@ -54,7 +54,13 @@ model CartItem {
 }
 
 model Role {
-  id         String  @id @default(cuid())
-  name       String?
-  assignedTo User[]  @relation("User_role")
+  id                String   @id @default(cuid())
+  name              String?
+  canManageProducts Boolean?
+  canSeeOtherUsers  Boolean?
+  canManageUsers    Boolean?
+  canManageRoles    Boolean?
+  canManageCart     Boolean?
+  canManageOrders   Boolean?
+  assignedTo        User[]   @relation("User_role")
 }

@@ -5,9 +5,12 @@ import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components'
 import styles from './index.module.css';
 
+// TODO: Refactor UI, beautify and clean up styles.
+
 export const databaseId =
 	process.env.NOTION_DATABASE_ID || 'd3504580353f4e9abe347a8d445f9c17';
 
+	// FIXME
 // TODO: If contains a page inside, then its clickable.
 // In [id].js, only getStaticPaths for the db_posts that do have a page inside `body`
 // TODO: Filter and show blogs by role.
@@ -31,6 +34,7 @@ const tags = {
 	todo: '#FBE7C6'
 }
 
+// TODO: Beautify the tag
 const Tag = styled.div`
 	background-color: ${props => props.tagColor};
 	margin: 0 4px 0 0;
@@ -38,9 +42,9 @@ const Tag = styled.div`
 	padding: 2px 1px;
 	border-radius: 10%;
 	display: inline-block;
-`
-// FIXME: Updated this, refactor and apply colors to posts
-const StyledItem = styled.div`
+`;
+
+const StyledPost = styled.li`
 	box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.05);
 	background: rgba(0, 0, 0, 0.02);
 	border: 5px solid white;
@@ -48,41 +52,14 @@ const StyledItem = styled.div`
 	font-size: 1.5rem;
 	line-height: 1.5;
 	font-weight: 600;
-	label {
-		display: block;
-		margin-top: 1rem;
-	}
-	input,
-	textarea,
-	select {
-		width: 100%;
-		padding: 0.5rem;
-		font-size: 1rem;
-		border: 1px solid black;
-		&:focus {
-			outline: 0;
-			border-color: var(--red);
-		}
-	}
-	button,
-	input[type='submit'] {
-		width: auto;
-		background: red;
-		color: white;
-		border: 0;
-		font-size: 2rem;
-		font-weight: 600;
-		padding: 0.5rem 1.2rem;
-		margin-top: 1rem;
-	}
-	fieldset {
-		border: 0;
-		padding: 0;
 
-		&[disabled] {
-			opacity: 0.5;
-		}
-		&::before {
+	.date {
+		justify-content: right;
+		align-self: right;
+		justify-self: right;
+		left: 0;
+		margin-top: 16px;
+		&::after {
 			height: 10px;
 			content: '';
 			display: block;
@@ -91,12 +68,22 @@ const StyledItem = styled.div`
 				#ff3019 0%,
 				#e2b04a 50%,
 				#ff3019 100%
-			);
+				);
 		}
-		&[aria-busy='true']::before {
-			background-size: 50% auto;
-			/* animation: ${loading} 0.5s linear infinite; */
-		}
+	}
+
+	.title {
+		margin-bottom: 10px;
+  	font-size: 1.8rem;
+	}
+
+	.title a {
+		color: inherit;
+	}
+
+	.tags-container {
+  	margin-top: 0;
+		font-size: 1.4rem;
 	}
 `;
 
@@ -114,35 +101,34 @@ const PageBlog = ({ posts }) => {
 					});
 					return (
 						<>
-							<li key={post.id} className={styles.post}>
-								<span className={styles.postDescription}>{date}</span>
-								{/* TODO: Remove this? <div>{post.id}</div> */}
-								<h3 className={styles.postTitle}>
+							<StyledPost key={post.id}>
+									<div className="date">{date}</div>
+									<h3 className="title">
+										<Link href={`/blog/${post.id}`}>
+											<a>
+												<Text text={post.properties.body.title} />
+											</a>
+										</Link>
+										<div className="tags-container">
+											{post?.properties?.tags?.multi_select?.map(tag => {
+												return (
+													<Tag
+														key={uuidv4()}
+														tagColor={tags[`${tag.name}`]}
+													>
+														{tag.name}
+													</Tag>
+												);
+											})}
+										</div>
+									</h3>
+									<h4>
+										<Text text={post.properties.description.rich_text} />
+									</h4>
 									<Link href={`/blog/${post.id}`}>
-										<a>
-										<Text text={post.properties.body.title} />
-										</a>
+										<a> Read post →</a>
 									</Link>
-									<div className={styles.tagsContainer}>
-									{post?.properties?.tags?.multi_select?.map(tag => {
-										return (
-											<Tag
-												key={uuidv4()}
-												tagColor={tags[`${tag.name}`]}
-											>
-												{tag.name}
-											</Tag>
-										);
-									})}
-									</div>
-								</h3>
-								<h4>
-									<Text text={post.properties.description.rich_text} />
-								</h4>
-								<Link href={`/blog/${post.id}`}>
-									<a> Read post →</a>
-								</Link>
-							</li>
+							</StyledPost>
 						</>
 					);
 				})}

@@ -5,6 +5,7 @@ import { createAuth } from '@keystone-next/auth';
 import { lists } from './schema';
 import { sendPasswordResetEmail } from './util/mail';
 import { extendGraphqlSchema } from './mutations/index';
+import { permissionsList } from 'schemas/Fields';
 
 const databaseURL = process.env.DATABASE_URL;
 
@@ -55,6 +56,9 @@ export default withAuth(
 			// 	return !!session?.data;
 			// },
 		},
-		session: statelessSessions(sessionConfig),
+		session: withItemData(statelessSessions(sessionConfig), {
+			// GraphQL query
+			User: `id name email role { ${permissionsList.join(' ')}}`,
+		}),
 	}),
 );

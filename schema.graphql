@@ -564,6 +564,12 @@ input CartItemsCreateInput {
 type Role {
   id: ID!
   name: String
+  canManageProducts: Boolean
+  canSeeOtherUsers: Boolean
+  canManageUsers: Boolean
+  canManageRoles: Boolean
+  canManageCart: Boolean
+  canManageOrders: Boolean
   assignedTo(
     where: UserWhereInput! = {}
     search: String
@@ -617,6 +623,18 @@ input RoleWhereInput {
   name_not_ends_with_i: String
   name_in: [String]
   name_not_in: [String]
+  canManageProducts: Boolean
+  canManageProducts_not: Boolean
+  canSeeOtherUsers: Boolean
+  canSeeOtherUsers_not: Boolean
+  canManageUsers: Boolean
+  canManageUsers_not: Boolean
+  canManageRoles: Boolean
+  canManageRoles_not: Boolean
+  canManageCart: Boolean
+  canManageCart_not: Boolean
+  canManageOrders: Boolean
+  canManageOrders_not: Boolean
 
   """
    condition must be true for all nodes
@@ -643,15 +661,39 @@ enum SortRolesBy {
   id_DESC
   name_ASC
   name_DESC
+  canManageProducts_ASC
+  canManageProducts_DESC
+  canSeeOtherUsers_ASC
+  canSeeOtherUsers_DESC
+  canManageUsers_ASC
+  canManageUsers_DESC
+  canManageRoles_ASC
+  canManageRoles_DESC
+  canManageCart_ASC
+  canManageCart_DESC
+  canManageOrders_ASC
+  canManageOrders_DESC
 }
 
 input RoleOrderByInput {
   id: OrderDirection
   name: OrderDirection
+  canManageProducts: OrderDirection
+  canSeeOtherUsers: OrderDirection
+  canManageUsers: OrderDirection
+  canManageRoles: OrderDirection
+  canManageCart: OrderDirection
+  canManageOrders: OrderDirection
 }
 
 input RoleUpdateInput {
   name: String
+  canManageProducts: Boolean
+  canSeeOtherUsers: Boolean
+  canManageUsers: Boolean
+  canManageRoles: Boolean
+  canManageCart: Boolean
+  canManageOrders: Boolean
   assignedTo: UserRelateToManyInput
 }
 
@@ -669,6 +711,12 @@ input RolesUpdateInput {
 
 input RoleCreateInput {
   name: String
+  canManageProducts: Boolean
+  canSeeOtherUsers: Boolean
+  canManageUsers: Boolean
+  canManageRoles: Boolean
+  canManageCart: Boolean
+  canManageOrders: Boolean
   assignedTo: UserRelateToManyInput
 }
 
