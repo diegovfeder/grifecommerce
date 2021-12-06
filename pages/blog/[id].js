@@ -9,7 +9,7 @@ import renderBlock from 'util/renderBlock';
 
 // TODO: If contains a page inside, then its clickable.
 // In [id].js, only getStaticPaths for the db_posts that do have a page inside `body`
-// TODO: Filter and show blogs by role.
+// TODO: Filter and show blogs by Roles.
 // todo, doing - admin only
 // release - all users
 
@@ -45,7 +45,7 @@ export const getStaticPaths = async () => {
   const database = await getDatabase(databaseId);
 	console.log({database})
   return {
-    paths: database.map((page) => ({ params: { id: page.id } })),
+    paths: database?.map((page) => ({ params: { id: page.id } })),
     fallback: false,
   };
 };
