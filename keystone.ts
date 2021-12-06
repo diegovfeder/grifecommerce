@@ -18,6 +18,8 @@ const { withAuth } = createAuth({
 	listKey: 'User',
 	identityField: 'email',
 	secretField: 'password',
+	// sessionData: 'id isAdmin',
+	sessionData: `id name email role { ${permissionsList.join(' ')}}`,
 	initFirstItem: {
 		fields: ['name', 'email', 'password'],
 		// TODO: add initial roles
@@ -56,9 +58,6 @@ export default withAuth(
 			// 	return !!session?.data;
 			// },
 		},
-		session: withItemData(statelessSessions(sessionConfig), {
-			// GraphQL query
-			User: `id name email role { ${permissionsList.join(' ')}}`,
-		}),
+		session: statelessSessions(sessionConfig),
 	}),
 );
