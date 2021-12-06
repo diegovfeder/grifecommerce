@@ -3,6 +3,9 @@ import { config } from '@keystone-next/keystone/schema';
 import { statelessSessions } from '@keystone-next/keystone/session';
 import { createAuth } from '@keystone-next/auth';
 import { lists } from './schema';
+import { sendPasswordResetEmail } from './util/mail';
+import { extendGraphqlSchema } from './mutations/index';
+import { permissionsList } from './schemas/Fields';
 
 const databaseURL = process.env.DATABASE_URL;
 
@@ -15,9 +18,18 @@ const { withAuth } = createAuth({
 	listKey: 'User',
 	identityField: 'email',
 	secretField: 'password',
+	// sessionData: 'id isAdmin',
+	sessionData: `id name email role { ${permissionsList.join(' ')}}`,
 	initFirstItem: {
 		fields: ['name', 'email', 'password'],
 		// TODO: add initial roles
+	},
+	passwordResetLink: {
+		async sendToken(args) {
+			// send the email
+			await sendPasswordResetEmail(args.token, args.identity);
+			// console.log(args);
+		},
 	},
 });
 
@@ -37,6 +49,7 @@ export default withAuth(
 			// useMigrations: true,
 		},
 		lists,
+		extendGraphqlSchema: extendGraphqlSchema,
 		ui: {
 			// TODO: Update this with roles
 			// Show the UI only for people who pass this test

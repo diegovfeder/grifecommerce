@@ -10,18 +10,7 @@ interface IEvent {
 	};
 }
 
-// FIXME: What happens when I need another page to use this hook?
-// Is there a way to define types Dynamically?
-// I think there is by passing the interface as props ..?
-// maybe use GENERICS?
-interface IFormInput {
-	name: string;
-	description: string;
-	price: number | undefined;
-	image?: any;
-}
-
-const useForm = (initial: IFormInput) => {
+const useForm = <T>(initial: T) => {
 	const [inputs, setInputs] = useState(initial);
 	const initialValues = Object.values(initial).join('');
 
@@ -53,11 +42,9 @@ const useForm = (initial: IFormInput) => {
 			Object.entries(inputs).map(([key, _]) => [key, '']),
 		);
 
-		// FIXME: How to clear inputs with Typescript? This blankState isn't properly typed
-		setInputs(
-			blankState,
-			// || { name: '', description: '', price: '', image: '' }
-		);
+		// FIXME: Find out how to clear inputs with Typescript?
+		// -- blankState isn't properly typed
+		setInputs(blankState);
 	};
 
 	return {
@@ -69,10 +56,3 @@ const useForm = (initial: IFormInput) => {
 };
 
 export default useForm;
-
-// FIXME: Will I ever use this useEffect? It was causing issues
-// const initialValues = Object.values(initial).join('');
-// useEffect(() => {
-// 	// This function runs when the things we are watching change
-// 	setInputs(initial);
-// }, [initial]);

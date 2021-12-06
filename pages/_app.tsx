@@ -3,32 +3,46 @@ import type { AppProps } from 'next/app';
 import PageComponent from '../components/PageComponent';
 import Router from 'next/router';
 import NProgress from 'nprogress';
-// TODO: Change to custom nprogress styles
-// import '../components/styles/nprogress.css'
 import 'nprogress/nprogress.css';
-import { ApolloClient, ApolloProvider } from '@apollo/client';
+import 'styles/customNProgress.css';
+import {
+	ApolloClient,
+	ApolloProvider,
+	NormalizedCacheObject,
+} from '@apollo/client';
 import withData from '../util/withData';
+import { CartStateProvider } from 'providers/cartState';
+import StyledAppContainer from '../components/styled/StyledAppContainer';
 
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
-interface IAppProps extends AppProps {
-	apollo: ApolloClient<any>;
+interface MyAppProps extends AppProps {
+	apollo: ApolloClient<NormalizedCacheObject>;
 }
 
-function MyApp({ Component, pageProps, apollo }: IAppProps) {
+// TODO: Remove any, properly type this
+interface GetInitialProps {
+	Component: any;
+	ctx: any;
+}
+
+function MyApp({ Component, pageProps, apollo }: MyAppProps) {
 	return (
-		<ApolloProvider client={apollo}>
-			<PageComponent>
-				<Component {...pageProps} />
-			</PageComponent>
-		</ApolloProvider>
+		<StyledAppContainer>
+			<ApolloProvider client={apollo}>
+				<CartStateProvider>
+					<PageComponent>
+						<Component {...pageProps} />
+					</PageComponent>
+				</CartStateProvider>
+			</ApolloProvider>
+		</StyledAppContainer>
 	);
 }
 
-// TODO: remove any, properly type this
-MyApp.getInitialProps = async function ({ Component, ctx }: any) {
+MyApp.getInitialProps = async function ({ Component, ctx }: GetInitialProps) {
 	let pageProps = { query: undefined };
 	if (Component.getInitialProps) {
 		pageProps = await Component.getInitialProps(ctx);

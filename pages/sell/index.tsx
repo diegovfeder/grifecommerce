@@ -1,10 +1,12 @@
-import CreateProduct from 'components/CreateProduct';
+import CreateProduct from 'components/forms/CreateProduct';
 import Head from 'next/head';
 
 const Sell = () => {
 	return (
 		<>
+			{/* TODO: This page should show in NavBar only if role is admin */}
 			<Head>
+				{/* <script async src="https://cdn.splitbee.io/sb.js"></script> */}{' '}
 				<title>GRIFE | Create Product</title>
 			</Head>
 			<CreateProduct />

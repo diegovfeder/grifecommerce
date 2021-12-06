@@ -7,13 +7,9 @@ import styled from 'styled-components';
 // ... or refresh and fetch new data.
 // FIXME: Also, do I need a state // reducer, or something here???
 // ... or can apollo be my guy for that?
-// TODO: Create a Type / Typings folder to gather common interfaces
-// interface IEvent {
-// 	preventDefault: () => void;
-// }
 
 interface IDeleteProduct {
-	id: String;
+	id: string | undefined;
 	children?: ReactNode;
 }
 
@@ -42,7 +38,6 @@ const DELETE_PRODUCT_MUTATION = gql`
 `;
 
 const DeleteProduct = ({ id, children }: IDeleteProduct) => {
-	// 1. Mutation to DELETE product
 	const [deleteProduct, deleteMutationState] = useMutation(
 		DELETE_PRODUCT_MUTATION,
 		{
@@ -54,15 +49,13 @@ const DeleteProduct = ({ id, children }: IDeleteProduct) => {
 	if (deleteMutationState.loading) return <p>Loading...</p>;
 
 	// TODO: Is there a chance of passing id = undefined here? If yes what happens
-	// TODO: Style this button with onHover effect, maybe change the confirm web default modal to a custom
-	// get modal example from aurora project or next/js lib?... maybe icn
+	// TODO: Change the confirm web default modal to a custom Modal?
 	return (
 		<StyledButtonLink
 			type="button"
 			disabled={deleteMutationState.loading}
 			onClick={() => {
 				if (confirm('Are you sure you want to delete this item?')) {
-					// go ahead and delete it...
 					deleteProduct().catch(console.error);
 				}
 			}}

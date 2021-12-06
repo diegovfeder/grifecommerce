@@ -17,33 +17,31 @@ const StyledErrorMessage = styled.div`
 	}
 `;
 
-// FIXME: Properly type this
-interface IErrorMessage {
-	error: any;
-}
-
-const ErrorMessage = ({ error }: IErrorMessage) => {
-	if (!error || !error.message) return null;
+const ErrorMessage = (props: { error: ApolloError | undefined }) => {
+	if (!props.error || !props.error.message) return null;
 	if (
-		error.networkError &&
-		error.networkError.result &&
-		error.networkError.result.errors.length
+		props.error.networkError &&
+		'result' in props.error.networkError &&
+		props.error.networkError.result.errors.length
 	) {
-		// FIXME: Properly type this
-		return error.networkError.result.errors.map((error: any, i: number) => (
-			<StyledErrorMessage key={i}>
-				<p data-test="graphql-error">
-					<strong>Shoot!</strong>
-					{error.message.replace('GraphQL error: ', '')}
-				</p>
-			</StyledErrorMessage>
-		));
+		return props.error.networkError.result.errors.map(
+			(error: ApolloError, i: number) => (
+				<StyledErrorMessage key={i}>
+					<p data-test="graphql-error">
+						<strong>Shoot!</strong>
+						{error.message.replace('GraphQL error: ', '')}
+					</p>
+				</StyledErrorMessage>
+			),
+		);
 	}
 	return (
-		<StyledErrorMessage>
+		<StyledErrorMessage
+			data-test-id="ErrorMessage"
+		>
 			<p data-test="graphql-error">
 				<strong>Shoot!</strong>
-				{error.message.replace('GraphQL error: ', '')}
+				{props.error.message.replace('GraphQL error: ', '')}
 			</p>
 		</StyledErrorMessage>
 	);

@@ -1,19 +1,24 @@
-name: GitHub Actions Demo
+name: Github Actions
 on: [push]
 jobs:
-  Explore-GitHub-Actions:
+  node:
     runs-on: ubuntu-latest
-		steps:
-			- run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Check out repository code
+    env:
+      COOKIE_SECRET: ARandomSecretWithMoreThan32Characters
+      CLOUDINARY_CLOUD_NAME: grifemusic
+      CLOUDINARY_KEY: 597576948711519
+      CLOUDINARY_SECRET: ${{secrets.CLOUDINARY_SECRET}}
+    steps:
+      - name: Checkout on repository
         uses: actions/checkout@v2
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
-				run: ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
-
-# - name: Commitsar Action
-#   uses: aevea/commitsar@v0.16.0
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+          cache: 'yarn'
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+      # - name: Build Packages
+        # run: yarn next:build
+      - name: Run Tests
+      - run: yarn test
