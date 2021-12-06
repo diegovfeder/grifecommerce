@@ -1,4 +1,7 @@
-import { Client, APIErrorCode } from '@notionhq/client';
+import {
+	Client,
+	// APIErrorCode
+} from '@notionhq/client';
 
 const notion = new Client({
 	auth: process.env.NOTION_INTEGRATION_TOKEN,
@@ -19,7 +22,9 @@ const fetchDatabase = async () => {
 		console.log({ myPage });
 		return myPage;
 	} catch (error: any) {
-		if (error.code === APIErrorCode.ObjectNotFound) {
+		if (error.code) {
+			// }
+			// else if (error.code === APIErrorCode.ObjectNotFound) {
 			//
 			// For example: handle by asking the user to select a different database
 			//
