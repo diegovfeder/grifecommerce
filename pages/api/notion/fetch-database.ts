@@ -1,4 +1,4 @@
-const { Client, APIErrorCode } = require('@notionhq/client');
+import { Client, APIErrorCode } from '@notionhq/client';
 
 const notion = new Client({
 	auth: process.env.NOTION_INTEGRATION_TOKEN,
