@@ -20,7 +20,7 @@ export default function Post({ page, blocks }) {
   return (
     <div>
       <Head>
-        <title>{page.properties.body.title[0].plain_text}</title>
+        <title>{page?.properties?.body?.title[0]?.plain_text || 'Cannot read property plain_text of undefined'}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 

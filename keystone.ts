@@ -7,7 +7,7 @@ import { sendPasswordResetEmail } from './util/mail';
 import { extendGraphqlSchema } from './mutations/index';
 import { permissionsList } from './schemas/Fields';
 
-const databaseURL = process.env.DATABASE_URL;
+// const databaseURL = process.env.DATABASE_URL;
 
 const sessionConfig = {
 	maxAge: 60 * 60 * 24 * 360, // How long should they stay signed in?
@@ -44,7 +44,7 @@ export default withAuth(
 		},
 		db: {
 			// @ts-ignore
-			url: databaseURL,
+			url: env('DATABASE_URL'),
 			provider: 'postgresql',
 			// useMigrations: true,
 		},
