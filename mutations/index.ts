@@ -1,4 +1,4 @@
-import { graphQLSchemaExtension } from '@keystone-next/keystone/schema';
+import { graphQLSchemaExtension } from '@keystone-6/core';
 import addToCart from './addToCart';
 
 // Forces a fake graphql-tag template literal that enables code "coloring"

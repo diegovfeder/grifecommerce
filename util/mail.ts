@@ -1,3 +1,4 @@
+// FIXME: Really fix and test this...
 import { createTransport } from 'nodemailer';
 
 const transport = createTransport({
@@ -30,15 +31,15 @@ interface IMailResponse {
 }
 
 const sendPasswordResetEmail = async (
-	resetToken: string,
-	to: string,
+	token: string,
+	identity: string,
 ): Promise<void> => {
 	const info = (await transport.sendMail({
-		to,
+		identity,
 		from: 'grifemusic@gmail.com',
 		subject: 'Your password reset token!',
 		html: makeANiceEmail(`Your Password Reset Token is here!
-			<a href="${process.env.FRONTEND_URL}/reset?token=${resetToken}">Click Here to reset</a>
+			<a href="${process.env.FRONTEND_URL}/reset?token=${token}">Click Here to reset</a>
 		`),
 	})) as IMailResponse;
 };

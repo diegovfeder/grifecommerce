@@ -1,16 +1,17 @@
-import { integer, relationship, select, text } from '@keystone-next/fields';
-import { list } from '@keystone-next/keystone/schema';
+import { integer, relationship, select, text } from '@keystone-6/core/fields';
+import { list } from '@keystone-6/core';
 import { isSignedIn } from '../access';
 
 export const Product = list({
 	access: {
-		create: isSignedIn,
-		read: isSignedIn,
-		update: isSignedIn,
-		delete: isSignedIn,
+		operation: {
+			create: isSignedIn,
+			update: isSignedIn,
+			delete: isSignedIn,
+		},
 	},
 	fields: {
-		name: text({ isRequired: true }),
+		name: text(), // isRequired
 		description: text({
 			ui: {
 				displayMode: 'textarea',

@@ -1,4 +1,4 @@
-import { KeystoneContext } from '@keystone-next/types';
+import { KeystoneContext } from '@keystone-6/core/types';
 
 async function addToCart(
 	root: any,
@@ -14,7 +14,7 @@ async function addToCart(
 	}
 
 	// 2. Query the current users cart
-	const allCartItems = await context.lists.CartItem.findMany({
+	const allCartItems = await context.prisma.lists.CartItem.findMany({
 		where: {
 			user: {
 				id: session.itemId,
@@ -35,14 +35,14 @@ async function addToCart(
 			`There are already ${existingCartItem.quantity}, increment by 1!`,
 		);
 
-		return await context.lists.CartItem.updateOne({
+		return await context.prisma.lists.CartItem.updateOne({
 			id: existingCartItem.id,
 			data: { quantity: existingCartItem.quantity + 1 },
 			resolveFields: false,
 		});
 	}
 	// -- 3.b. If it isn't, create new cartItem
-	return await context.lists.CartItem.createOne({
+	return await context.prisma.lists.CartItem.createOne({
 		data: {
 			product: { connect: { id: productId } },
 			user: { connect: { id: session.itemId } },

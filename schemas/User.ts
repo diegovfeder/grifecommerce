@@ -1,12 +1,21 @@
-import { list } from '@keystone-next/keystone/schema';
-import { text, password, relationship } from '@keystone-next/fields';
+import { list } from '@keystone-6/core';
+import { text, password, relationship } from '@keystone-6/core/fields';
 
 export const User = list({
 	// access:
 	// ui:
 	fields: {
-		name: text({ isRequired: true }),
-		email: text({ isRequired: true, isUnique: true }),
+		name: text({
+			validation: {
+				isRequired: true,
+			},
+		}),
+		email: text({
+			validation: {
+				isRequired: true,
+			},
+			isIndexed: 'unique',
+		}), 
 		password: password(),
 		cart: relationship({
 			ref: 'CartItem.user',
@@ -19,8 +28,8 @@ export const User = list({
 		// TODO: add roles, cart and orders
 		// orders
 		role: relationship({
-			ref: 'Role.assignedTo'
+			ref: 'Role.assignedTo',
 			// TODO: Add access control
-		})
+		}),
 	},
 });
