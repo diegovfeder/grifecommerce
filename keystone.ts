@@ -1,13 +1,12 @@
 import 'dotenv/config';
 import { config } from '@keystone-6/core';
-// import type { ListSchemaConfig } from '@keystone-6/core/types';
+// import type { AdminUIConfig, DatabaseConfig, ListSchemaConfig } from '@keystone-6/core/types';
 import { statelessSessions } from '@keystone-6/core/session';
 import { lists } from './schema';
 import { createAuth } from '@keystone-6/auth';
 import { sendPasswordResetEmail } from './util/mail';
 import { extendGraphqlSchema } from './mutations/index';
 import { permissionsList } from './schemas/Fields';
-
 
 const { withAuth } = createAuth({
 	listKey: 'User',
@@ -47,7 +46,25 @@ const sessionConfig = {
 
 export default withAuth(
 	config({
-		extendGraphqlSchema,
+		lists,
+		ui: {
+			// Show the UI only for poeple who pass this test
+			isAccessAllowed: ({ session }) => !!session?.data,
+		},
+		session: statelessSessions(sessionConfig),
+		db: {
+			provider: 'postgresql',
+			url:
+				databaseURL ||
+				'postgres://diego.feder:diegof94@localhost:5432/keystone',
+			onConnect: async context => {
+				/* ... */
+			},
+			// Optional advanced configuration
+			enableLogging: true,
+			useMigrations: true,
+			idField: { kind: 'uuid' },
+		},
 		server: {
 			cors: {
 				// @ts-ignore
@@ -69,17 +86,6 @@ export default withAuth(
 				}),
 			},
 		},
-		db: {
-			provider: 'postgresql',
-			url: databaseURL,
-			onConnect: async context => {
-				/* ... */
-			},
-			// Optional advanced configuration
-			enableLogging: true,
-			useMigrations: true,
-			idField: { kind: 'uuid' },
-		},
 		graphql: {
 			debug: process.env.NODE_ENV !== 'production',
 			queryLimits: { maxTotalResults: 100 },
@@ -89,12 +95,7 @@ export default withAuth(
 				/* ... */
 			},
 		},
-		lists,
-		ui: {
-			// Show the UI only for poeple who pass this test
-			isAccessAllowed: ({ session }) => !!session?.data,
-		},
-		session: statelessSessions(sessionConfig),
+		extendGraphqlSchema,
 	}),
 );
 
