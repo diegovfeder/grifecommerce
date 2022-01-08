@@ -1,0 +1,46 @@
+// https://nodemailer.com/about/
+import { createTransport, SentMessageInfo } from 'nodemailer';
+
+const transporter = createTransport({
+	host: 'smtp.ethereal.email',
+	port: 587,
+	secure: false,
+	auth: {
+		user: process.env.MAIL_USER || 'username',
+		pass: process.env.MAIL_PASS || 'password',
+	},
+});
+
+const makeANiceEmail = (text: string): string => {
+	return `
+		<div style="
+			border: 1px solid black;
+			padding: 20px;
+			font-family: sans-serif;
+			line-height: 2;
+		  font-size: 20px;"
+		>
+			<h2> Hello There! </h2>
+			<p>${text}</p>
+			<p>att, GRIFE</p>
+		</div>
+	`;
+};
+
+const sendPasswordResetEmail = async (
+	token: string,
+	identity: string,
+): Promise<void> => {
+	let info = (await transporter.sendMail({
+		from: '"GRIFE 🦅" <grifemusic@gmail.com>',
+		to: identity,
+		subject: 'Your password reset token!',
+		text: 'Your Password Reset Token is here!',
+		html: makeANiceEmail(`Your Password Reset Token is here!
+			<a href="${process.env.FRONTEND_URL}/reset?token=${token}">Click Here to reset</a>
+		`),
+	})) as SentMessageInfo;
+	console.log('Message sent: %s', info.messageId);
+};
+
+export { sendPasswordResetEmail };

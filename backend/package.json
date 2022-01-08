@@ -1,0 +1,40 @@
+{
+  "name": "grifecommerce-backend",
+  "version": "0.0.1",
+  "private": true,
+  "author": "@diegovfeder",
+  "license": "MIT",
+  "scripts": {
+    "dev": "keystone dev",
+    "build": "keystone build",
+    "start": "keystone start"
+  },
+  "dependencies": {
+    "@keystone-6/auth": "^1.0.0",
+    "@keystone-6/cloudinary": "^1.0.0",
+    "@keystone-6/core": "^1.0.0",
+    "dotenv": "^10.0.0",
+    "next": "^12.0.7",
+    "nodemailer": "^6.6.3",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
+  },
+  "devDependencies": {
+    "@types/nodemailer": "^6.4.4",
+    "@types/react": "17.0.13",
+    "@typescript-eslint/eslint-plugin": "^4.27.0",
+    "@typescript-eslint/parser": "^4.27.0",
+		"babel-eslint": "^10.1.0",
+    "eslint": "7.30.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-typescript": "^2.4.0",
+    "eslint-plugin-import": "^2.23.4",
+		"eslint-plugin-prettier": "^3.1.4",
+		"eslint-plugin-react": "^7.21.5",
+    "prettier": "^2.3.1",
+    "typescript": "4.3.5"
+  },
+	"engines": {
+    "node": "^14.17.1"
+  }
+}
