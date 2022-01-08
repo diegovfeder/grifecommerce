@@ -9,6 +9,8 @@ jobs:
       CLOUDINARY_KEY: 597576948711519
       CLOUDINARY_SECRET: ${{secrets.CLOUDINARY_SECRET}}
     steps:
+      - name: Frontend Actions
+        run: cd Frontend
       - name: Checkout on repository
         uses: actions/checkout@v2
       - name: Setup Node.js
@@ -18,7 +20,7 @@ jobs:
           cache: 'yarn'
       - name: Install dependencies
         run: yarn --frozen-lockfile
-      # - name: Build Packages
-        # run: yarn next:build
       - name: Run Tests
       - run: yarn test
+      # - name: Build Packages
+      #   run: yarn next:build
