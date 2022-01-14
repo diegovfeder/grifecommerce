@@ -10,6 +10,7 @@ const ADD_TO_CART_MUTATION = gql`
 	}
 `;
 
+// eslint-disable-next-line react/prop-types
 export default function AddToCart({ id }) {
 	const [addToCart, { loading }] = useMutation(ADD_TO_CART_MUTATION, {
 		variables: { id },

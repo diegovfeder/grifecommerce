@@ -4,7 +4,7 @@ import Head from 'next/head';
 import styled from 'styled-components';
 import Link from 'next/link';
 import ErrorMessage from '../components/ErrorMessage';
-import formatMoney from '../lib/formatMoney';
+import formatMoney from '../util/formatMoney';
 import OrderItemStyles from '../components/styles/OrderItemStyles';
 
 // TODO: Create Orders model inkeystone

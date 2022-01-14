@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 import Router from 'next/router';
 import { useMutation } from '@apollo/client';
 import Form from './styles/Form';
-import useForm from '../lib/useForm';
+import useForm from '../util/useForm';
 import { CURRENT_USER_QUERY } from './User';
 import Error from './ErrorMessage';
 

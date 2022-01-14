@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useCart } from '../lib/cartState';
+import { useCart } from '../util/cartState';
 import CartCount from './CartCount';
 import SignOut from './SignOut';
 import NavStyles from './styles/NavStyles';

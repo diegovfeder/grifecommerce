@@ -6,7 +6,7 @@ import wait from 'waait';
 import CreateProduct, {
 	CREATE_PRODUCT_MUTATION,
 } from '../components/CreateProduct';
-import { fakeItem, makePaginationMocksFor } from '../lib/testUtils';
+import { fakeItem, makePaginationMocksFor } from '../util/testUtils';
 import { ALL_PRODUCTS_QUERY } from '../components/Products';
 
 const item = fakeItem();

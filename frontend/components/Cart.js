@@ -2,10 +2,10 @@ import styled from 'styled-components';
 import CartStyles from './styles/CartStyles';
 import CloseButton from './styles/CloseButton';
 import Supreme from './styles/Supreme';
-import formatMoney from '../lib/formatMoney';
+import formatMoney from '../util/formatMoney';
 import { useUser } from './User';
-import calcTotalPrice from '../lib/calcTotalPrice';
-import { useCart } from '../lib/cartState';
+import calcTotalPrice from '../util/calcTotalPrice';
+import { useCart } from '../util/cartState';
 import RemoveFromCart from './RemoveFromCart';
 import { Checkout } from './Checkout';
 

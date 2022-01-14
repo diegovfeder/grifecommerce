@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import wait from 'waait';
 import Signup, { SIGNUP_MUTATION } from '../components/SignUp';
 import { CURRENT_USER_QUERY } from '../components/User';
-import { fakeUser } from '../lib/testUtils';
+import { fakeUser } from '../util/testUtils';
 
 const me = fakeUser();
 const password = 'wes';
