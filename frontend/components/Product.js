@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import Link from 'next/link';
 import ItemStyles from './styles/ItemStyles';
 import Title from './styles/Title';
@@ -6,7 +7,6 @@ import formatMoney from '../util/formatMoney';
 import DeleteProduct from './DeleteProduct';
 import AddToCart from './AddToCart';
 
-// eslint-disable-next-line react/prop-types
 export default function Product({ product }) {
 	return (
 		<ItemStyles>

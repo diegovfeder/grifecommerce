@@ -1,4 +1,4 @@
-// import { KeystoneContext } from '@keystone-6/core/types';
+import { KeystoneContext } from '@keystone-6/core/types';
 
 async function addToCart(productId) {
 	console.log('adding to cart');
