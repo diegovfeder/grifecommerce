@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import CartStyles from './styles/CartStyles';
+import StyledCart from './styles/StyledCart';
 import CloseButton from './styles/CloseButton';
 import Supreme from './styles/Supreme';
 import formatMoney from '../util/formatMoney';
@@ -8,6 +8,7 @@ import calcTotalPrice from '../util/calcTotalPrice';
 import { useCart } from '../util/cartState';
 import RemoveFromCart from './RemoveFromCart';
 import { Checkout } from './Checkout';
+import { CartItemProps } from '../types/commonTypes';
 
 const CartItemStyles = styled.li`
 	padding: 1rem 0;
@@ -23,9 +24,7 @@ const CartItemStyles = styled.li`
 	}
 `;
 
-// eslint-disable-next-line react/prop-types
-function CartItem({ cartItem }) {
-	const { product } = cartItem;
+const CartItem = ({ id, quantity, product }: CartItemProps) => {
 	if (!product) return null;
 	return (
 		<CartItemStyles>
@@ -37,36 +36,38 @@ function CartItem({ cartItem }) {
 			<div>
 				<h3>{product.name}</h3>
 				<p>
-					{formatMoney(product.price * cartItem.quantity)}-
+					{formatMoney(product.price * quantity)}-
 					<em>
-						{cartItem.quantity} &times; {formatMoney(product.price)} each
+						{quantity} &times; {formatMoney(product.price)} each
 					</em>
 				</p>
 			</div>
-			<RemoveFromCart id={cartItem.id} />
+			<RemoveFromCart id={id} />
 		</CartItemStyles>
 	);
-}
+};
 
-export default function Cart() {
+const Cart = () => {
 	const me = useUser();
 	const { cartOpen, closeCart } = useCart();
 	if (!me) return null;
 	return (
-		<CartStyles open={cartOpen}>
+		<StyledCart open={cartOpen}>
 			<header>
 				<Supreme>{me.name}'s Cart</Supreme>
 				<CloseButton onClick={closeCart}>&times;</CloseButton>
 			</header>
 			<ul>
-				{me.cart.map((cartItem) => (
-					<CartItem key={cartItem.id} cartItem={cartItem} />
+				{me.cart.map((cartItem: CartItemProps) => (
+					<CartItem key={cartItem.id} {...cartItem} />
 				))}
 			</ul>
 			<footer>
 				<p>{formatMoney(calcTotalPrice(me.cart))}</p>
 				<Checkout />
 			</footer>
-		</CartStyles>
+		</StyledCart>
 	);
-}
+};
+
+export default Cart;
