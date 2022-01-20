@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import Head from 'next/head';
 import Link from 'next/link';
-import PaginationStyles from './styles/PaginationStyles';
+import StyledPagination from './styles/StyledPagination';
 import DisplayError from './ErrorMessage';
 import { totalProductsPerPage } from '../config';
 
@@ -20,7 +20,7 @@ export default function Pagination({ page }) {
 	const { productsCount } = data;
 	const pagesTotal = Math.ceil(productsCount / totalProductsPerPage);
 	return (
-		<PaginationStyles>
+		<StyledPagination>
 			<Head>
 				<title>
 					GRIFE - Page {page} of {pagesTotal}
@@ -36,6 +36,6 @@ export default function Pagination({ page }) {
 			<Link href={`/products/${page + 1}`}>
 				<a aria-disabled={page === pagesTotal}>Next →</a>
 			</Link>
-		</PaginationStyles>
+		</StyledPagination>
 	);
 }

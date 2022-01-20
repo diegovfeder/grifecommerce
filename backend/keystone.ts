@@ -14,7 +14,7 @@ import type {
 import { lists } from "./schema";
 import { permissionsList } from "./schemas/Fields";
 import { extendGraphqlSchema } from "./mutations/index";
-import { sendPasswordResetEmail } from "./util/mail";
+import { sendPasswordResetEmail } from "./utils/mail";
 
 const databaseURL =
 	process.env.DATABASE_URL ||

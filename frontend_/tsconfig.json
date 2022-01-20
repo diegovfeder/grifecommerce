@@ -13,6 +13,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
+		"baseUrl": ".",
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/blog/[id].js", "pages/blog/index.js", "components/Notion/text.jsx"],
   "exclude": ["node_modules"]

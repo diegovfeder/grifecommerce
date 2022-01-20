@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react';
-
-// TODO: Can I group this interface with commonTypes IEvent?
 interface IEvent {
 	target: {
 		files?: any;

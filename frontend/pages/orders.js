@@ -4,10 +4,10 @@ import Head from 'next/head';
 import styled from 'styled-components';
 import Link from 'next/link';
 import ErrorMessage from '../components/ErrorMessage';
-import formatMoney from '../util/formatMoney';
-import OrderItemStyles from '../components/styles/OrderItemStyles';
+import formatMoney from '../utils/formatMoney';
+import StyledOrderItem from '../components/styles/StyledOrderItem';
 
-// TODO: Create Orders model inkeystone
+// TODO: Create Orders model in keystone
 const USER_ORDERS_QUERY = gql`
 	query USER_ORDERS_QUERY {
 		orders {
@@ -56,7 +56,7 @@ export default function OrdersPage() {
 			<h2>You have {allOrders.length} orders!</h2>
 			<OrderUl>
 				{allOrders.map((order) => (
-					<OrderItemStyles>
+					<StyledOrderItem>
 						<Link href={`/order/${order.id}`}>
 							<a>
 								<div className="order-meta">
@@ -78,7 +78,7 @@ export default function OrdersPage() {
 								</div>
 							</a>
 						</Link>
-					</OrderItemStyles>
+					</StyledOrderItem>
 				))}
 			</OrderUl>
 		</div>

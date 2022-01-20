@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 import Router from 'next/router';
 import { useMutation } from '@apollo/client';
-import Form from './styles/Form';
-import useForm from '../util/useForm';
+import StyledForm from './styles/StyledForm';
+import useForm from '../utils/useForm';
 import { CURRENT_USER_QUERY } from './User';
 import Error from './ErrorMessage';
 
@@ -50,7 +50,7 @@ export default function SignIn() {
 	return (
 		<>
 			{loading && <p>Loading...</p>}
-			<Form method="POST" onSubmit={handleSubmit}>
+			<StyledForm method="POST" onSubmit={handleSubmit}>
 				<h2>Sign Into Your Account</h2>
 				<Error error={error} />
 				<fieldset>
@@ -78,7 +78,7 @@ export default function SignIn() {
 					</label>
 					<button type="submit">Sign In!</button>
 				</fieldset>
-			</Form>
+			</StyledForm>
 		</>
 	);
 }

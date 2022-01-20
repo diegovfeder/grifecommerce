@@ -7,7 +7,7 @@
 
 // FIXME: Migrate from keystone-next to keystone-6
 import { KeystoneContext, SessionStore } from "@keystone-6/core/types";
-import stripeConfig from "../util/stripe";
+import stripeConfig from "../utils/stripe";
 
 const graphql = String.raw;
 

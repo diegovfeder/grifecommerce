@@ -3,7 +3,7 @@ import { resetIdCounter, useCombobox } from 'downshift';
 import gql from 'graphql-tag';
 import debounce from 'lodash.debounce';
 import { useRouter } from 'next/dist/client/router';
-import { DropDown, DropDownItem, SearchStyles } from './styles/DropDown';
+import { StyledDropDown, StyledDropDownItem, StyledSearch } from './styles/StyledSearch';
 
 const SEARCH_PRODUCTS_QUERY = gql`
 	query SEARCH_PRODUCTS_QUERY($searchTerm: String!) {
@@ -62,7 +62,7 @@ export default function Search() {
 		itemToString: (item) => item?.name || '',
 	});
 	return (
-		<SearchStyles>
+		<StyledSearch>
 			<div {...getComboboxProps()}>
 				<input
 					{...getInputProps({
@@ -73,10 +73,10 @@ export default function Search() {
 					})}
 				/>
 			</div>
-			<DropDown {...getMenuProps()}>
+			<StyledDropDown {...getMenuProps()}>
 				{isOpen &&
 					items.map((item, index) => (
-						<DropDownItem
+						<StyledDropDownItem
 							{...getItemProps({ item, index })}
 							key={item.id}
 							highlighted={index === highlightedIndex}
@@ -87,12 +87,12 @@ export default function Search() {
 								width="50"
 							/>
 							{item.name}
-						</DropDownItem>
+						</StyledDropDownItem>
 					))}
 				{isOpen && !items.length && !loading && (
-					<DropDownItem>Sorry, No items found for {inputValue}</DropDownItem>
+					<StyledDropDownItem>Sorry, No items found for {inputValue}</StyledDropDownItem>
 				)}
-			</DropDown>
-		</SearchStyles>
+			</StyledDropDown>
+		</StyledSearch>
 	);
 }

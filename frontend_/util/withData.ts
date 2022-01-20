@@ -39,7 +39,7 @@ function createClient({ headers, initialState }: any) {
 					fields: {
 						// FIXME: Add pagination to products here...
 						// TODO: This is probably Module #7
-						// allProducts: PaginationField(),
+						allProducts: PaginationField(),
 					},
 				},
 			},

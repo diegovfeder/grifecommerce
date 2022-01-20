@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import styled from 'styled-components';
-import Cart from './Cart';
-import Nav from './Nav';
+import CartComponent from './CartComponent';
+import NavigationComponent from './NavigationComponent';
 import Search from './Search';
 
 const Logo = styled.h1`
@@ -42,12 +42,12 @@ export default function Header() {
 				<Logo>
 					<Link href="/">GRIFE</Link>
 				</Logo>
-				<Nav />
+				<NavigationComponent />
 			</div>
 			<div className="sub-bar">
 				<Search />
 			</div>
-			<Cart />
+			<CartComponent />
 		</HeaderStyles>
 	);
 }

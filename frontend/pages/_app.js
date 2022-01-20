@@ -3,8 +3,8 @@ import NProgress from 'nprogress';
 import Router from 'next/router';
 import Page from '../components/Page';
 import '../components/styles/nprogress.css';
-import withData from '../util/withData';
-import { CartStateProvider } from '../util/cartState';
+import withData from '../utils/withData';
+import CartStateProvider  from '../providers/CartStateProvider';
 
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
