@@ -1,12 +1,18 @@
 import CreateProduct from '../components/CreateProduct';
 import PleaseSignIn from '../components/PleaseSignIn';
+import Head from 'next/head';
 
-export default function SellPage() {
+const SellPage = () => {
 	return (
-		<div>
+		<>
+			<Head>
+				<title>GRIFE | Create Product</title>
+			</Head>
 			<PleaseSignIn>
 				<CreateProduct />
 			</PleaseSignIn>
-		</div>
+		</>
 	);
-}
+};
+
+export default SellPage;

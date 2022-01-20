@@ -1,8 +1,8 @@
 import RequestReset from '../components/RequestReset';
 import Reset from '../components/Reset';
 
-// eslint-disable-next-line react/prop-types
-export default function ResetPage({ query }) {
+// TODO: Properly type query
+const ResetPage = ({ query }: { query: any }) => {
 	if (!query?.token) {
 		return (
 			<div>
@@ -17,4 +17,6 @@ export default function ResetPage({ query }) {
 			<Reset token={query.token} />
 		</div>
 	);
-}
+};
+
+export default ResetPage;

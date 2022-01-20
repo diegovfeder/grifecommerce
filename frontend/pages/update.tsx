@@ -1,11 +1,13 @@
 import UpdateProduct from '../components/UpdateProduct';
 
-// eslint-disable-next-line react/prop-types
-export default function UpdatePage({ query }) {
+// TODO: Properly type query
+const UpdatePage = ({ query }: { query: any }) => {
 	console.log(query);
 	return (
 		<div>
 			<UpdateProduct id={query.id} />
 		</div>
 	);
-}
+};
+
+export default UpdatePage;

@@ -4,12 +4,15 @@ const StyledPagination = styled.div`
 	text-align: center;
 	display: inline-grid;
 	grid-template-columns: repeat(4, auto);
-	align-items: stretch;
+	align-items: center;
+	align-self: center;
+	justify-self: center;
 	justify-content: center;
 	align-content: center;
 	margin: 2rem 0;
 	border: 1px solid var(--lightGrey);
 	border-radius: 10px;
+
 	& > * {
 		margin: 0;
 		padding: 15px 30px;

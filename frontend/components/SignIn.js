@@ -3,7 +3,7 @@ import Router from 'next/router';
 import { useMutation } from '@apollo/client';
 import StyledForm from './styles/StyledForm';
 import useForm from '../utils/useForm';
-import { CURRENT_USER_QUERY } from './User';
+import { CURRENT_USER_QUERY } from '../hooks/useUserQuery';
 import Error from './ErrorMessage';
 
 const SIGNIN_MUTATION = gql`

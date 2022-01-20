@@ -12,15 +12,17 @@ const StyledGrid = styled.div`
 
 const SignInPage = () => {
 	return (
-    <>
-      <Head>
-          <title>GRIFE | Sign In</title>
-      </Head>
-      <StyledGrid>
-        <SignIn />
-        <SignUp />
-        <RequestReset />
-      </StyledGrid>
-    </>
+		<>
+			<Head>
+				<title>GRIFE | Sign In</title>
+			</Head>
+			<StyledGrid>
+				<SignIn />
+				<SignUp />
+				<RequestReset />
+			</StyledGrid>
+		</>
 	);
-}
+};
+
+export default SignInPage;
