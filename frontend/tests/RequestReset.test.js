@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import { MockedProvider } from '@apollo/react-testing';
 import userEvent from '@testing-library/user-event';
-import RequestReset, {
+import RequestPasswordReset, {
   REQUEST_RESET_MUTATION,
-} from '../components/RequestReset';
+} from '../components/RequestPasswordReset';
 
 const email = 'wesbos@gmail.com';
 const mocks = [
@@ -18,11 +18,11 @@ const mocks = [
   },
 ];
 
-describe('<RequestReset/>', () => {
+describe('<RequestPasswordReset/>', () => {
   it('renders and matches snapshot', () => {
     const { container } = render(
       <MockedProvider>
-        <RequestReset />
+        <RequestPasswordReset />
       </MockedProvider>
     );
     expect(container).toMatchSnapshot();
@@ -31,7 +31,7 @@ describe('<RequestReset/>', () => {
   it('calls the mutation when submitted', async () => {
     const { container, debug } = render(
       <MockedProvider mocks={mocks}>
-        <RequestReset />
+        <RequestPasswordReset />
       </MockedProvider>
     );
     // type into the email box

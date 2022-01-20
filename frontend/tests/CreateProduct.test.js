@@ -7,7 +7,7 @@ import CreateProduct, {
 	CREATE_PRODUCT_MUTATION,
 } from '../components/CreateProduct';
 import { fakeItem, makePaginationMocksFor } from '../utils/testUtils';
-import { ALL_PRODUCTS_QUERY } from '../components/Products';
+import { PRODUCTS_QUERY } from '../components/Products';
 
 const item = fakeItem();
 
@@ -72,7 +72,7 @@ describe('<CreateProduct/>', () => {
 			},
 			{
 				request: {
-					query: ALL_PRODUCTS_QUERY,
+					query: PRODUCTS_QUERY,
 					variables: { take: 2, skip: 0 },
 				},
 				result: {

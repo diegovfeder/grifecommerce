@@ -1,7 +1,0 @@
-{
-	"presets": ["@babel/preset-env", "@babel/preset-typescript", "next/babel"],
-  "plugins": [
-		["@babel/plugin-transform-runtime", { "regenerator": true }],
-		["styled-components", { "ssr": true }]
-	]
-}

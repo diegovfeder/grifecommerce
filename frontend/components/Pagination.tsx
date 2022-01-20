@@ -4,7 +4,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import styled from 'styled-components';
 import StyledPagination from './styles/StyledPagination';
-import DisplayError from './ErrorMessage';
+import ErrorMessage from './ErrorMessage';
 import { totalProductsPerPage } from '../config';
 
 interface PaginationProps {
@@ -27,7 +27,7 @@ const Pagination = ({ page }: PaginationProps) => {
 	}
 
 	if (error) {
-		return <DisplayError error={error} />;
+		return <ErrorMessage error={error} />;
 	}
 
 	return (

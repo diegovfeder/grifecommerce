@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Checkout } from './Checkout';
-import RemoveFromCart from './RemoveFromCart';
+import RemoveFromCartButton from './RemoveFromCartButton';
 import Supreme from './styles/Supreme';
 import StyledCart from './styles/StyledCart';
 import StyledCloseButton from './styles/StyledCloseButton';
@@ -42,7 +42,7 @@ const CartItem = ({ id, quantity, product }: CartItemProps) => {
 					</em>
 				</p>
 			</div>
-			<RemoveFromCart id={id} />
+			<RemoveFromCartButton id={id} />
 		</StyledCartItem>
 	);
 };

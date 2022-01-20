@@ -43,7 +43,7 @@ const AddToCartButton = ({ id, children }: AddToCartButtonProps) => {
 			disabled={loading}
 			onClick={() => addToCart()}
 		>
-			{children ? children : undefined}
+			{children}
 		</StyledButtonLink>
 	);
 }

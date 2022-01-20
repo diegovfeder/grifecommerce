@@ -6,7 +6,7 @@ import {
 import { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import Router from 'next/router';
-import Page from '../components/Page';
+import Page from '../components/PageComponent';
 import CartStateProvider from '../providers/CartStateProvider';
 import withData from '../utils/withData';
 import NProgress from 'nprogress';

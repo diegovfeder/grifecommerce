@@ -1,13 +1,12 @@
-import RequestReset from '../components/RequestReset';
+import RequestPasswordReset from '../components/RequestPasswordReset';
 import Reset from '../components/Reset';
 
-// TODO: Properly type query
-const ResetPage = ({ query }: { query: any }) => {
+const ResetPage = ({ query }: { query: { token: string } }) => {
 	if (!query?.token) {
 		return (
 			<div>
 				<p>Sorry you must supply a token</p>
-				<RequestReset />
+				<RequestPasswordReset />
 			</div>
 		);
 	}

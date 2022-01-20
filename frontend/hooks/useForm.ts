@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-interface IEvent {
+interface EventProps {
 	target: {
 		files?: any;
 		value?: any;
@@ -17,7 +17,7 @@ const useForm = <T>(initial: T) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [initialValues]);
 
-	const handleChange = (e: IEvent) => {
+	const handleChange = (e: EventProps) => {
 		let { value, name, type } = e.target;
 		if (type === 'number') {
 			value = parseInt(value);

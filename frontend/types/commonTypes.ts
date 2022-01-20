@@ -4,45 +4,37 @@ export interface IRFC {
 	children?: ReactNode;
 }
 
-// TODO: Import auto generated types from Prisma | Keystone
-export interface IUserModel {}
-
-export interface IProductModel {
-	name: string;
-	price: number;
-	photo: {
-		image: {
-			publicUrlTransformed: string;
-		};
-	};
-}
-
-export interface IEvent {
+export interface EventProps {
 	preventDefault: () => void;
 }
 
-export interface ISignInFormInput {
+export interface SignInFormInputProps {
 	email: string;
 	password: string;
 }
 
-export interface ISignUpFormInput extends ISignInFormInput {
+export interface SignUpFormInputProps extends SignInFormInputProps {
 	name: string;
 }
 
-export interface IRequestPasswordResetFormInput {
+export interface RequestPasswordResetFormInputProps {
 	email: string;
 }
 
-export interface IRedeemPasswordResetFormInput extends ISignInFormInput {
+export interface RedeemPasswordResetFormInputProps
+	extends SignInFormInputProps {
 	token: string;
 }
 
-export interface IProductFormInput {
+export interface ProductFormInputProps {
 	name: string;
 	description: string;
 	price: number | undefined;
 	image?: any;
+}
+
+export interface UserProps {
+	id: string;
 }
 
 export interface ProductProps {
@@ -57,14 +49,10 @@ export interface ProductProps {
 	};
 }
 
-export interface UserProps {
-	id: string;
-}
-
 export interface CartItemProps {
 	__typename?: string;
 	id: string;
 	product: ProductProps;
 	quantity: number;
-	user?: UserProps
+	user?: UserProps;
 }

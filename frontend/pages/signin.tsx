@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import styled from 'styled-components';
-import RequestReset from '../components/RequestReset';
+import RequestPasswordReset from '../components/RequestPasswordReset';
 import SignIn from '../components/SignIn';
 import SignUp from '../components/SignUp';
 
@@ -19,7 +19,7 @@ const SignInPage = () => {
 			<StyledGrid>
 				<SignIn />
 				<SignUp />
-				<RequestReset />
+				<RequestPasswordReset />
 			</StyledGrid>
 		</>
 	);
