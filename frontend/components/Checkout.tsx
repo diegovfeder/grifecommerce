@@ -39,11 +39,14 @@ const CREATE_ORDER_MUTATION = gql`
 	}
 `;
 
-const stripeLib = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY || '');
+const stripeLib = loadStripe(
+	process.env.STRIPE_PUBLISHABLE ||
+		'pk_test_r8CRQ81h9iU39zms77NErkg90052pu0p6n',
+);
 
 const CheckoutForm = () => {
 	const [error, setError] = useState<StripeError | null>(null);
-	// TODO: loading UX
+	// TODO: loading UI/UX
 	const [loading, setLoading] = useState(false);
 	const stripe = useStripe();
 	const elements = useElements();
@@ -51,10 +54,11 @@ const CheckoutForm = () => {
 	const { closeCart } = useCartState();
 	const [checkout, { error: graphQLError }] = useMutation(
 		CREATE_ORDER_MUTATION,
-		{
-			refetchQueries: [{ query: CURRENT_USER_QUERY }],
-		},
+		// {
+		// 	refetchQueries: [{ query: CURRENT_USER_QUERY }],
+		// },
 	);
+
 	const handleSubmit = async (e: EventProps) => {
 		e.preventDefault();
 		setLoading(true);
@@ -65,7 +69,6 @@ const CheckoutForm = () => {
 			type: 'card',
 			card: elements?.getElement(CardElement) || { token: '' },
 		});
-
 		console.log(paymentMethod);
 		console.log(error);
 
@@ -75,24 +78,22 @@ const CheckoutForm = () => {
 			return;
 		}
 
-		const order = await checkout({
-			variables: {
-				token: paymentMethod?.id,
-			},
-		});
+		// const order = await checkout({
+		// 	variables: {
+		// 		token: paymentMethod?.id,
+		// 	},
+		// });
+		// console.log(`Finished with the order!!`);
+		// console.log(order);
 
-		console.log(`Finished with the order!!`);
-		console.log(order);
+		// router.push({
+		// 	pathname: `/order/[id]`,
+		// 	query: {
+		// 		id: order.data.checkout.id,
+		// 	},
+		// });
 
-		// 6. Change the page to view the order
-		router.push({
-			pathname: `/order/[id]`,
-			query: {
-				id: order.data.checkout.id,
-			},
-		});
-
-		closeCart();
+		// closeCart();
 		setLoading(false);
 		nProgress.done();
 	};

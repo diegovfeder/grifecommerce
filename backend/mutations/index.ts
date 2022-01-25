@@ -1,5 +1,6 @@
 import { graphql } from "@keystone-6/core";
-import { ICartItemModel } from "../types/models";
+import { ICartItemModel, IProductModel } from "../types/models";
+import stripeConfig from "../utils/stripe";
 
 export const extendGraphqlSchema = graphql.extend((base) => {
 	return {
@@ -55,45 +56,97 @@ export const extendGraphqlSchema = graphql.extend((base) => {
 					token: graphql.arg({ type: graphql.nonNull(graphql.String) }),
 				},
 				async resolve(_source, { token }, context) {
-					const session = context.session;
-					if (!session.itemId) {
+					const userId = context.session.itemId;
+					if (!userId) {
 						throw new Error(
 							"You must be signed in to create an order and checkout!"
 						);
 					}
 
 					const user = await context.db.User.findOne({
-						where: { id: session.itemId },
+						where: { id: userId },
 					});
-					console.log({ user });
 
-					// TODO: Use prisma or graphql api instead of db to get proper nested object values and not only productId
 					const allCartItems = await context.prisma.cartItem.findMany({
 						where: {
 							user: {
-								id: session.itemId,
-								// id: { equals: session.itemId },
+								id: userId,
 							},
 						},
 					});
-					console.log(allCartItems);
 
-					const cartItems = allCartItems.filter(
-						(cartItem) => cartItem.productId
+					const cartItems = allCartItems.filter((cartItem) => {
+						return cartItem.productId;
+					});
+					console.log({ cartItems });
+
+					if (!cartItems) {
+						throw new Error("You have no items in your cart");
+					}
+
+					const findProducts = async () => {
+						const unresolvedPromises = cartItems.map((cartItem) =>
+							context.prisma.product.findUnique({
+								where: {
+									id: cartItem.productId,
+								},
+							})
+						);
+						return await Promise.all(unresolvedPromises);
+					};
+
+					const products = await findProducts();
+					console.log({ products });
+
+					const amount = products.reduce(
+						(tally: number, product: IProductModel, index: number) =>
+							tally + product.price * cartItems[index].quantity,
+						0
 					);
-					console.log(cartItems);
+					// console.log({ amount });
 
-					// const amount = cartItems.reduce((tally: number, cartItem: ICartItemModel) => {
-					// 	return tally + cartItem.quantity * cartItem.product.price;
-					// }
+					const charge = await stripeConfig.paymentIntents
+						.create({
+							amount,
+							currency: "BRL",
+							confirm: true,
+							payment_method: token,
+						})
+						.catch((err) => {
+							console.log(err);
+							throw new Error(err.message);
+						});
+					console.log(charge);
 
-					// const [existingCartItem] = <ICartItem[]>(<unknown>allCartItems);
-					// if (!existingCartItem) {
-					// 	throw new Error("You have no items in your cart");
-					// }
+					// TODO: Test this, update to new API
+					const orderItems = cartItems.map((cartItem, index) => {
+						const orderItem = {
+							name: products[index].name,
+							description: products[index].description,
+							price: products[index].price,
+							quantity: cartItem.quantity,
+							image: { connect: { id: products[index].photoId } },
+							user: { connect: { id: userId } },
+						};
+						return orderItem;
+					});
+					console.log({ orderItems });
 
-					// const order = await context.prisma.order.create({
-					// 	data: {
+					const order = await context.prisma.order.create({
+						data: {
+							total: charge.amount,
+							charge: charge.id,
+							items: { create: orderItems },
+							user: { connect: { id: userId } },
+						},
+					});
+
+					const cartItemIds = cartItems.map((cartItem) => cartItem.id);
+					await context.prisma.cartItem.deleteMany({
+						ids: cartItemIds,
+					});
+
+					return order;
 					// 		user: { connect: { id: session.itemId } },
 					// 		items: {
 					// 			create: allCartItems.map((cartItem) => {
