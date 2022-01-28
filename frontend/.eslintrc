@@ -1,0 +1,11 @@
+{
+  "extends": ["next", "next/babel", "next/core-web-vitals"],
+	"settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {}
+    }
+  }
+}
