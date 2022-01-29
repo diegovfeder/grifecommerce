@@ -39,10 +39,7 @@ const CREATE_ORDER_MUTATION = gql`
 	}
 `;
 
-const stripeLib = loadStripe(
-	process.env.STRIPE_PUBLISHABLE ||
-		'pk_test_r8CRQ81h9iU39zms77NErkg90052pu0p6n',
-);
+const stripeLib = loadStripe(process.env.STRIPE_PUBLISHABLE || '');
 
 const CheckoutForm = () => {
 	const [error, setError] = useState<StripeError | null>(null);
