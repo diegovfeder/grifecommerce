@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
 	ApolloClient,
 	ApolloProvider,
@@ -5,7 +6,7 @@ import {
 } from '@apollo/client';
 import { NextPage } from 'next';
 import type { AppProps } from 'next/app';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import Page from '../components/PageComponent';
 import CartStateProvider from '../providers/CartStateProvider';
 import withData from '../utils/withData';
@@ -23,6 +24,24 @@ interface MyAppProps extends AppProps {
 }
 
 function MyApp({ Component, pageProps, apollo }: MyAppProps) {
+	const router = useRouter();
+
+	// TODO: Install gtag to use the function below
+	// GET A TRACKING ID, CREATE AT TAG MANAGER / GOOGLE ANALYTICS
+	const handleRouteChange = (url: string) => {
+		console.log(url);
+		// 	window.gtag('config', '[Tracking ID]', {
+		//     page_path: url,
+		//   });
+	};
+
+	useEffect(() => {
+		router.events.on('routeChangeComplete', handleRouteChange);
+		return () => {
+			router.events.off('routeChangeComplete', handleRouteChange);
+		};
+	}, [router.events]);
+
 	return (
 		<ApolloProvider client={apollo}>
 			<CartStateProvider>
