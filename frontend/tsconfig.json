@@ -15,5 +15,6 @@
     "jsx": "preserve",
   },
   "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+	"setupFilesAfterEnv": ["./jest.setup.ts"],
 }
