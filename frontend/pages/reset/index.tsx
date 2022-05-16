@@ -1,5 +1,5 @@
-import RequestPasswordReset from '../components/RequestPasswordReset';
-import Reset from '../components/Reset';
+import RequestPasswordReset from '../../components/RequestPasswordReset';
+import Reset from '../../components/Reset';
 
 const ResetPage = ({ query }: { query: { token: string } }) => {
 	if (!query?.token) {

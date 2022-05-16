@@ -12,10 +12,10 @@ interface SingleProductProps {
 export const SINGLE_ITEM_QUERY = gql`
 	query SINGLE_ITEM_QUERY($id: ID!) {
 		product(where: { id: $id }) {
+			id
 			name
 			price
 			description
-			id
 			photo {
 				id
 				altText
@@ -33,8 +33,11 @@ const SingleProduct = ({ id }: SingleProductProps) => {
 			id,
 		},
 	});
+
 	if (loading) return <p>Loading...</p>;
+
 	if (error) return <ErrorMessage error={error} />;
+
 	const { product } = data;
 	return (
 		<ProductStyles>
@@ -54,7 +57,7 @@ const SingleProduct = ({ id }: SingleProductProps) => {
 			</div>
 		</ProductStyles>
 	);
-}
+};
 
 const ProductStyles = styled.div`
 	display: grid;

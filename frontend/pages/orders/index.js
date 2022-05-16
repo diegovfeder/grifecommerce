@@ -3,9 +3,9 @@ import gql from 'graphql-tag';
 import Head from 'next/head';
 import styled from 'styled-components';
 import Link from 'next/link';
-import ErrorMessage from '../components/ErrorMessage';
-import formatMoney from '../utils/formatMoney';
-import StyledOrderItem from '../components/styles/StyledOrderItem';
+import ErrorMessage from '../../components/ErrorMessage';
+import formatMoney from '../../utils/formatMoney';
+import StyledOrderItem from '../../components/styles/StyledOrderItem';
 
 // TODO: Create Orders model in keystone
 const USER_ORDERS_QUERY = gql`
@@ -51,11 +51,15 @@ export default function OrdersPage() {
 	return (
 		<div>
 			<Head>
-				<title>Your Orders ({allOrders.length})</title>
+				<title>Your Orders ({allOrders?.length})</title>
 			</Head>
-			<h2>You have {allOrders.length} orders!</h2>
+			{allOrders?.length > 0 ? (
+				<h2>You have {allOrders?.length} orders!</h2>
+			) : (
+				<h2>You have no orders!</h2>
+			)}
 			<OrderUl>
-				{allOrders.map((order) => (
+				{allOrders?.map(order => (
 					<StyledOrderItem>
 						<Link href={`/order/${order.id}`}>
 							<a>
@@ -68,7 +72,7 @@ export default function OrdersPage() {
 									<p>{formatMoney(order.total)}</p>
 								</div>
 								<div className="images">
-									{order.items.map((item) => (
+									{order.items.map(item => (
 										<img
 											key={`image-${item.id}`}
 											src={item.photo?.image?.publicUrlTransformed}

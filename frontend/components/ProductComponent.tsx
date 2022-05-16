@@ -9,15 +9,14 @@ import DeleteProduct from './DeleteProduct';
 import AddToCartButton from './AddToCartButton';
 import { ProductProps } from '../types/commonTypes';
 
-
-const ProductComponent = ({ product }: {product: ProductProps}) => {
+const ProductComponent = ({ product }: { product: ProductProps }) => {
 	return (
 		<StyledItem>
 			<Image
 				src={product?.photo?.image?.publicUrlTransformed}
 				alt={product.name}
-        width={320}
-        height={320}
+				width={320}
+				height={320}
 			/>
 			<StyledTitle>
 				<Link href={`/product/${product.id}`}>{product.name}</Link>
@@ -27,7 +26,7 @@ const ProductComponent = ({ product }: {product: ProductProps}) => {
 			<div className="buttonList">
 				<Link
 					href={{
-						pathname: '/update',
+						pathname: '/edit',
 						query: {
 							id: product.id,
 						},
@@ -40,6 +39,6 @@ const ProductComponent = ({ product }: {product: ProductProps}) => {
 			</div>
 		</StyledItem>
 	);
-}
+};
 
 export default ProductComponent;

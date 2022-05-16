@@ -1,8 +1,8 @@
 import Head from 'next/head';
 import styled from 'styled-components';
-import RequestPasswordReset from '../components/RequestPasswordReset';
-import SignIn from '../components/SignIn';
-import SignUp from '../components/SignUp';
+import RequestPasswordReset from '../../components/RequestPasswordReset';
+import SignIn from '../../components/SignIn';
+import SignUp from '../../components/SignUp';
 
 const StyledGrid = styled.div`
 	display: grid;

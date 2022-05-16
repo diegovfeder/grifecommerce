@@ -3,14 +3,12 @@
  */
 
 import React from 'react';
-// TODO: run jest.setup properly
 import '@testing-library/jest-dom/extend-expect';
 import { render, screen } from '@testing-library/react';
-import SellPage from './sell';
+import SellPage from '.';
 import { MockedProvider } from '@apollo/client/testing';
 import { MockedResponse } from '@apollo/client/testing';
-import { CURRENT_USER_QUERY } from '../hooks/useUserQuery';
-CURRENT_USER_QUERY;
+import { CURRENT_USER_QUERY } from '../../hooks/useUserQuery';
 
 const mocks = [
 	{

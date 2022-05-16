@@ -1,4 +1,3 @@
-// https://nodemailer.com/about/
 import { createTransport, SentMessageInfo } from 'nodemailer';
 
 const transporter = createTransport({
@@ -40,7 +39,6 @@ const sendPasswordResetEmail = async (
 			<a href="${process.env.FRONTEND_URL}/reset?token=${token}">Click Here to reset</a>
 		`),
 	})) as SentMessageInfo;
-	console.log('Message sent: %s', info.messageId);
 };
 
 export { sendPasswordResetEmail };

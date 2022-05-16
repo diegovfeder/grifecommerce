@@ -1,13 +1,14 @@
 import SingleProduct from '../../components/SingleProduct';
 
-// TODO: Properly type this
 interface ISingleProductPage {
-	query: any;
+	query: {
+		id: string;
+	};
 }
 
-// TODO: Style this page
+// TODO: Style this page / component
 const SingleProductPage = ({ query }: ISingleProductPage) => {
 	return <SingleProduct id={query.id} />;
-}
+};
 
 export default SingleProductPage;

@@ -7,7 +7,7 @@ import useForm from '../hooks/useForm';
 import StyledForm from './styles/StyledForm';
 import { EventProps, ProductFormInputProps } from '../types/commonTypes';
 
-interface UpdateProductProps {
+interface EditProductProps {
 	id: String;
 }
 
@@ -22,8 +22,8 @@ const SINGLE_PRODUCT_QUERY = gql`
 	}
 `;
 
-const UPDATE_PRODUCT_MUTATION = gql`
-	mutation UPDATE_PRODUCT_MUTATION(
+const EDIT_PRODUCT_MUTATION = gql`
+	mutation EDIT_PRODUCT_MUTATION(
 		$id: ID!
 		$name: String
 		$description: String
@@ -41,13 +41,13 @@ const UPDATE_PRODUCT_MUTATION = gql`
 	}
 `;
 
-const UpdateProduct = ({ id }: UpdateProductProps) => {
+const EditProduct = ({ id }: EditProductProps) => {
 	const { loading, data, error } = useQuery(SINGLE_PRODUCT_QUERY, {
 		variables: { id },
 	});
 	const router = useRouter();
 
-	const [updateProduct, updateMutation] = useMutation(UPDATE_PRODUCT_MUTATION);
+	const [editProduct, editMutation] = useMutation(EDIT_PRODUCT_MUTATION);
 
 	const { inputs, handleChange, clearForm } = useForm<ProductFormInputProps>(
 		data?.Product || {
@@ -63,7 +63,7 @@ const UpdateProduct = ({ id }: UpdateProductProps) => {
 		<StyledForm
 			onSubmit={async (e: EventProps) => {
 				e.preventDefault();
-				const res = await updateProduct({
+				const res = await editProduct({
 					variables: {
 						id,
 						name: inputs.name,
@@ -78,10 +78,10 @@ const UpdateProduct = ({ id }: UpdateProductProps) => {
 				});
 			}}
 		>
-			<ErrorMessage error={error || updateMutation.error} />
+			<ErrorMessage error={error || editMutation.error} />
 			<fieldset
-				disabled={updateMutation.loading}
-				aria-busy={updateMutation.loading}
+				disabled={editMutation.loading}
+				aria-busy={editMutation.loading}
 			>
 				<label htmlFor="name">
 					Name
@@ -115,10 +115,10 @@ const UpdateProduct = ({ id }: UpdateProductProps) => {
 						onChange={handleChange}
 					/>
 				</label>
-				<button type="submit">Update Product</button>
+				<button type="submit">Edit Product</button>
 			</fieldset>
 		</StyledForm>
 	);
 };
 
-export default UpdateProduct;
+export default EditProduct;

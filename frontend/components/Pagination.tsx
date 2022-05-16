@@ -21,6 +21,7 @@ const Pagination = ({ page }: PaginationProps) => {
 	const { error, loading, data } = useQuery(PAGINATION_QUERY);
 	const productsCount = data?.productsCount;
 	const pagesTotal = Math.ceil(productsCount / totalProductsPerPage);
+	console.log({ data });
 
 	if (loading) {
 		return <p>Loading...</p>;
