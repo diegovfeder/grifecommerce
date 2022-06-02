@@ -1,14 +1,13 @@
-import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import Head from 'next/head';
 import Link from 'next/link';
 import styled from 'styled-components';
 import StyledPagination from './styles/StyledPagination';
-import ErrorMessage from './ErrorMessage';
 import { totalProductsPerPage } from '../config';
 
 interface PaginationProps {
 	page: number;
+	productsCount: number;
 }
 
 export const PAGINATION_QUERY = gql`
@@ -17,22 +16,12 @@ export const PAGINATION_QUERY = gql`
 	}
 `;
 
-const Pagination = ({ page }: PaginationProps) => {
-	const { error, loading, data } = useQuery(PAGINATION_QUERY);
-	const productsCount = data?.productsCount;
+const Pagination = ({ page, productsCount }: PaginationProps) => {
+	// const productsCount = data?.productsCount;
 	const pagesTotal = Math.ceil(productsCount / totalProductsPerPage);
-	console.log({ data });
-
-	if (loading) {
-		return <p>Loading...</p>;
-	}
-
-	if (error) {
-		return <ErrorMessage error={error} />;
-	}
 
 	return (
-		<StyledPaginationContainer>
+		<StyledPaginationContainer data-test-id="pagination">
 			<StyledPagination>
 				<Head>
 					<title>
@@ -42,7 +31,7 @@ const Pagination = ({ page }: PaginationProps) => {
 				<Link href={`/products/${page - 1}`}>
 					<a aria-disabled={page === 1}>← Prev</a>
 				</Link>
-				<p>
+				<p data-test-id="pageCount">
 					Page {page} of {pagesTotal}
 				</p>
 				<p>Total Products: {productsCount}</p>

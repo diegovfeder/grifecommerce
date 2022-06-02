@@ -2,7 +2,7 @@ import formatMoney from '../utils/formatMoney';
 
 describe('format Money function', () => {
 	it('works with fractional reals', () => {
-		expect(formatMoney(1)).toEqual('R$ 0,01');
+		expect(formatMoney(1)).toStrictEqual('R$ 0,01');
 		expect(formatMoney(10)).toEqual('R$ 0,10');
 		expect(formatMoney(9)).toEqual('R$ 0,09');
 		expect(formatMoney(40)).toEqual('R$ 0,40');
