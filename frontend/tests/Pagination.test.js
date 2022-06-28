@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { MockedProvider } from '@apollo/react-testing';
+import { MockedProvider } from '@apollo/client/testing';
 import { makePaginationMocksFor } from '../utils/testUtils';
 import Pagination from '../components/Pagination';
 

@@ -99,6 +99,7 @@ describe('Single Product Page', () => {
 			);
 			expect(screen.getByText('Loading...')).toBeInTheDocument();
 			// await resolveMockState();
+			expect(screen.getByText('Sample Pack')).toBeInTheDocument();
 		});
 	});
 });

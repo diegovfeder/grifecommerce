@@ -2,10 +2,10 @@ import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
 import Router from 'next/router';
 import ErrorMessage from './ErrorMessage';
-import { PRODUCTS_QUERY } from './ProductsGridComponent';
 import StyledForm from './styles/StyledForm';
 import useForm from '../hooks/useForm';
 import { EventProps, ProductFormInputProps } from '../types/commonTypes';
+import ALL_PRODUCTS_QUERY from '../gql/allProductsQuery.gql';
 
 export const CREATE_PRODUCT_MUTATION = gql`
 	mutation CREATE_PRODUCT_MUTATION(
@@ -43,7 +43,7 @@ const CreateProduct = () => {
 		CREATE_PRODUCT_MUTATION,
 		{
 			variables: inputs,
-			refetchQueries: [{ query: PRODUCTS_QUERY }],
+			refetchQueries: [{ query: ALL_PRODUCTS_QUERY }],
 		},
 	);
 

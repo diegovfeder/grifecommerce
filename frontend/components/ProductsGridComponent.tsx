@@ -5,27 +5,11 @@ import styled from 'styled-components';
 import ProductComponent from './ProductComponent';
 import { totalProductsPerPage } from '../config';
 import { ProductProps } from '../types/commonTypes';
+import PRODUCTS_QUERY from '../gql/productsQuery.gql';
 
 interface ProductsGridComponentProps {
 	page: number;
 }
-
-export const PRODUCTS_QUERY = gql`
-	query PRODUCTS_QUERY($take: Int, $skip: Int = 0) {
-		products(take: $take, skip: $skip) {
-			id
-			name
-			price
-			description
-			photo {
-				id
-				image {
-					publicUrlTransformed
-				}
-			}
-		}
-	}
-`;
 
 const ProductsGridComponent = ({ page }: ProductsGridComponentProps) => {
 	const { loading, data, error } = useQuery(PRODUCTS_QUERY, {
@@ -35,8 +19,11 @@ const ProductsGridComponent = ({ page }: ProductsGridComponentProps) => {
 		},
 		onCompleted: data => console.log(data),
 	});
+
 	if (loading) return <p>Loading...</p>;
+
 	if (error) return <p>Error: {error.message}</p>;
+
 	return (
 		<div>
 			<ProductsListStyles>

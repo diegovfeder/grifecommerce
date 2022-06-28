@@ -1,4 +1,5 @@
-import { gql, useQuery } from '@apollo/client';
+import { useEffect } from 'react';
+import { gql, useLazyQuery } from '@apollo/client';
 import { useRouter } from 'next/dist/client/router';
 import Pagination from '../../components/Pagination';
 import ProductsGridComponent from '../../components/ProductsGridComponent';
@@ -11,7 +12,12 @@ const PAGINATION_QUERY = gql`
 
 const ProductsPage = () => {
 	const { query } = useRouter();
-	const { error, loading, data } = useQuery(PAGINATION_QUERY);
+	const [queryPagination, { error, loading, data }] =
+		useLazyQuery(PAGINATION_QUERY);
+
+	useEffect(() => {
+		queryPagination();
+	});
 
 	const queryPageNumber = query.page ? Number(query.page) : 1;
 	return (

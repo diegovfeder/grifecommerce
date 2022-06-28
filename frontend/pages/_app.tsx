@@ -34,11 +34,24 @@ function MyApp({ Component, pageProps, apollo }: MyAppProps) {
 	);
 }
 
+// FIXME: What is the issue with Component?...
 // TODO: Properly type pageProps, Component and ctx
+
+// Here, we're overriding the default App component
+// with our own getInitialProps function.
+// this function is meant to get initialProps from the component,
+// passing down a function
+// and then rewriting pageProps.query with ctx.query??
+// -- Here I'm initializing pageProps, trying to get from Component, passing down the context?..
+
+// It seems that this is wanting to automate getInitialProps in the whole app
+// Should I getInitialProps from the component?
+// Should I getInitialProps from the app?
 MyApp.getInitialProps = async function ({ Component, ctx }: any) {
 	let pageProps = {};
 	if (Component.getInitialProps) {
 		pageProps = await Component.getInitialProps(ctx);
+		console.log({ pageProps });
 	}
 	pageProps.query = ctx.query;
 	return { pageProps };

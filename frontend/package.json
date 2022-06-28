@@ -42,7 +42,6 @@
     "waait": "^1.0.5"
   },
   "devDependencies": {
-    "@apollo/react-testing": "^4.0.0",
     "@babel/core": "^7.12.10",
     "@babel/plugin-transform-runtime": "^7.14.5",
     "@babel/preset-env": "^7.12.11",
@@ -65,6 +64,7 @@
     "babel-loader": "^8.2.2",
     "babel-plugin-styled-components": "^1.12.0",
     "casual": "^1.6.2",
+    "dom-serializer": "^2.0.0",
     "eslint": "^7.17.0",
     "eslint-config-next": "11.0.1",
     "eslint-config-prettier": "^7.1.0",
@@ -80,11 +80,27 @@
     "ts-node": "^10.7.0",
     "typescript": "^4.5.4"
   },
-	"jest": {
-		"verbose": true,
-		"testEnvironment": "jsdom",
-		"setupFilesAfterEnv": ["./jest.setup.ts"],
-		"moduleDirectories": ["node_modules", "src"],
-		"moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"]
-	}
+  "jest": {
+    "verbose": true,
+    "testEnvironment": "jsdom",
+		"transform": {
+      "\\.(gql|graphql)$": "jest-transform-graphql",
+      ".*": "babel-jest"
+    },
+    "setupFilesAfterEnv": [
+      "./jest.setup.ts"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  }
 }

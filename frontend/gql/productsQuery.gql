@@ -1,0 +1,14 @@
+query Products ($take: Int, $skip: Int = 0) {
+	products(take: $take, skip: $skip) {
+		id
+		name
+		price
+		description
+		photo {
+			id
+			image {
+				publicUrlTransformed
+			}
+		}
+	}
+}

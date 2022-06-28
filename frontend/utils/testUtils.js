@@ -7,21 +7,23 @@ casual.seed(777);
 
 const fakeItem = () => ({
 	// __typename: 'Item',
-	id: 'abc123',
+	id: '1',
+	name: 'GRIFE Sample Pack - (Yellow)',
+	description:
+		'This our first sample pack for summer beats in a sunny day, when all is yellow :)',
 	price: 5000,
-	user: null,
+	// user: null,
 	photo: {
-		id: 'abc123',
-		altText: 'dogs are best',
+		// FIXME:
+		// id: 'abc123',
+		// altText: 'dogs are best',
 		image: {
-			publicUrlTransformed: 'dog.jpg',
+			publicUrlTransformed: '/samplepack_yellow.jpg',
 		},
 	},
-	name: 'dogs are best',
-	description: 'dogs',
 });
 
-const fakeUser = (overrides) => ({
+const fakeUser = overrides => ({
 	__typename: 'User',
 	id: '4234',
 	name: casual.name,
@@ -54,7 +56,7 @@ const fakeOrder = () => ({
 	user: fakeUser(),
 });
 
-const fakeCartItem = (overrides) => ({
+const fakeCartItem = overrides => ({
 	__typename: 'CartItem',
 	id: 'omg123',
 	quantity: 3,

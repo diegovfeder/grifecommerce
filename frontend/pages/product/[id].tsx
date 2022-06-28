@@ -6,9 +6,8 @@ interface ISingleProductPage {
 	};
 }
 
-// TODO: Style this page / component
 const SingleProductPage = ({ query }: ISingleProductPage) => {
-	return <SingleProduct id={query.id} />;
+	return <SingleProduct id={query?.id || ''} />;
 };
 
 export default SingleProductPage;

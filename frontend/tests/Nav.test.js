@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
-import { MockedProvider } from '@apollo/react-testing';
+import { MockedProvider } from '@apollo/client/testing';
 import Nav from '../components/Nav';
-import { CURRENT_USER_QUERY } from '../components/User';
+import { CURRENT_USER_QUERY } from '../hooks/useUserQuery';
 import { fakeUser, fakeCartItem } from '../utils/testUtils';
-import CartStateProvider  from '../providers/CartStateProvider';
+import CartStateProvider from '../providers/CartStateProvider';
 
 // Make some Mocks for being logged out, logged in, and loggedin with cart items
 const notSignedInMocks = [
@@ -40,7 +40,7 @@ describe('<Nav/>', () => {
 				<MockedProvider mocks={notSignedInMocks}>
 					<Nav />
 				</MockedProvider>
-			</CartStateProvider>
+			</CartStateProvider>,
 		);
 		expect(container).toHaveTextContent('Sign In');
 		expect(container).toMatchSnapshot();
@@ -57,7 +57,7 @@ describe('<Nav/>', () => {
 				<MockedProvider mocks={signedInMocks}>
 					<Nav />
 				</MockedProvider>
-			</CartStateProvider>
+			</CartStateProvider>,
 		);
 		await screen.findByText('Account');
 		expect(container).toMatchSnapshot();
@@ -71,7 +71,7 @@ describe('<Nav/>', () => {
 				<MockedProvider mocks={signedInMocksWithCartItems}>
 					<Nav />
 				</MockedProvider>
-			</CartStateProvider>
+			</CartStateProvider>,
 		);
 		await screen.findByText('Account');
 		expect(screen.getByText('3')).toBeInTheDocument();

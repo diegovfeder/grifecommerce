@@ -1,44 +1,60 @@
 import { render, screen } from '@testing-library/react';
-import { MockedProvider } from '@apollo/react-testing';
+import { MockedProvider } from '@apollo/client/testing';
 import userEvent from '@testing-library/user-event';
-import RequestPasswordReset, {
-  REQUEST_RESET_MUTATION,
-} from '../components/RequestPasswordReset';
+import { resolveMockState } from './utils';
+import { VERIFY_USER_EMAIL_QUERY } from '../gql/queries';
+import { SEND_USER_PASSWORD_RESET_LINK_MUTATION } from '../gql/mutations';
+import RequestPasswordReset from '../components/RequestPasswordReset'
 
-const email = 'wesbos@gmail.com';
+const email = 'diego@test.com';
 const mocks = [
-  {
-    request: {
-      query: REQUEST_RESET_MUTATION,
-      variables: { email },
-    },
-    result: {
-      data: { sendUserPasswordResetLink: null },
-    },
-  },
+	{
+		request: {
+			query: VERIFY_USER_EMAIL_QUERY,
+			variables: { email },
+		},
+		result: {
+			data: {
+				user: {
+					id: '1',
+					email,
+				}
+			},
+		},
+	},
+	{
+		request: {
+			query: SEND_USER_PASSWORD_RESET_LINK_MUTATION,
+			variables: { email },
+		},
+		result: {
+			data: {
+				sendUserPasswordResetLink: true
+			},
+		},
+	},
 ];
 
 describe('<RequestPasswordReset/>', () => {
-  it('renders and matches snapshot', () => {
-    const { container } = render(
-      <MockedProvider>
-        <RequestPasswordReset />
-      </MockedProvider>
-    );
-    expect(container).toMatchSnapshot();
-  });
+	it('renders and matches snapshot', () => {
+		const { container } = render(
+			<MockedProvider mocks={mocks} addTypename={false}>
+				<RequestPasswordReset />
+			</MockedProvider>,
+		);
+		expect(container).toMatchSnapshot();
+	});
 
-  it('calls the mutation when submitted', async () => {
-    const { container, debug } = render(
-      <MockedProvider mocks={mocks}>
-        <RequestPasswordReset />
-      </MockedProvider>
-    );
-    // type into the email box
-    userEvent.type(screen.getByPlaceholderText(/email/i), email);
-    // click submit
-    userEvent.click(screen.getByText(/Request Reset/));
-    const success = await screen.findByText(/Success/i);
-    expect(success).toBeInTheDocument();
-  });
+	it('calls the mutation when submitted', async () => {
+		const { container, debug } = render(
+			<MockedProvider mocks={mocks} addTypename={false}>
+				<RequestPasswordReset />
+			</MockedProvider>,
+		);
+		userEvent.type(screen.getByPlaceholderText(/email/i), email);
+		userEvent.click(screen.getByText(/Request Reset/));
+		await resolveMockState();
+		const success = await screen.findByText(/Success/i);
+		expect(success).toBeInTheDocument();
+	});
 });

@@ -1,51 +1,69 @@
-import gql from 'graphql-tag';
-import { useMutation } from '@apollo/client';
+import { useState } from 'react';
+import { ApolloError, useLazyQuery, useMutation } from '@apollo/client';
+import Error from './ErrorMessage';
 import StyledForm from './styles/StyledForm';
 import useForm from '../hooks/useForm';
-import Error from './ErrorMessage';
 import {
 	EventProps,
 	RequestPasswordResetFormInputProps,
 } from '../types/commonTypes';
-
-const REQUEST_PASSWORD_RESET_MUTATION = gql`
-	mutation REQUEST_PASSWORD_RESET_MUTATION($email: String!) {
-		sendUserPasswordResetLink(email: $email) {
-			code
-			message
-		}
-	}
-`;
+import { VERIFY_USER_EMAIL_QUERY } from '../gql/queries';
+import { SEND_USER_PASSWORD_RESET_LINK_MUTATION } from '../gql/mutations';
+import { IUserModel } from '../types/commonTypes';
 
 const RequestPasswordReset = () => {
+	const [error, setError] = useState<ApolloError>();
+	const [userEmailExists, setUserEmailExists] = useState<boolean>(true);
+	const [verifyUserEmail, { loading: userLoading }] = useLazyQuery(
+		VERIFY_USER_EMAIL_QUERY,
+		{
+			onCompleted: async (data: { user: IUserModel | null }) => {
+				if (data.user === null) {
+					setUserEmailExists(false);
+					return;
+				}
+				setUserEmailExists(true);
+				await sendUserPasswordResetLink();
+			},
+			onError: err => {
+				setError(err);
+			},
+		},
+	);
+
 	const { inputs, handleChange, resetForm } =
 		useForm<RequestPasswordResetFormInputProps>({
 			email: '',
 		});
 
-	const [signup, { data, loading, error }] = useMutation(
-		REQUEST_PASSWORD_RESET_MUTATION,
+	const [sendUserPasswordResetLink, { data, loading }] = useMutation(
+		SEND_USER_PASSWORD_RESET_LINK_MUTATION,
 		{
-			variables: inputs,
-			// refetchQueries: [{ query: CURRENT_USER_QUERY }],
+			variables: { email: inputs.email },
+			onCompleted: (data: { sendUserPasswordResetLink: boolean }) => {
+				setUserEmailExists(true);
+				if (data.sendUserPasswordResetLink) {
+					resetForm();
+				}
+			},
+			onError: err => {
+				setError(err);
+			},
 		},
 	);
 
 	const handleSubmit = async (e: EventProps) => {
-		e.preventDefault(); // stop the form from submitting
-		await signup().catch(console.error);
-		resetForm();
+		e.preventDefault();
+		if (inputs.email === '') {
+			return;
+		}
+		await verifyUserEmail({ variables: { email: inputs.email } });
 	};
 
 	return (
 		<StyledForm method="POST" onSubmit={handleSubmit}>
 			<h2>Request a Password Reset</h2>
-			<Error error={error} />
 			<fieldset>
-				{data?.sendUserPasswordResetLink === null && (
-					<p>Success! Check your email for a link!</p>
-				)}
-
 				<label htmlFor="email">
 					Email
 					<input
@@ -57,7 +75,15 @@ const RequestPasswordReset = () => {
 						onChange={handleChange}
 					/>
 				</label>
-				<button type="submit">Request Reset!</button>
+				<button type="submit" disabled={loading}>
+					Request Reset!
+				</button>
+				{(loading || userLoading) && <p>Loading...</p>}
+				{!userEmailExists && <p>Email not found...</p>}
+				{data?.sendUserPasswordResetLink && (
+					<p>Success! Check your email for a link!</p>
+				)}
+				<Error error={error} />
 			</fieldset>
 		</StyledForm>
 	);

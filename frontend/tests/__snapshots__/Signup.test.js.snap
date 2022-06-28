@@ -3,7 +3,7 @@
 exports[`<SignUp/> render and matches snapshot 1`] = `
 <div>
   <form
-    class="Form-sc-1xszr8q-0 gBNtYT"
+    class="StyledForm-sc-44wenk-0 kdyDoq"
     method="POST"
   >
     <h2>
@@ -49,7 +49,7 @@ exports[`<SignUp/> render and matches snapshot 1`] = `
       <button
         type="submit"
       >
-        Sign Up!
+        Sign In!
       </button>
     </fieldset>
   </form>

@@ -1,53 +1,36 @@
+import React from 'react';
 import { useQuery } from '@apollo/client';
-import gql from 'graphql-tag';
 import Head from 'next/head';
 import styled from 'styled-components';
 import Link from 'next/link';
 import ErrorMessage from '../../components/ErrorMessage';
 import formatMoney from '../../utils/formatMoney';
 import StyledOrderItem from '../../components/styles/StyledOrderItem';
+import GET_ORDERS_QUERY from '../../gql/getOrdersQuery.gql';
+import { IItem, IOrder } from '../../types/commonTypes';
 
 // TODO: Create Orders model in keystone
-const USER_ORDERS_QUERY = gql`
-	query USER_ORDERS_QUERY {
-		orders {
-			id
-			charge
-			total
-			user {
-				id
-			}
-			items {
-				id
-				name
-				description
-				price
-				quantity
-				photo {
-					image {
-						publicUrlTransformed
-					}
-				}
-			}
-		}
-	}
-`;
-
 const OrderUl = styled.ul`
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
 	grid-gap: 4rem;
 `;
 
-function countItemsInAnOrder(order) {
-	return order.items.reduce((tally, item) => tally + item.quantity, 0);
+function countItemsInAnOrder(order: IOrder) {
+	return order.items.reduce(
+		(tally: number, item: { quantity: number }) => tally + item.quantity,
+		0,
+	);
 }
 
 export default function OrdersPage() {
-	const { data, error, loading } = useQuery(USER_ORDERS_QUERY);
+	const { data, error, loading } = useQuery(GET_ORDERS_QUERY);
+	const { allOrders } = data || [];
+
 	if (loading) return <p>Loading...</p>;
+
 	if (error) return <ErrorMessage error={error} />;
-	const { allOrders } = data;
+
 	return (
 		<div>
 			<Head>
@@ -59,7 +42,7 @@ export default function OrdersPage() {
 				<h2>You have no orders!</h2>
 			)}
 			<OrderUl>
-				{allOrders?.map(order => (
+				{allOrders?.map((order: IOrder) => (
 					<StyledOrderItem>
 						<Link href={`/order/${order.id}`}>
 							<a>
@@ -72,7 +55,7 @@ export default function OrdersPage() {
 									<p>{formatMoney(order.total)}</p>
 								</div>
 								<div className="images">
-									{order.items.map(item => (
+									{order.items.map((item: IItem) => (
 										<img
 											key={`image-${item.id}`}
 											src={item.photo?.image?.publicUrlTransformed}
