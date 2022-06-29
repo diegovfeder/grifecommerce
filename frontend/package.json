@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "next -p 7777",
     "build": "next build",
+		"vercel-build": "npm run prepare && next build",
     "start": "next start -p 7777",
     "sb:dev": "start-storybook -p 6006",
     "sb:build": "build-storybook",
