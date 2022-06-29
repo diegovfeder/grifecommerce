@@ -11,7 +11,8 @@ module.exports = {
 		});
 		return config;
 	},
-	webpackDevMiddleware: config => {
-		return config;
-	},
+	// FIXME: What does this do?
+	// webpackDevMiddleware: config => {
+	// 	return config;
+	// },
 };

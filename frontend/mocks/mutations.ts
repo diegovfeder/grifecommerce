@@ -33,6 +33,9 @@ const mockMutations = {
 			},
 		},
 	},
+	signUp: {
+		// TODO:
+	},
 };
 
 export default mockMutations;

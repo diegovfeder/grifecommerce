@@ -10,12 +10,6 @@ interface PaginationProps {
 	productsCount: number;
 }
 
-export const PAGINATION_QUERY = gql`
-	query PAGINATION_QUERY {
-		productsCount
-	}
-`;
-
 const Pagination = ({ page, productsCount }: PaginationProps) => {
 	// const productsCount = data?.productsCount;
 	const pagesTotal = Math.ceil(productsCount / totalProductsPerPage);

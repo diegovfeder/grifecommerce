@@ -31,7 +31,7 @@ exports[`<ProductComponent/> Renders and matches the snapshot 1`] = `
       class="StyledTitle-sc-xu1dk-0 AeOwD"
     >
       <a
-        href="/product/1"
+        href="/product/718b7ac6-7cf1-47e7-b1de-c4a13ca92f2d"
       >
         GRIFE Sample Pack - (Yellow)
       </a>
@@ -48,7 +48,7 @@ exports[`<ProductComponent/> Renders and matches the snapshot 1`] = `
       class="buttonList"
     >
       <a
-        href="/edit?id=1"
+        href="/edit?id=718b7ac6-7cf1-47e7-b1de-c4a13ca92f2d"
       >
         Edit ✏️
       </a>

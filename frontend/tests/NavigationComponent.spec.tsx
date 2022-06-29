@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
-import Nav from '../components/Nav';
+import NavigationComponent from '../components/NavigationComponent';
 import { CURRENT_USER_QUERY } from '../hooks/useUserQuery';
 import { fakeUser, fakeCartItem } from '../utils/testUtils';
 import CartStateProvider from '../providers/CartStateProvider';
@@ -33,20 +33,20 @@ const signedInMocksWithCartItems = [
 	},
 ];
 
-describe('<Nav/>', () => {
+describe('<NavigationComponent/>', () => {
 	it('Renders and minimal nav when signed out', () => {
 		const { container, debug } = render(
 			<CartStateProvider>
 				<MockedProvider mocks={notSignedInMocks}>
-					<Nav />
+					<NavigationComponent />
 				</MockedProvider>
 			</CartStateProvider>,
 		);
-		expect(container).toHaveTextContent('Sign In');
+		expect(container).toHaveTextContent(/sign in/i);
 		expect(container).toMatchSnapshot();
-		const link = screen.getByText('Sign In');
+		const link = screen.getByText(/sign in/i);
 		expect(link).toHaveAttribute('href', '/signin');
-		const productsLink = screen.getByText('Products');
+		const productsLink = screen.getByText(/products/i);
 		expect(productsLink).toBeInTheDocument();
 		expect(productsLink).toHaveAttribute('href', '/products');
 	});
@@ -55,25 +55,25 @@ describe('<Nav/>', () => {
 		const { container, debug } = render(
 			<CartStateProvider>
 				<MockedProvider mocks={signedInMocks}>
-					<Nav />
+					<NavigationComponent />
 				</MockedProvider>
 			</CartStateProvider>,
 		);
-		await screen.findByText('Account');
+		await screen.findByText(/account/i);
 		expect(container).toMatchSnapshot();
-		expect(container).toHaveTextContent('Sign Out');
-		expect(container).toHaveTextContent('My Cart');
+		expect(container).toHaveTextContent(/sign out/i);
+		expect(container).toHaveTextContent(/my cart/i);
 	});
 
 	it('rendres the amount of items in the cart', async () => {
 		const { container, debug } = render(
 			<CartStateProvider>
 				<MockedProvider mocks={signedInMocksWithCartItems}>
-					<Nav />
+					<NavigationComponent />
 				</MockedProvider>
 			</CartStateProvider>,
 		);
-		await screen.findByText('Account');
+		await screen.findByText(/account/i);
 		expect(screen.getByText('3')).toBeInTheDocument();
 	});
 });

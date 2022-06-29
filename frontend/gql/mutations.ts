@@ -5,3 +5,17 @@ export const SEND_USER_PASSWORD_RESET_LINK_MUTATION = gql`
 		sendUserPasswordResetLink(email: $email)
 	}
 `;
+
+export const SIGN_UP_MUTATION = gql`
+	mutation SIGNUP_MUTATION(
+		$email: String!
+		$name: String!
+		$password: String!
+	) {
+		createUser(data: { email: $email, name: $name, password: $password }) {
+			id
+			email
+			name
+		}
+	}
+`;

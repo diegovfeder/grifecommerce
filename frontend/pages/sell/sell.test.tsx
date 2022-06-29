@@ -1,14 +1,8 @@
-/**
- * @jest-environment jsdom
- */
-
-import React from 'react';
-import '@testing-library/jest-dom/extend-expect';
 import { render, screen } from '@testing-library/react';
-import SellPage from '.';
 import { MockedProvider } from '@apollo/client/testing';
 import { MockedResponse } from '@apollo/client/testing';
 import { CURRENT_USER_QUERY } from '../../hooks/useUserQuery';
+import SellPage from '.';
 
 const mocks = [
 	{

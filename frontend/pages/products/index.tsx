@@ -1,14 +1,16 @@
+// TODO: Fix error, query is not being passed from useRouter()
+// can I mock it?
 import { useEffect } from 'react';
-import { gql, useLazyQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import { useRouter } from 'next/dist/client/router';
 import Pagination from '../../components/Pagination';
 import ProductsGridComponent from '../../components/ProductsGridComponent';
-
-const PAGINATION_QUERY = gql`
-	query PAGINATION_QUERY {
-		productsCount
-	}
-`;
+// TODO: How can I add vscode / graphql vscode reccomendations?
+// If we have that similar to the dx we get from typescript,
+// we could write files with .gql extension...
+// -- on the other hand, the second option is to
+// simply use a .ts file like this below...
+import { PAGINATION_QUERY } from '../../gql/queries';
 
 const ProductsPage = () => {
 	const { query } = useRouter();

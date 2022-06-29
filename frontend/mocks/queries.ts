@@ -1,4 +1,4 @@
-import CURRENT_USER_QUERY from '../gql/queryCurrentUser.gql';
+import { CURRENT_USER_QUERY } from '../hooks/useUserQuery';
 
 const mockQueries = {
 	currentUser: {
@@ -23,10 +23,10 @@ const mockQueries = {
 							photo: {
 								image: {
 									publicUrlTransformed: 'https://via.placeholder.com/300x300',
-								}
-							}
-						}
-					}
+								},
+							},
+						},
+					},
 				},
 			},
 		},

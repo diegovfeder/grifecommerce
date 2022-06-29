@@ -11,23 +11,34 @@ describe('<ProductComponent/>', () => {
 	it('renders out the price tag and title', () => {
 		const { container, debug } = render(
 			<MockedProvider
-				mocks={[mockQueries.currentUser, mockMutations.addToCart, mockMutations.deleteProduct]}
+				mocks={[
+					mockQueries.currentUser,
+					mockMutations.addToCart,
+					mockMutations.deleteProduct,
+				]}
 				addTypename={false}
 			>
 				<ProductComponent product={product} />
 			</MockedProvider>,
 		);
-		const priceTag = screen.getByText('$50');
+		const priceTag = screen.getByText('R$ 50');
 		expect(priceTag).toBeInTheDocument();
 		const link = container.querySelector('a');
-		expect(link).toHaveAttribute('href', '/product/abc123');
+		expect(link).toHaveAttribute(
+			'href',
+			'/product/718b7ac6-7cf1-47e7-b1de-c4a13ca92f2d',
+		);
 		expect(link).toHaveTextContent(product.name);
 	});
 
 	it('Renders and matches the snapshot', () => {
 		const { container, debug } = render(
 			<MockedProvider
-				mocks={[mockQueries.currentUser, mockMutations.addToCart, mockMutations.deleteProduct]}
+				mocks={[
+					mockQueries.currentUser,
+					mockMutations.addToCart,
+					mockMutations.deleteProduct,
+				]}
 				addTypename={false}
 			>
 				<ProductComponent product={product} />
@@ -39,7 +50,11 @@ describe('<ProductComponent/>', () => {
 	it('renders the image properly', () => {
 		const { container, debug } = render(
 			<MockedProvider
-				mocks={[mockQueries.currentUser, mockMutations.addToCart, mockMutations.deleteProduct]}
+				mocks={[
+					mockQueries.currentUser,
+					mockMutations.addToCart,
+					mockMutations.deleteProduct,
+				]}
 				addTypename={false}
 			>
 				<ProductComponent product={product} />

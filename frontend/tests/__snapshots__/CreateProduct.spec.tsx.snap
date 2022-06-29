@@ -3,22 +3,11 @@
 exports[`<CreateProduct/> renders and matches snapshot 1`] = `
 <div>
   <form
-    class="Form-sc-1xszr8q-0 gBNtYT"
+    class="StyledForm-sc-44wenk-0 kdyDoq"
   >
     <fieldset
       aria-busy="false"
     >
-      <label
-        for="image"
-      >
-        Image
-        <input
-          id="image"
-          name="image"
-          required=""
-          type="file"
-        />
-      </label>
       <label
         for="name"
       >
@@ -29,6 +18,16 @@ exports[`<CreateProduct/> renders and matches snapshot 1`] = `
           placeholder="Name"
           type="text"
           value=""
+        />
+      </label>
+      <label
+        for="description"
+      >
+        Description
+        <textarea
+          id="description"
+          name="description"
+          placeholder="Description"
         />
       </label>
       <label
@@ -44,13 +43,14 @@ exports[`<CreateProduct/> renders and matches snapshot 1`] = `
         />
       </label>
       <label
-        for="description"
+        for="image"
       >
-        Description
-        <textarea
-          id="description"
-          name="description"
-          placeholder="Description"
+        Image
+        <input
+          id="image"
+          name="image"
+          required=""
+          type="file"
         />
       </label>
       <button

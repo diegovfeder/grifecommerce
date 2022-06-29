@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { ApolloError } from '@apollo/client';
 
-const ErrorMessage = ({ error }: { error: ApolloError | undefined }) => {
+const ErrorMessage = ({ error }: { error: ApolloError | null }) => {
 	if (!error || !error.message) return null;
 	if (
 		error.networkError &&

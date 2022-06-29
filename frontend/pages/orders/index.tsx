@@ -6,7 +6,7 @@ import Link from 'next/link';
 import ErrorMessage from '../../components/ErrorMessage';
 import formatMoney from '../../utils/formatMoney';
 import StyledOrderItem from '../../components/styles/StyledOrderItem';
-import GET_ORDERS_QUERY from '../../gql/getOrdersQuery.gql';
+import GET_ORDERS_QUERY from '../../gql/queryOrders.gql';
 import { IItem, IOrder } from '../../types/commonTypes';
 
 // TODO: Create Orders model in keystone

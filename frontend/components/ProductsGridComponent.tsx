@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import ProductComponent from './ProductComponent';
 import { totalProductsPerPage } from '../config';
 import { ProductProps } from '../types/commonTypes';
-import PRODUCTS_QUERY from '../gql/productsQuery.gql';
+import PRODUCTS_QUERY from '../gql/queryProducts.gql';
 
 interface ProductsGridComponentProps {
 	page: number;

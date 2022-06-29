@@ -11,8 +11,8 @@ interface EditProductProps {
 	id: String;
 }
 
-const SINGLE_PRODUCT_QUERY = gql`
-	query SINGLE_PRODUCT_QUERY($id: ID!) {
+const PRODUCT_QUERY = gql`
+	query PRODUCT_QUERY($id: ID!) {
 		product(where: { id: $id }) {
 			id
 			name
@@ -42,7 +42,7 @@ const EDIT_PRODUCT_MUTATION = gql`
 `;
 
 const EditProduct = ({ id }: EditProductProps) => {
-	const { loading, data, error } = useQuery(SINGLE_PRODUCT_QUERY, {
+	const { loading, data, error } = useQuery(PRODUCT_QUERY, {
 		variables: { id },
 	});
 	const router = useRouter();

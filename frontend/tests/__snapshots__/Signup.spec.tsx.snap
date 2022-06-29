@@ -13,8 +13,9 @@ exports[`<SignUp/> render and matches snapshot 1`] = `
       <label
         for="email"
       >
-        Your Name
+        Name
         <input
+          aria-label="name"
           autocomplete="name"
           name="name"
           placeholder="Your Name"
@@ -49,8 +50,11 @@ exports[`<SignUp/> render and matches snapshot 1`] = `
       <button
         type="submit"
       >
-        Sign In!
+        Sign Up!
       </button>
+      <p>
+        Error
+      </p>
     </fieldset>
   </form>
 </div>

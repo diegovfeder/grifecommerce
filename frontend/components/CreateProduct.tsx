@@ -5,7 +5,7 @@ import ErrorMessage from './ErrorMessage';
 import StyledForm from './styles/StyledForm';
 import useForm from '../hooks/useForm';
 import { EventProps, ProductFormInputProps } from '../types/commonTypes';
-import ALL_PRODUCTS_QUERY from '../gql/allProductsQuery.gql';
+import ALL_PRODUCTS_QUERY from '../gql/queryAllProducts.gql';
 
 export const CREATE_PRODUCT_MUTATION = gql`
 	mutation CREATE_PRODUCT_MUTATION(
@@ -25,7 +25,7 @@ export const CREATE_PRODUCT_MUTATION = gql`
 		) {
 			id
 			price
-			descriptio
+			description
 			name
 		}
 	}

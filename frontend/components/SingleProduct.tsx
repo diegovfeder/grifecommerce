@@ -1,47 +1,29 @@
-import React from 'react';
 import { useQuery } from '@apollo/client';
-import gql from 'graphql-tag';
+import styled from 'styled-components';
 import Image from 'next/image';
 import Head from 'next/head';
-import styled from 'styled-components';
 import ErrorMessage from './ErrorMessage';
+import { PRODUCT_QUERY } from '../gql/queries';
+import LoadingLabel from './loading/LoadingLabel';
 
 interface SingleProductProps {
 	id: string;
 }
 
-export const SINGLE_ITEM_QUERY = gql`
-	query SINGLE_ITEM_QUERY($id: ID!) {
-		product(where: { id: $id }) {
-			id
-			name
-			price
-			description
-			photo {
-				id
-				altText
-				image {
-					publicUrlTransformed
-				}
-			}
-		}
-	}
-`;
-
 const SingleProduct = ({ id }: SingleProductProps) => {
-	const { loading, data, error } = useQuery(SINGLE_ITEM_QUERY, {
+	const { loading, data, error } = useQuery(PRODUCT_QUERY, {
 		variables: {
 			id,
 		},
 	});
 
-	if (loading) return <p>Loading...</p>;
+	if (loading) return <LoadingLabel />;
 
 	if (error) return <ErrorMessage error={error} />;
 
 	const { product } = data;
 	return (
-		<ProductStyles>
+		<ProductStyles data-test-id="singleProduct">
 			<Head>
 				<title>GRIFE | {product.name}</title>
 			</Head>

@@ -83,7 +83,7 @@
   "jest": {
     "verbose": true,
     "testEnvironment": "jsdom",
-		"transform": {
+    "transform": {
       "\\.(gql|graphql)$": "jest-transform-graphql",
       ".*": "babel-jest"
     },

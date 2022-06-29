@@ -1,13 +1,13 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import casual from 'casual';
-import { PAGINATION_QUERY } from '../components/Pagination';
+import { PAGINATION_QUERY } from '../gql/queries';
 
 // seed it so we get consistent results
 casual.seed(777);
 
 const fakeItem = () => ({
 	// __typename: 'Item',
-	id: '1',
+	id: '718b7ac6-7cf1-47e7-b1de-c4a13ca92f2d',
 	name: 'GRIFE Sample Pack - (Yellow)',
 	description:
 		'This our first sample pack for summer beats in a sunny day, when all is yellow :)',
@@ -23,7 +23,7 @@ const fakeItem = () => ({
 	},
 });
 
-const fakeUser = overrides => ({
+const fakeUser = (rest?: any) => ({
 	__typename: 'User',
 	id: '4234',
 	name: casual.name,
@@ -31,7 +31,7 @@ const fakeUser = overrides => ({
 	permissions: ['ADMIN'],
 	orders: [],
 	cart: [],
-	...overrides,
+	...rest,
 });
 
 const fakeOrderItem = () => ({
@@ -56,15 +56,16 @@ const fakeOrder = () => ({
 	user: fakeUser(),
 });
 
-const fakeCartItem = overrides => ({
+const fakeCartItem = (rest?: any) => ({
 	__typename: 'CartItem',
 	id: 'omg123',
 	quantity: 3,
 	product: fakeItem(),
 	user: fakeUser(),
-	...overrides,
+	...rest,
 });
 
+// FIXME: Properly type this class
 // Fake LocalStorage
 class LocalStorageMock {
 	constructor() {
@@ -88,7 +89,7 @@ class LocalStorageMock {
 	}
 }
 
-function makePaginationMocksFor(length) {
+function makePaginationMocksFor(length: number) {
 	return [
 		{
 			request: { query: PAGINATION_QUERY },

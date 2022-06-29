@@ -10,7 +10,7 @@ import {
 	fakeItem,
 	// makePaginationMocksFor
 } from '../utils/testUtils';
-import { PRODUCTS_QUERY } from '../components/ProductsGridComponent';
+import PRODUCTS_QUERY from '../gql/queryProducts.gql';
 
 import { logRoles } from '@testing-library/dom';
 
@@ -22,6 +22,21 @@ jest.mock('next/router', () => ({
 }));
 
 const mocks = [
+	{
+		request: {
+			query: PRODUCTS_QUERY,
+			variables: {
+				take: 1,
+				skip: 0,
+			},
+		},
+		result: {
+			data: {
+				products: [item],
+				productsCount: 1,
+			},
+		},
+	},
 	{
 		request: {
 			query: PRODUCTS_QUERY,
@@ -78,7 +93,6 @@ describe('<CreateProduct/>', () => {
 	});
 
 	it('creates the items when the form is submitted', async () => {
-		// create the mocks for this one
 		const mocks = [
 			{
 				request: {
@@ -112,10 +126,7 @@ describe('<CreateProduct/>', () => {
 			},
 		];
 
-		const {
-			container,
-			// debug
-		} = render(
+		const { container } = render(
 			<MockedProvider mocks={mocks} addTypename={false}>
 				<CreateProduct />
 			</MockedProvider>,

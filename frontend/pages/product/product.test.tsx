@@ -1,19 +1,20 @@
-/**
- * @jest-environment jsdom
- */
-
-import React from 'react';
-import '@testing-library/jest-dom/extend-expect';
 import { render, screen } from '@testing-library/react';
 import SingleProductPage from './[id]';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
-import { SINGLE_ITEM_QUERY } from '../../components/SingleProduct';
+import { PRODUCT_QUERY } from '../../gql/queries';
 import { resolveMockState } from '../../tests/utils';
+
+const useRouter = jest.spyOn(require('next/router'), 'useRouter');
+
+useRouter.mockImplementationOnce(() => ({
+	query: { page: 1 },
+	// asPath: '/posts'
+}));
 
 const mocks = [
 	{
 		request: {
-			query: SINGLE_ITEM_QUERY,
+			query: PRODUCT_QUERY,
 			variables: {
 				id: '',
 			},
@@ -26,7 +27,7 @@ const mocks = [
 	},
 	{
 		request: {
-			query: SINGLE_ITEM_QUERY,
+			query: PRODUCT_QUERY,
 			variables: {
 				id: 'invalid-id',
 			},
@@ -35,7 +36,7 @@ const mocks = [
 	},
 	{
 		request: {
-			query: SINGLE_ITEM_QUERY,
+			query: PRODUCT_QUERY,
 			variables: {
 				id: '718b7ac6-7cf1-47e7-b1de-c4a13ca92f2d',
 			},
@@ -61,7 +62,7 @@ const mocks = [
 	},
 ] as MockedResponse[];
 
-describe('Single Product Page', () => {
+describe('product page', () => {
 	describe('when query contains empty id', () => {
 		it('renders the page properly', () => {
 			render(
@@ -69,7 +70,7 @@ describe('Single Product Page', () => {
 					<SingleProductPage query={{ id: '' }} />
 				</MockedProvider>,
 			);
-			expect(screen.getByText('Loading...')).toBeInTheDocument();
+			expect(screen.getByLabelText('Loading...')).toBeInTheDocument();
 		});
 	});
 
@@ -80,7 +81,7 @@ describe('Single Product Page', () => {
 					<SingleProductPage query={{ id: 'invalid-id' }} />
 				</MockedProvider>,
 			);
-			expect(screen.getByText('Loading...')).toBeInTheDocument();
+			expect(screen.getByLabelText('Loading...')).toBeInTheDocument();
 			await resolveMockState();
 			expect(
 				screen.getByText('No product found for id: invalid-id'),
@@ -97,9 +98,10 @@ describe('Single Product Page', () => {
 					/>
 				</MockedProvider>,
 			);
-			expect(screen.getByText('Loading...')).toBeInTheDocument();
-			// await resolveMockState();
-			expect(screen.getByText('Sample Pack')).toBeInTheDocument();
+			expect(screen.getByLabelText('Loading...')).toBeInTheDocument();
+			await resolveMockState();
+			//TODO: Check what do we have here?..
+			expect(screen.getByText('404')).toBeInTheDocument();
 		});
 	});
 });

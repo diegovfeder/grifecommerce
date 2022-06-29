@@ -1,14 +1,15 @@
-/**
- * @jest-environment jsdom
- */
-
-import React from 'react';
-import '@testing-library/jest-dom/extend-expect';
 import { render, screen } from '@testing-library/react';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
-import { PAGINATION_QUERY } from '../../components/Pagination';
-import { PRODUCTS_QUERY } from '../../components/ProductsGridComponent';
+import { PAGINATION_QUERY } from '../../gql/queries';
+import { PRODUCTS_QUERY } from '../../gql/queries';
 import ProductsPage from '.';
+
+const useRouter = jest.spyOn(require('next/router'), 'useRouter');
+
+useRouter.mockImplementationOnce(() => ({
+	query: { page: 1 },
+	// asPath: '/posts'
+}));
 
 const mocks = [
 	{
@@ -48,16 +49,19 @@ const mocks = [
 	},
 ] as MockedResponse[];
 
-describe('Products Page', () => {
-	describe('When user is not Signed In', () => {
-		it('should render the Sign In page', () => {
+describe('products page', () => {
+	describe('when user is not signed in', () => {
+		it('should render the products page', () => {
 			render(
 				<MockedProvider mocks={mocks} addTypename={false}>
 					<ProductsPage />
 				</MockedProvider>,
 			);
 
-			expect(screen.getByText('Sign Into Your Account')).toBeVisible();
+			expect(screen.getByText('Loading...')).toBeVisible();
+			expect(screen.getByText('Prev:')).toBeVisible();
+			expect(screen.getByText('Page')).toBeVisible();
+			expect(screen.getByText('Total Products:')).toBeVisible();
 			expect(screen.getByText('Email')).toBeVisible();
 			expect(screen.getByText('Password')).toBeVisible();
 			expect(screen.getByText('Sign In!')).toBeVisible();

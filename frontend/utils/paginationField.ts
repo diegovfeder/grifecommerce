@@ -1,4 +1,4 @@
-import { PAGINATION_QUERY } from '../components/Pagination';
+import { PAGINATION_QUERY } from '../gql/queries';
 
 const paginationField = () => {
 	return {
@@ -10,7 +10,7 @@ const paginationField = () => {
 			const { productsCount } = data;
 			const page = skip / take + 1;
 			const pages = Math.ceil(productsCount / take);
-			const items = existing.slice(skip, skip + take).filter((x) => x);
+			const items = existing.slice(skip, skip + take).filter(x => x);
 
 			if (items.length && items.length !== take && page === pages) {
 				return items;
@@ -33,7 +33,6 @@ const paginationField = () => {
 			return merged;
 		},
 	};
-}
+};
 
 export default paginationField;
-
