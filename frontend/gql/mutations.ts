@@ -19,3 +19,17 @@ export const SIGN_UP_MUTATION = gql`
 		}
 	}
 `;
+
+export const CREATE_ORDER_MUTATION = gql`
+	mutation CreateOrder($token: String!) {
+		checkout(token: $token) {
+			id
+			charge
+			total
+			items {
+				id
+				name
+			}
+		}
+	}
+`;

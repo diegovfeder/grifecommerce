@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
-export const VERIFY_USER_EMAIL_QUERY = gql`
-	query UserEmailExists($email: String!) {
+export const USER_EMAIL_QUERY = gql`
+	query UserEmail($email: String!) {
 		user(where: { email: $email }) {
 			id
 			email
@@ -62,7 +62,36 @@ export const PRODUCTS_QUERY = gql`
 `;
 
 export const PAGINATION_QUERY = gql`
-	query PAGINATION_QUERY {
+	query Pagination {
 		productsCount
 	}
 `;
+
+export const CURRENT_USER_QUERY = gql`
+	query CurrentUser {
+		authenticatedItem {
+			... on User {
+				id
+				email
+				name
+				cart {
+					id
+					quantity
+					product {
+						id
+						price
+						name
+						description
+						photo {
+							image {
+								publicUrlTransformed
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+`;
+
+

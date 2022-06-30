@@ -2,15 +2,15 @@ import { render, screen } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 import userEvent from '@testing-library/user-event';
 import { resolveMockState } from './utils';
-import { VERIFY_USER_EMAIL_QUERY } from '../gql/queries';
+import { USER_EMAIL_QUERY } from '../gql/queries';
 import { SEND_USER_PASSWORD_RESET_LINK_MUTATION } from '../gql/mutations';
-import RequestPasswordReset from '../components/RequestPasswordReset'
+import RequestPasswordReset from '../components/RequestPasswordReset';
 
 const email = 'diego@test.com';
 const mocks = [
 	{
 		request: {
-			query: VERIFY_USER_EMAIL_QUERY,
+			query: USER_EMAIL_QUERY,
 			variables: { email },
 		},
 		result: {
@@ -18,7 +18,7 @@ const mocks = [
 				user: {
 					id: '1',
 					email,
-				}
+				},
 			},
 		},
 	},
@@ -29,7 +29,7 @@ const mocks = [
 		},
 		result: {
 			data: {
-				sendUserPasswordResetLink: true
+				sendUserPasswordResetLink: true,
 			},
 		},
 	},

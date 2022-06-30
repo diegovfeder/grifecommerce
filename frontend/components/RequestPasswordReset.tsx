@@ -7,7 +7,7 @@ import {
 	EventProps,
 	RequestPasswordResetFormInputProps,
 } from '../types/commonTypes';
-import { VERIFY_USER_EMAIL_QUERY } from '../gql/queries';
+import { USER_EMAIL_QUERY } from '../gql/queries';
 import { SEND_USER_PASSWORD_RESET_LINK_MUTATION } from '../gql/mutations';
 import { IUserModel } from '../types/commonTypes';
 
@@ -15,7 +15,7 @@ const RequestPasswordReset = () => {
 	const [error, setError] = useState<ApolloError>();
 	const [userEmailExists, setUserEmailExists] = useState<boolean>(true);
 	const [verifyUserEmail, { loading: userLoading }] = useLazyQuery(
-		VERIFY_USER_EMAIL_QUERY,
+		USER_EMAIL_QUERY,
 		{
 			onCompleted: async (data: { user: IUserModel | null }) => {
 				if (data.user === null) {
