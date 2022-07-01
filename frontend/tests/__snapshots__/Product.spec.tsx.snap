@@ -48,9 +48,9 @@ exports[`<ProductComponent/> Renders and matches the snapshot 1`] = `
       class="buttonList"
     >
       <a
-        href="/edit?id=718b7ac6-7cf1-47e7-b1de-c4a13ca92f2d"
+        href="/update-product?id=718b7ac6-7cf1-47e7-b1de-c4a13ca92f2d"
       >
-        Edit ✏️
+        Update ✏️
       </a>
       <button
         class="AddToCartButton__StyledButtonLink-sc-er42vj-0 jJITkP"

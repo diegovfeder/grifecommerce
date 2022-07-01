@@ -33,3 +33,23 @@ export const CREATE_ORDER_MUTATION = gql`
 		}
 	}
 `;
+
+
+export const UPDATE_PRODUCT_MUTATION = gql`
+	mutation UpdateProduct(
+		$id: ID!
+		$name: String
+		$description: String
+		$price: Int
+	) {
+		updateProduct(
+			where: { id: $id }
+			data: { name: $name, description: $description, price: $price }
+		) {
+			id
+			name
+			description
+			price
+		}
+	}
+`;

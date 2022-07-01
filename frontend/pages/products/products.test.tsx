@@ -59,12 +59,13 @@ describe('products page', () => {
 			);
 
 			expect(screen.getByText('Loading...')).toBeVisible();
-			expect(screen.getByText('Prev:')).toBeVisible();
-			expect(screen.getByText('Page')).toBeVisible();
-			expect(screen.getByText('Total Products:')).toBeVisible();
-			expect(screen.getByText('Email')).toBeVisible();
-			expect(screen.getByText('Password')).toBeVisible();
-			expect(screen.getByText('Sign In!')).toBeVisible();
+			expect(screen.getAllByText(/Prev/)[0]).toBeVisible();
+			expect(screen.getAllByText(/Prev/)[1]).toBeVisible();
+			expect(screen.getAllByText(/Page/)[0]).toBeVisible();
+			expect(screen.getAllByText(/Page/)[1]).toBeVisible();
+			expect(screen.getAllByText(/Total Products/)[0]).toBeVisible();
+			expect(screen.getAllByText(/Total Products/)[1]).toBeVisible();
+			// TODO: Test header, if in this case we get only PRODUCTS and SIGN IN to click.
 		});
 	});
 

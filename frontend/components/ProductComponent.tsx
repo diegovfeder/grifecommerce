@@ -12,6 +12,7 @@ import { ProductProps } from '../types/commonTypes';
 const ProductComponent = ({ product }: { product: ProductProps }) => {
 	return (
 		<StyledItem>
+			{/* TODO: This image should be clickable too, route to /product/[id] page */}
 			<Image
 				src={product?.photo?.image?.publicUrlTransformed}
 				alt={product.name}
@@ -24,15 +25,17 @@ const ProductComponent = ({ product }: { product: ProductProps }) => {
 			<StyledPriceTag>{formatMoney(product.price)}</StyledPriceTag>
 			<p>{product.description}</p>
 			<div className="buttonList">
+				{/* TODO: Move this Update Product Button  */}
+				{/* TODO: Also change its UI and wrap in a custom component  */}
 				<Link
 					href={{
-						pathname: '/edit',
+						pathname: '/update-product',
 						query: {
 							id: product.id,
 						},
 					}}
 				>
-					Edit ✏️
+					Update ✏️
 				</Link>
 				<AddToCartButton id={product.id}>Add To Cart 🛒</AddToCartButton>
 				<DeleteProduct id={product.id}>Delete</DeleteProduct>

@@ -62,15 +62,27 @@ const mocks = [
 	},
 ] as MockedResponse[];
 
-describe('product page', () => {
+describe('product/[id] page', () => {
 	describe('when query contains empty id', () => {
-		it('renders the page properly', () => {
+		it('renders page  in loading state properly', () => {
 			render(
 				<MockedProvider mocks={mocks} addTypename={false}>
 					<SingleProductPage query={{ id: '' }} />
 				</MockedProvider>,
 			);
 			expect(screen.getByLabelText('Loading...')).toBeInTheDocument();
+		});
+
+		it('renders page  in loaded state properly', async () => {
+			render(
+				<MockedProvider mocks={mocks} addTypename={false}>
+					<SingleProductPage query={{ id: '' }} />
+				</MockedProvider>,
+			);
+			expect(screen.getByLabelText('Loading...')).toBeInTheDocument();
+			await resolveMockState();
+			expect(screen.queryByText('Loading...')).toBe(null);
+			// TODO: Check if we have the image, check if we have the price, 
 		});
 	});
 
@@ -101,6 +113,7 @@ describe('product page', () => {
 			expect(screen.getByLabelText('Loading...')).toBeInTheDocument();
 			await resolveMockState();
 			//TODO: Check what do we have here?..
+			// TODO: What is being loaded here?
 			expect(screen.getByText('404')).toBeInTheDocument();
 		});
 	});

@@ -6,6 +6,8 @@ import ErrorMessage from './ErrorMessage';
 import useForm from '../hooks/useForm';
 import StyledForm from './styles/StyledForm';
 import { EventProps, ProductFormInputProps } from '../types/commonTypes';
+import LoadingLabel from './loading/LoadingLabel';
+import { UPDATE_PRODUCT_MUTATION } from '../gql/mutations';
 
 interface EditProductProps {
 	id: String;
@@ -22,67 +24,55 @@ const PRODUCT_QUERY = gql`
 	}
 `;
 
-const EDIT_PRODUCT_MUTATION = gql`
-	mutation EDIT_PRODUCT_MUTATION(
-		$id: ID!
-		$name: String
-		$description: String
-		$price: Int
-	) {
-		updateProduct(
-			where: { id: $id }
-			data: { name: $name, description: $description, price: $price }
-		) {
-			id
-			name
-			description
-			price
-		}
-	}
-`;
-
-const EditProduct = ({ id }: EditProductProps) => {
-	const { loading, data, error } = useQuery(PRODUCT_QUERY, {
+const UpdateProductComponent = ({ id }: EditProductProps) => {
+	const {
+		data,
+		loading: queryLoading,
+		error: queryError,
+	} = useQuery(PRODUCT_QUERY, {
 		variables: { id },
 	});
 	const router = useRouter();
 
-	const [editProduct, editMutation] = useMutation(EDIT_PRODUCT_MUTATION);
+	const onMutationComplete = (data: any) => {
+		console.log({ data });
+	};
+
+	const [
+		updateProductMutation,
+		{ loading: mutationLoading, error: mutationError },
+	] = useMutation(UPDATE_PRODUCT_MUTATION);
 
 	const { inputs, handleChange, clearForm } = useForm<ProductFormInputProps>(
-		data?.Product || {
+		data?.product || {
 			name: '',
 			description: '',
 			price: '',
 		},
 	);
 
-	if (loading) return <p>loading...</p>;
+	const handleSubmit = async (e: EventProps) => {
+		e.preventDefault();
+		const res = await updateProductMutation({
+			variables: {
+				id,
+				...inputs,
+			},
+			onCompleted: onMutationComplete,
+		});
+		// TODO: Update UX: When success, show something as feedback to the user
+		clearForm();
+		router.push(`/product/${res.data.updateProduct.id}`);
+	};
+
+	if (queryLoading || mutationLoading) return <LoadingLabel />;
+
+	if (queryError || mutationError)
+		return <ErrorMessage error={queryError || mutationError} />;
 
 	return (
-		<StyledForm
-			onSubmit={async (e: EventProps) => {
-				e.preventDefault();
-				const res = await editProduct({
-					variables: {
-						id,
-						name: inputs.name,
-						description: inputs.description,
-						price: inputs.price,
-					},
-				}).catch(console.error);
-				// TODO: Update UX: When success, show something as feedback to the user
-				clearForm();
-				router.push({
-					pathname: `/product/${res?.data?.updateProduct?.id}`,
-				});
-			}}
-		>
-			<ErrorMessage error={error || editMutation.error} />
-			<fieldset
-				disabled={editMutation.loading}
-				aria-busy={editMutation.loading}
-			>
+		<StyledForm onSubmit={handleSubmit}>
+			<fieldset disabled={mutationLoading} aria-busy={mutationLoading}>
 				<label htmlFor="name">
 					Name
 					<input
@@ -115,10 +105,10 @@ const EditProduct = ({ id }: EditProductProps) => {
 						onChange={handleChange}
 					/>
 				</label>
-				<button type="submit">Edit Product</button>
+				<button type="submit">Update Product</button>
 			</fieldset>
 		</StyledForm>
 	);
 };
 
-export default EditProduct;
+export default UpdateProductComponent;
