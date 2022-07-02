@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Pagination/> renders pagination for 36 items 1`] = `
+exports[`<PaginationComponent/> renders pagination for 36 items 1`] = `
 <div>
   <div
     class="Pagination__StyledPaginationContainer-sc-v2oj55-0 jifjaQ"
@@ -18,13 +18,13 @@ exports[`<Pagination/> renders pagination for 36 items 1`] = `
       <p
         data-test-id="pageCount"
       >
-        Page 
+        Page
         1
-         of 
+         of
         9
       </p>
       <p>
-        Total Products: 
+        Total Products:
         36
       </p>
       <a

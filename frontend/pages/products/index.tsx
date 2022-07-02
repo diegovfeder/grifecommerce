@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import { useRouter } from 'next/dist/client/router';
-import Pagination from '../../components/Pagination';
+import PaginationComponent from '../../components/PaginationComponent';
 import ProductsGridComponent from '../../components/ProductsGridComponent';
 // TODO: How can I add vscode / graphql vscode reccomendations?
 // If we have that similar to the dx we get from typescript,
@@ -14,22 +14,32 @@ import { PAGINATION_QUERY } from '../../gql/queries';
 
 const ProductsPage = () => {
 	const { query } = useRouter();
-	const [queryPagination, { error, loading, data }] =
-		useLazyQuery(PAGINATION_QUERY);
+	const [queryPagination, { error, loading, data }] = useLazyQuery(
+		PAGINATION_QUERY,
+		{
+			onCompleted: data => {
+				console.log(data);
+			},
+		},
+	);
 
 	useEffect(() => {
-		queryPagination();
-	});
+		async () => {
+			console.log('inside await');
+			await queryPagination();
+		};
+		console.log('queryPagination', { data });
+	}, []);
 
-	const queryPageNumber = query.page ? Number(query.page) : 1;
+	const queryPageNumber = !!query?.page ? Number(query.page) : 1;
 	return (
 		<div>
-			<Pagination
+			<PaginationComponent
 				page={queryPageNumber || 1}
 				productsCount={data?.productsCount}
 			/>
 			<ProductsGridComponent page={queryPageNumber || 1} />
-			<Pagination
+			<PaginationComponent
 				page={queryPageNumber || 1}
 				productsCount={data?.productsCount}
 			/>

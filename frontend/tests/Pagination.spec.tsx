@@ -2,13 +2,13 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 import { makePaginationMocksFor } from '../utils/testUtils';
-import Pagination from '../components/Pagination';
+import Pagination from '../components/PaginationComponent';
 
-describe('<Pagination/>', () => {
+describe('<PaginationComponent/>', () => {
 	it('displays a loading message', () => {
 		const { container } = render(
 			<MockedProvider mocks={makePaginationMocksFor(1)}>
-				<Pagination page={1} productsCount={1} />
+				<PaginationComponent page={1} productsCount={1} />
 			</MockedProvider>,
 		);
 		expect(container).toHaveTextContent(
@@ -19,7 +19,7 @@ describe('<Pagination/>', () => {
 	it('renders pagination for 36 items', async () => {
 		const { container, debug } = render(
 			<MockedProvider mocks={makePaginationMocksFor(36)}>
-				<Pagination page={1} productsCount={36} />
+				<PaginationComponent page={1} productsCount={36} />
 			</MockedProvider>,
 		);
 		await screen.findByTestId('pagination');
@@ -32,7 +32,7 @@ describe('<Pagination/>', () => {
 	it('disables the prev page on first page', async () => {
 		const { container, debug } = render(
 			<MockedProvider mocks={makePaginationMocksFor(2)}>
-				<Pagination page={1} productsCount={2} />
+				<PaginationComponent page={1} productsCount={2} />
 			</MockedProvider>,
 		);
 		await screen.findByTestId('pagination');
@@ -44,7 +44,7 @@ describe('<Pagination/>', () => {
 	it('disables the next page on last page', async () => {
 		const { container, debug } = render(
 			<MockedProvider mocks={makePaginationMocksFor(11)}>
-				<Pagination page={3} productsCount={11} />
+				<PaginationComponent page={3} productsCount={11} />
 			</MockedProvider>,
 		);
 		await screen.findByTestId('pagination');
@@ -56,7 +56,7 @@ describe('<Pagination/>', () => {
 	it('enables all on middle page', async () => {
 		const { container, debug } = render(
 			<MockedProvider mocks={makePaginationMocksFor(24)}>
-				<Pagination page={4} productsCount={24} />
+				<PaginationComponent page={4} productsCount={24} />
 			</MockedProvider>,
 		);
 		await screen.findByTestId('pagination');

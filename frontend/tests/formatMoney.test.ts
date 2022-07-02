@@ -9,9 +9,9 @@ describe('format Money function', () => {
 	});
 
 	it('leaves off cents when its whole reals', () => {
-		expect(formatMoney(5000)).toStrictEqual('R$ 50');
-		expect(formatMoney(100)).toStrictEqual('R$ 1');
-		expect(formatMoney(50000000)).toStrictEqual('R$ 500.000');
+		expect(formatMoney(5000)).toStrictEqual('R$ 50,00');
+		expect(formatMoney(100)).toStrictEqual('R$ 1,00');
+		expect(formatMoney(50000000)).toStrictEqual('R$ 500.000,00');
 	});
 
 	it('works with whole and fractional reals', () => {

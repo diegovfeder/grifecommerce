@@ -8,6 +8,7 @@ import formatMoney from '../../utils/formatMoney';
 import StyledOrderItem from '../../components/styles/StyledOrderItem';
 import GET_ORDERS_QUERY from '../../gql/queryOrders.gql';
 import { IItem, IOrder } from '../../types/commonTypes';
+import { LoadingLabel, LoadingSkeleton } from '../../components/loading';
 
 // TODO: Create Orders model in keystone
 const OrderUl = styled.ul`
@@ -27,7 +28,13 @@ export default function OrdersPage() {
 	const { data, error, loading } = useQuery(GET_ORDERS_QUERY);
 	const { allOrders } = data || [];
 
-	if (loading) return <p>Loading...</p>;
+	if (loading)
+		return (
+			<>
+				<LoadingLabel />
+				<LoadingSkeleton />
+			</>
+		);
 
 	if (error) return <ErrorMessage error={error} />;
 
@@ -36,6 +43,8 @@ export default function OrdersPage() {
 			<Head>
 				<title>Your Orders ({allOrders?.length})</title>
 			</Head>
+			{/* TODO: Style this page header */}
+			{/* Create a PageHeader component */}
 			{allOrders?.length > 0 ? (
 				<h2>You have {allOrders?.length} orders!</h2>
 			) : (

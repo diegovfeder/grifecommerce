@@ -39,7 +39,7 @@ exports[`<ProductComponent/> Renders and matches the snapshot 1`] = `
     <span
       class="StyledPriceTag-sc-hnq0ox-0 hHCllp"
     >
-      R$ 50
+      R$ 50,00
     </span>
     <p>
       This our first sample pack for summer beats in a sunny day, when all is yellow :)

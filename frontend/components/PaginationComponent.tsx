@@ -1,18 +1,26 @@
-import gql from 'graphql-tag';
+import styled from 'styled-components';
+import { useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import styled from 'styled-components';
 import StyledPagination from './styles/StyledPagination';
+import StyledPaginationContainer from './styles/StyledPaginationContainer';
 import { totalProductsPerPage } from '../config';
 
-interface PaginationProps {
+interface PaginationComponentProps {
 	page: number;
 	productsCount: number;
 }
 
-const Pagination = ({ page, productsCount }: PaginationProps) => {
-	// const productsCount = data?.productsCount;
-	const pagesTotal = Math.ceil(productsCount / totalProductsPerPage);
+const PaginationComponent = ({
+	page,
+	productsCount,
+}: PaginationComponentProps) => {
+	// TODO: get proper page count
+	useEffect(() => {
+		console.log({ page, productsCount });
+	});
+
+	const pagesTotal = Math.ceil(productsCount || 1 / totalProductsPerPage);
 
 	return (
 		<StyledPaginationContainer data-test-id="pagination">
@@ -37,18 +45,4 @@ const Pagination = ({ page, productsCount }: PaginationProps) => {
 	);
 };
 
-const StyledPaginationContainer = styled.div`
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	justify-items: center;
-	align-items: center;
-	margin-bottom: 2rem;
-
-	& :last-child {
-		margin-top: 2rem;
-		margin-bottom: 0;
-	}
-`;
-
-export default Pagination;
+export default PaginationComponent;
