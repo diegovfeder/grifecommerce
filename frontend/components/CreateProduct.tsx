@@ -60,7 +60,10 @@ const CreateProduct = () => {
 		<StyledForm onSubmit={onSubmit}>
 			<ErrorMessage error={error} />
 			<fieldset disabled={loading} aria-busy={loading}>
-				<label htmlFor="name">
+				<label
+					style={{ display: 'flex', flex: 1, flexDirection: 'column' }}
+					htmlFor="name"
+				>
 					Name
 					<input
 						type="text"
@@ -71,7 +74,10 @@ const CreateProduct = () => {
 						onChange={handleChange}
 					/>
 				</label>
-				<label htmlFor="description">
+				<label
+					style={{ display: 'flex', flex: 1, flexDirection: 'column' }}
+					htmlFor="description"
+				>
 					Description
 					<textarea
 						id="description"
@@ -81,7 +87,10 @@ const CreateProduct = () => {
 						onChange={handleChange}
 					/>
 				</label>
-				<label htmlFor="price">
+				<label
+					style={{ display: 'flex', flex: 1, flexDirection: 'column' }}
+					htmlFor="price"
+				>
 					Price
 					<input
 						type="number"

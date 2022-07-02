@@ -1,15 +1,15 @@
 import styled, { keyframes } from 'styled-components';
 
+interface StyledDropDownItemProps {
+	highlighted: boolean;
+}
+
 const StyledDropDown = styled.div`
 	position: absolute;
 	width: 100%;
 	z-index: 2;
 	border: 1px solid var(--lightGrey);
 `;
-
-interface StyledDropDownItemProps {
-	highlighted: boolean;
-}
 
 const StyledDropDownItem = styled.div<StyledDropDownItemProps>`
 	border-bottom: 1px solid var(--lightGrey);

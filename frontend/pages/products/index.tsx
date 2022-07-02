@@ -1,8 +1,9 @@
 // TODO: Fix error, query is not being passed from useRouter()
 // can I mock it?
 import { useEffect } from 'react';
-import { useLazyQuery } from '@apollo/client';
+import { useQuery, useLazyQuery } from '@apollo/client';
 import { useRouter } from 'next/dist/client/router';
+import { LoadingLabel, LoadingSkeleton } from '../../components/loading';
 import PaginationComponent from '../../components/PaginationComponent';
 import ProductsGridComponent from '../../components/ProductsGridComponent';
 // TODO: How can I add vscode / graphql vscode reccomendations?
@@ -10,38 +11,39 @@ import ProductsGridComponent from '../../components/ProductsGridComponent';
 // we could write files with .gql extension...
 // -- on the other hand, the second option is to
 // simply use a .ts file like this below...
-import { PAGINATION_QUERY } from '../../gql/queries';
+import { PRODUCTS_COUNT_QUERY } from '../../gql/queries';
 
 const ProductsPage = () => {
 	const { query } = useRouter();
-	const [queryPagination, { error, loading, data }] = useLazyQuery(
-		PAGINATION_QUERY,
-		{
-			onCompleted: data => {
-				console.log(data);
-			},
+	const { error, loading, data } = useQuery(PRODUCTS_COUNT_QUERY, {
+		onCompleted: data => {
+			console.log(data);
 		},
-	);
+	});
 
 	useEffect(() => {
-		async () => {
-			console.log('inside await');
-			await queryPagination();
-		};
 		console.log('queryPagination', { data });
 	}, []);
+
+	if (loading)
+		return (
+			<>
+				<LoadingLabel />
+				<LoadingSkeleton />
+			</>
+		);
 
 	const queryPageNumber = !!query?.page ? Number(query.page) : 1;
 	return (
 		<div>
 			<PaginationComponent
 				page={queryPageNumber || 1}
-				productsCount={data?.productsCount}
+				productsCount={data?.productsCount || 0}
 			/>
 			<ProductsGridComponent page={queryPageNumber || 1} />
 			<PaginationComponent
 				page={queryPageNumber || 1}
-				productsCount={data?.productsCount}
+				productsCount={data?.productsCount || 0}
 			/>
 		</div>
 	);

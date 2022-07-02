@@ -61,7 +61,7 @@ export const PRODUCTS_QUERY = gql`
 	}
 `;
 
-export const PAGINATION_QUERY = gql`
+export const PRODUCTS_COUNT_QUERY = gql`
 	query Pagination {
 		productsCount
 	}

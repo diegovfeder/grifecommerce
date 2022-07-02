@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
-import { PAGINATION_QUERY } from '../../gql/queries';
+import { PRODUCTS_COUNT_QUERY } from '../../gql/queries';
 import { PRODUCTS_QUERY } from '../../gql/queries';
 import ProductsPage from '.';
 
@@ -14,7 +14,7 @@ useRouter.mockImplementationOnce(() => ({
 const mocks = [
 	{
 		request: {
-			query: PAGINATION_QUERY,
+			query: PRODUCTS_COUNT_QUERY,
 		},
 		result: {
 			data: {

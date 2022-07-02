@@ -11,6 +11,14 @@ import {
 } from './styles/StyledSearch';
 import { ProductProps } from '../types/commonTypes';
 
+interface ISelectedItem {
+	id: string;
+}
+
+interface IItem {
+	name: string;
+}
+
 // TODO: searchTerm shouldn't care about letter case (upper or lower)
 const SEARCH_PRODUCTS_QUERY = gql`
 	query SEARCH_PRODUCTS_QUERY($searchTerm: String!) {
@@ -63,9 +71,11 @@ const SearchComponent = () => {
 				},
 			});
 		},
+		// FIXME: Properly type this
 		onSelectedItemChange({ selectedItem }: any) {
+			// FIXME: Can we test this route action?
 			router.push({
-				pathname: `/product/${selectedItem.id}`,
+				pathname: `/product/${selectedItem?.id}`,
 			});
 		},
 		itemToString({ item }: any) {
@@ -102,9 +112,9 @@ const SearchComponent = () => {
 						</StyledDropDownItem>
 					))}
 				{isOpen && !items.length && !loading && (
-					<StyledDropDownItem>
+					<StyledDropDown>
 						Sorry, No items found for {inputValue}
-					</StyledDropDownItem>
+					</StyledDropDown>
 				)}
 			</StyledDropDown>
 		</StyledSearch>

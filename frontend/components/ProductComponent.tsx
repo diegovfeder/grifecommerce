@@ -23,6 +23,8 @@ const ProductComponent = ({
 	// Why does it take so long for the image to load?..
 	// Pass down loading...
 
+	const isPhotoImageUrlDefined = !!product.photo?.image?.publicUrlTransformed;
+
 	return (
 		<StyledItem>
 			{!!loading ? (
@@ -31,12 +33,21 @@ const ProductComponent = ({
 					<LoadingSkeleton />
 				</>
 			) : (
-				<Image
-					src={product?.photo?.image?.publicUrlTransformed}
-					alt={product?.name}
-					width={'80%'}
-					height={'80%'}
-				/>
+				<>
+					{/* TODO: Test what happens if no image is found */}
+					{isPhotoImageUrlDefined ? (
+						<Image
+							src={product.photo.image.publicUrlTransformed}
+							alt={product.name}
+							width={'100%'}
+							height={'100%'}
+						/>
+					) : (
+						<>
+							<LoadingSkeleton />
+						</>
+					)}
+				</>
 			)}
 			<StyledTitle>
 				<Link href={`/product/${product.id}`}>{product.name}</Link>

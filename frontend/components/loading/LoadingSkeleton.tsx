@@ -1,6 +1,14 @@
 const LoadingSkeleton = () => {
 	return (
 		<>
+			<br />
+			<br />
+			<br />
+			TODO: Add tailwind or use some skeleton here. // or something when image
+			is not loaded
+			<br />
+			<br />
+			<br />
 			<div className="flex w-full flex-1 flex-col items-center  px-20">
 				<div className="mt-12 w-1/2 animate-pulse flex-row items-center justify-center space-x-1 rounded-xl border p-6 ">
 					<div className="flex flex-col space-y-2">

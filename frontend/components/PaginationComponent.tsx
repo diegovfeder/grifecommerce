@@ -1,5 +1,3 @@
-import styled from 'styled-components';
-import { useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import StyledPagination from './styles/StyledPagination';
@@ -15,12 +13,7 @@ const PaginationComponent = ({
 	page,
 	productsCount,
 }: PaginationComponentProps) => {
-	// TODO: get proper page count
-	useEffect(() => {
-		console.log({ page, productsCount });
-	});
-
-	const pagesTotal = Math.ceil(productsCount || 1 / totalProductsPerPage);
+	const pagesTotal = Math.ceil(productsCount / totalProductsPerPage);
 
 	return (
 		<StyledPaginationContainer data-test-id="pagination">

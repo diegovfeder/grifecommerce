@@ -40,7 +40,7 @@ const SignIn = () => {
 		await signin();
 		resetForm();
 		Router.push({
-			pathname: `/products`,
+			pathname: `/products/1`,
 		});
 	}
 	const error =

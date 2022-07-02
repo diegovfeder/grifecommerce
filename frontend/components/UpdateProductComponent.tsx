@@ -73,7 +73,10 @@ const UpdateProductComponent = ({ id }: EditProductProps) => {
 	return (
 		<StyledForm onSubmit={handleSubmit}>
 			<fieldset disabled={mutationLoading} aria-busy={mutationLoading}>
-				<label htmlFor="name">
+				<label
+					style={{ display: 'flex', flex: 1, flexDirection: 'column' }}
+					htmlFor="name"
+				>
 					Name
 					<input
 						type="text"
@@ -84,7 +87,10 @@ const UpdateProductComponent = ({ id }: EditProductProps) => {
 						onChange={handleChange}
 					/>
 				</label>
-				<label htmlFor="description">
+				<label
+					style={{ display: 'flex', flex: 1, flexDirection: 'column' }}
+					htmlFor="description"
+				>
 					Description
 					<textarea
 						id="description"
@@ -94,7 +100,10 @@ const UpdateProductComponent = ({ id }: EditProductProps) => {
 						onChange={handleChange}
 					/>
 				</label>
-				<label htmlFor="price">
+				<label
+					style={{ display: 'flex', flex: 1, flexDirection: 'column' }}
+					htmlFor="price"
+				>
 					Price
 					<input
 						type="number"
