@@ -3,7 +3,7 @@ import {
 	ApolloProvider,
 	NormalizedCacheObject,
 } from '@apollo/client';
-import { NextPage } from 'next';
+import { NextComponentType, NextPage, NextPageContext } from 'next';
 import type { AppProps } from 'next/app';
 import Router from 'next/router';
 import Page from '../components/PageComponent';
@@ -11,6 +11,7 @@ import CartStateProvider from '../providers/CartStateProvider';
 import withData from '../utils/withData';
 import NProgress from 'nprogress';
 import '../components/styles/nprogress.css';
+import React from 'react';
 
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
@@ -47,14 +48,27 @@ function MyApp({ Component, pageProps, apollo }: MyAppProps) {
 // It seems that this is wanting to automate getInitialProps in the whole app
 // Should I getInitialProps from the component?
 // Should I getInitialProps from the app?
-MyApp.getInitialProps = async function ({ Component, ctx }: any) {
-	let pageProps = {};
+MyApp.getInitialProps = async function ({
+	Component,
+	ctx,
+}: {
+	Component: NextComponentType<NextPageContext>;
+	ctx: NextPageContext;
+}) {
+	// TODO: Fix any
+	let pageProps = {} as any;
 	if (Component.getInitialProps) {
 		pageProps = await Component.getInitialProps(ctx);
 		console.log({ pageProps });
 	}
-	pageProps.query = ctx.query;
+	pageProps.query = ctx?.query || '';
 	return { pageProps };
 };
 
+// withData has following type:
+// (App: NextComponentType<NextPageContext>) => NextComponentType<NextPageContext>
+// So, I'm passing MyApp as App
+// ???
+
+// This is myApp with Overriden getInitialProps
 export default withData(MyApp);
