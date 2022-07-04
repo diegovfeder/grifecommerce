@@ -1,6 +1,5 @@
 // TODO: Fix error, query is not being passed from useRouter()
 // can I mock it?
-import { useEffect } from 'react';
 import { useQuery, useLazyQuery } from '@apollo/client';
 import { useRouter } from 'next/dist/client/router';
 import { LoadingLabel, LoadingSkeleton } from '../../components/loading';
@@ -12,18 +11,11 @@ import ProductsGridComponent from '../../components/ProductsGridComponent';
 // -- on the other hand, the second option is to
 // simply use a .ts file like this below...
 import { PRODUCTS_COUNT_QUERY } from '../../gql/queries';
+import ErrorMessage from '../../components/ErrorMessage';
 
 const ProductsPage = () => {
 	const { query } = useRouter();
-	const { error, loading, data } = useQuery(PRODUCTS_COUNT_QUERY, {
-		onCompleted: data => {
-			console.log(data);
-		},
-	});
-
-	useEffect(() => {
-		console.log('queryPagination', { data });
-	}, []);
+	const { error, loading, data } = useQuery(PRODUCTS_COUNT_QUERY);
 
 	if (loading)
 		return (
@@ -32,6 +24,8 @@ const ProductsPage = () => {
 				<LoadingSkeleton />
 			</>
 		);
+
+	if (error) return <ErrorMessage error={error} />;
 
 	const queryPageNumber = !!query?.page ? Number(query.page) : 1;
 	return (

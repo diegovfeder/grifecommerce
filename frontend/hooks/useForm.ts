@@ -8,6 +8,11 @@ interface EventProps {
 	};
 }
 
+// PRIORITY #00
+// TODO: Fix type error for proper deploy
+// interface UseFormProps
+// 	{ [k: string]: string; }
+
 const useForm = <T>(initial: T) => {
 	const [inputs, setInputs] = useState(initial);
 	const initialValues = Object.values(initial).join('');
@@ -36,7 +41,8 @@ const useForm = <T>(initial: T) => {
 	};
 
 	const clearForm = () => {
-		const blankState = Object.fromEntries(
+		// TODO: Update any here
+		const blankState: any = Object.fromEntries(
 			Object.entries(inputs).map(([key, _]) => [key, '']),
 		);
 

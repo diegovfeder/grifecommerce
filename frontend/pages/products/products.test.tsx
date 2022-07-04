@@ -3,6 +3,7 @@ import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { PRODUCTS_COUNT_QUERY } from '../../gql/queries';
 import { PRODUCTS_QUERY } from '../../gql/queries';
 import ProductsPage from '.';
+import { resolveMockState } from '../../tests/utils';
 
 const useRouter = jest.spyOn(require('next/router'), 'useRouter');
 
@@ -51,14 +52,33 @@ const mocks = [
 
 describe('products page', () => {
 	describe('when user is not signed in', () => {
-		it('should render the products page', () => {
+		it('should render the products page in loading state', async () => {
 			render(
 				<MockedProvider mocks={mocks} addTypename={false}>
 					<ProductsPage />
 				</MockedProvider>,
 			);
 
-			expect(screen.getByText('Loading...')).toBeVisible();
+			expect(screen.getByLabelText(/Loading/)).toBeInTheDocument();
+			await resolveMockState();
+			expect(screen.getAllByText(/Prev/)[0]).toBeVisible();
+			expect(screen.getAllByText(/Prev/)[1]).toBeVisible();
+			expect(screen.getAllByText(/Page/)[0]).toBeVisible();
+			expect(screen.getAllByText(/Page/)[1]).toBeVisible();
+			expect(screen.getAllByText(/Total Products/)[0]).toBeVisible();
+			expect(screen.getAllByText(/Total Products/)[1]).toBeVisible();
+			// TODO: Test header, if in this case we get only PRODUCTS and SIGN IN to click.
+		});
+
+		it('should render the products page data', async () => {
+			render(
+				<MockedProvider mocks={mocks} addTypename={false}>
+					<ProductsPage />
+				</MockedProvider>,
+			);
+
+			expect(screen.getByLabelText(/Loading/)).toBeInTheDocument();
+			await resolveMockState();
 			expect(screen.getAllByText(/Prev/)[0]).toBeVisible();
 			expect(screen.getAllByText(/Prev/)[1]).toBeVisible();
 			expect(screen.getAllByText(/Page/)[0]).toBeVisible();

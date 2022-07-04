@@ -6,7 +6,7 @@ exports[`<NavigationComponent/> Renders and minimal nav when signed out 1`] = `
     class="StyledNavigation-sc-hq3jod-0 lnyikG"
   >
     <a
-      href="/products"
+      href="/products/1"
     >
       PRODUCTS
     </a>
@@ -25,7 +25,7 @@ exports[`<NavigationComponent/> renders a full nav when signed in 1`] = `
     class="StyledNavigation-sc-hq3jod-0 lnyikG"
   >
     <a
-      href="/products"
+      href="/products/1"
     >
       PRODUCTS
     </a>

@@ -10,6 +10,7 @@ exports[`<CreateProduct/> renders and matches snapshot 1`] = `
     >
       <label
         for="name"
+        style="display: flex; flex: 1; flex-direction: column;"
       >
         Name
         <input
@@ -22,6 +23,7 @@ exports[`<CreateProduct/> renders and matches snapshot 1`] = `
       </label>
       <label
         for="description"
+        style="display: flex; flex: 1; flex-direction: column;"
       >
         Description
         <textarea
@@ -32,6 +34,7 @@ exports[`<CreateProduct/> renders and matches snapshot 1`] = `
       </label>
       <label
         for="price"
+        style="display: flex; flex: 1; flex-direction: column;"
       >
         Price
         <input

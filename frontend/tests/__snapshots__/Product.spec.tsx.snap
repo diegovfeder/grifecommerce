@@ -15,7 +15,7 @@ exports[`<ProductComponent/> Renders and matches the snapshot 1`] = `
           alt=""
           aria-hidden="true"
           role="presentation"
-          src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjMyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="
+          src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="
           style="max-width: 100%; display: block; margin: 0px; padding: 0px;"
         />
       </div>
@@ -37,11 +37,18 @@ exports[`<ProductComponent/> Renders and matches the snapshot 1`] = `
       </a>
     </h3>
     <span
-      class="StyledPriceTag-sc-hnq0ox-0 hHCllp"
+      class="StyledPriceTag-sc-hnq0ox-0 iAEVwB"
     >
       R$ 50,00
     </span>
-    <p>
+    <h3
+      class="Supreme__SupremeDescription-sc-2anpcp-1 cEBCgi"
+    >
+      Description:
+    </h3>
+    <p
+      style="margin-top: 0px; margin-bottom: 0px; padding-top: 1rem; padding-bottom: 2rem; font-size: 1.5rem; max-height: 120px; overflow: scroll;"
+    >
       This our first sample pack for summer beats in a sunny day, when all is yellow :)
     </p>
     <div

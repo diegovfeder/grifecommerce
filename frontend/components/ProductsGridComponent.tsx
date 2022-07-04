@@ -18,7 +18,7 @@ const ProductsGridComponent = ({ page }: ProductsGridComponentProps) => {
 			take: totalProductsPerPage,
 			skip: page * totalProductsPerPage - totalProductsPerPage,
 		},
-		onCompleted: data => console.log(data),
+		// onCompleted: data => console.log(data),
 	});
 
 	if (loading)
