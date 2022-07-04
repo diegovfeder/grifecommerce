@@ -11,7 +11,8 @@ import CartStateProvider from '../providers/CartStateProvider';
 import withData from '../utils/withData';
 import NProgress from 'nprogress';
 import '../components/styles/nprogress.css';
-import React from 'react';
+import React, { FunctionComponent } from 'react';
+import app from 'next/app';
 
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
@@ -19,11 +20,26 @@ Router.events.on('routeChangeError', () => NProgress.done());
 
 interface MyAppProps extends AppProps {
 	apollo: ApolloClient<NormalizedCacheObject>;
-	Component: NextPage;
+	// Component: NextPage;
+	Component: NextComponentType<NextPageContext>;
 	pageProps: any;
 }
 
-function MyApp({ Component, pageProps, apollo }: MyAppProps) {
+interface MyAppWithDataProps {
+	// FunctionComponent<any> & { getInitialProps?(context: NextPageContext): any; }
+}
+// function MyApp({ Component, pageProps, apollo }: MyAppProps) {
+function MyApp({
+	Component,
+	pageProps,
+	apollo,
+}: MyAppProps &
+	(React.ComponentClass<any, any> & {
+		getInitialProps?(context: NextPageContext): any;
+	}) &
+	(FunctionComponent<any> & {
+		getInitialProps?(context: NextPageContext): any;
+	})) {
 	return (
 		<ApolloProvider client={apollo}>
 			<CartStateProvider>
@@ -52,6 +68,7 @@ MyApp.getInitialProps = async function ({
 	Component,
 	ctx,
 }: {
+	// TODO: Properly type Component
 	Component: NextComponentType<NextPageContext>;
 	ctx: NextPageContext;
 }) {
@@ -71,4 +88,13 @@ MyApp.getInitialProps = async function ({
 // ???
 
 // This is myApp with Overriden getInitialProps
-export default withData(MyApp);
+export default withData(MyApp as any);
+
+// withData(Page: typeof App | (React.ComponentClass<any, any> & {
+// 	getInitialProps?(context: NextPageContext): any;
+// }) | (React.FunctionComponent<any> & {
+// 	...;
+// }), pageOptions?: WithApolloOptions | undefined): {
+// 	...;
+
+// Type 'typeof MyApp' is not assignable to type 'FunctionComponent<any> & { getInitialProps?(context: NextPageContext): any; }'.
