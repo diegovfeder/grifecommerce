@@ -2,8 +2,8 @@ import { render, screen } from '@testing-library/react';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { PRODUCTS_COUNT_QUERY } from '../../gql/queries';
 import { PRODUCTS_QUERY } from '../../gql/queries';
-import ProductsPage from '.';
-import { resolveMockState } from '../../tests/utils';
+import ProductsPage from '../../pages/products';
+import { resolveMockState } from '../utils';
 
 const useRouter = jest.spyOn(require('next/router'), 'useRouter');
 

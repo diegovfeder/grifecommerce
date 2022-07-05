@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
-import SingleProductPage from './[id]';
+import SingleProductPage from '../../pages/product/[id]';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { PRODUCT_QUERY } from '../../gql/queries';
-import { resolveMockState } from '../../tests/utils';
+import { resolveMockState } from '../utils';
 
 const useRouter = jest.spyOn(require('next/router'), 'useRouter');
 
@@ -82,7 +82,7 @@ describe('product/[id] page', () => {
 			expect(screen.getByLabelText('Loading...')).toBeInTheDocument();
 			await resolveMockState();
 			expect(screen.queryByText('Loading...')).toBe(null);
-			// TODO: Check if we have the image, check if we have the price, 
+			// TODO: Check if we have the image, check if we have the price,
 		});
 	});
 

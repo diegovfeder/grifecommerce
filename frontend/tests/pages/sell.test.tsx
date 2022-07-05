@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 import { MockedResponse } from '@apollo/client/testing';
 import { CURRENT_USER_QUERY } from '../../hooks/useUserQuery';
-import SellPage from '.';
+import SellPage from '../../pages/sell';
 
 const mocks = [
 	{

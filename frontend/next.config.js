@@ -9,7 +9,7 @@ module.exports = {
 			exclude: /node_modules/,
 			loader: 'graphql-tag/loader',
 		});
-		config.plugins.push(new webpack.IgnorePlugin(/\/__tests__\//));
+		config.plugins.push(new webpack.IgnorePlugin(/\/__test__\//));
 		return config;
 	},
 	// FIXME: What does this do?
