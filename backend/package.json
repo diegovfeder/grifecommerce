@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "keystone dev",
+    "post": "keystone postinstall",
     "build": "keystone build",
     "start": "keystone start",
     "test": "yarn jest"

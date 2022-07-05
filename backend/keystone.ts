@@ -23,7 +23,7 @@ const databaseURL =
 const sessionConfig = {
 	secret:
 		process.env.COOKIE_SECRET ||
-		"Could not access COOKIE_SECRET environment variable",
+		"CouldNotAccessCOOKIE_SECRETEnvironmentVariable",
 	maxAge: 60 * 60 * 24 * 360,
 	secure: true,
 	path: "/",
