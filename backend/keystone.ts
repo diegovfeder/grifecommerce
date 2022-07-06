@@ -26,8 +26,8 @@ const sessionConfig = {
 		"CouldNotAccessCOOKIE_SECRETEnvironmentVariable",
 	maxAge: 60 * 60 * 24 * 360,
 	secure: true,
-	path: "/",
-	domain: "localhost",
+	// path: "/",
+	// domain: "localhost",
 };
 
 const { withAuth } = createAuth({

@@ -35,7 +35,7 @@ const RemoveFromCartButton = ({ id }: RemoveFromCartButtonProps) => {
 			onClick={() => removeFromCart()}
 			disabled={loading}
 			type="button"
-			title="Remove This Item from Cart"
+			title="Remove item from cart"
 		>
 			&times;
 		</StyledButton>
