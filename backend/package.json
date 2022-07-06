@@ -7,9 +7,10 @@
   "scripts": {
     "dev": "keystone dev",
     "post": "keystone postinstall",
-    "build": "keystone build",
+    "build": "NODE_ENV=production keystone build && keystone prisma migrate deploy",
     "start": "keystone start",
-    "test": "yarn jest"
+    "test": "yarn jest",
+    "push": "NODE_ENV=production keystone prisma db push"
   },
   "dependencies": {
     "@keystone-6/auth": "^1.0.0",

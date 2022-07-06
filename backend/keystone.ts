@@ -18,7 +18,7 @@ import { sendPasswordResetEmail } from "./utils/mail";
 
 const databaseURL =
 	process.env.DATABASE_URL ||
-	"";
+	"postgres://db:password@localhost:5432/keystone";
 
 const sessionConfig = {
 	secret:
