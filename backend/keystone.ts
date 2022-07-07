@@ -33,6 +33,8 @@ const { withAuth } = createAuth({
 	// sessionData: `id name email role {${permissionsList.join(' ')}}`,
 	initFirstItem: {
 		fields: ["name", "email", "password"],
+		// itemData: { isAdmin: true },
+    // skipKeystoneWelcome: false,
 	},
 	passwordResetLink: {
 		sendToken: async ({ token, identity }: any) => {

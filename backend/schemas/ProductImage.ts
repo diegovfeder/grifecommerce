@@ -3,11 +3,13 @@ import { relationship, text } from "@keystone-6/core/fields";
 import { list } from "@keystone-6/core";
 import { cloudinaryImage } from "@keystone-6/cloudinary";
 
-// TODO: Add your own Cloudinary Cloud Name and API Key to vercel backend envs.
+const { CLOUDINARY_CLOUD_NAME, CLOUDINARY_KEY, CLOUDINARY_SECRET } =
+	process.env;
+
 export const cloudinary = {
-	cloudName: process.env.CLOUDINARY_CLOUD_NAME || "",
-	apiKey: process.env.CLOUDINARY_KEY || "",
-	apiSecret: process.env.CLOUDINARY_SECRET || "",
+	cloudName: CLOUDINARY_CLOUD_NAME,
+	apiKey: CLOUDINARY_KEY,
+	apiSecret: CLOUDINARY_SECRET,
 	folder: "grifecommerce",
 };
 

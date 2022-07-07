@@ -1,5 +1,11 @@
+import 'dotenv/config';
+
+const { GRAPHQL_ENDPOINT } = process.env;
+
 export const devEndpoint =
-	process.env.GRAPHQL_ENDPOINT || `http://localhost:3000/api/graphql`;
+	GRAPHQL_ENDPOINT || 'http://localhost:3000/api/graphql';
+
 export const prodEndpoint =
-	process.env.GRAPHQL_ENDPOINT || `https://grifecommerce-backend-95gmymxkz-diegovfeder.vercel.app/api/graphql`;
+	GRAPHQL_ENDPOINT || 'https://grifecommerce-backend.vercel.app/api/graphql';
+
 export const totalProductsPerPage = 2;

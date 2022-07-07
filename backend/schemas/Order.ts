@@ -2,6 +2,7 @@ import { integer, relationship, text, virtual } from "@keystone-6/core/fields";
 import { list, graphql } from "@keystone-6/core";
 import formatMoney from "../utils/formatMoney";
 
+// TODO: Properly type item.
 export const Order = list({
 	fields: {
 		label: virtual({
