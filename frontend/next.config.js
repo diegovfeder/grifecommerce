@@ -12,8 +12,4 @@ module.exports = {
 		config.plugins.push(new webpack.IgnorePlugin(/\/__test__\//));
 		return config;
 	},
-	// FIXME: What does this do?
-	// webpackDevMiddleware: config => {
-	// 	return config;
-	// },
 };
