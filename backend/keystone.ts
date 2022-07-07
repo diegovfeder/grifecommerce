@@ -21,9 +21,7 @@ const { COOKIE_SECRET, DATABASE_URL, FRONTEND_URL, NODE_ENV } = process.env;
 const sessionConfig = {
 	secret: COOKIE_SECRET,
 	maxAge: 60 * 60 * 24 * 360,
-	secure: true,
-	path: "/",
-	// domain: "localhost",
+	secure: false,
 };
 
 const { withAuth } = createAuth({
