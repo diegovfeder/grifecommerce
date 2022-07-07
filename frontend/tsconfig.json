@@ -14,7 +14,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
   },
-  "include": ["**/*.ts", "**/*.tsx", "pages/_app.jsx"],
+  "include": ["**/*.ts", "**/*.tsx", "pages/_app.jsx", "pages/_document.jsx"],
   "exclude": ["node_modules"],
 	"setupFilesAfterEnv": ["./jest.setup.ts"],
 }
