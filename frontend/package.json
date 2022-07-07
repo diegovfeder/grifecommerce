@@ -9,7 +9,9 @@
     "start": "next start -p 7777",
     "sb:dev": "start-storybook -p 6006",
     "sb:build": "build-storybook",
-    "test": "NODE_ENV=test jest --watch",
+    "test": "NODE_ENV=test jest",
+    "test-cov": "NODE_ENV=test jest --coverage",
+    "test-w": "NODE_ENV=test jest --watch",
     "lint": "next lint"
   },
   "dependencies": {
@@ -19,8 +21,6 @@
     "@stripe/react-stripe-js": "^1.1.2",
     "@stripe/stripe-js": "^1.11.0",
     "apollo-upload-client": "^14.1.3",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-plugin-styled-components": "^1.12.0",
     "date-fns": "^2.16.1",
     "downshift": "^6.0.12",
     "enzyme": "^3.11.0",
@@ -40,7 +40,6 @@
     "waait": "^1.0.5"
   },
   "devDependencies": {
-    "@apollo/react-testing": "^4.0.0",
     "@babel/core": "^7.12.10",
     "@babel/plugin-transform-runtime": "^7.14.5",
     "@babel/preset-env": "^7.12.11",
@@ -57,12 +56,15 @@
     "@types/lodash.debounce": "^4.0.6",
     "@types/nprogress": "^0.2.0",
     "@types/react": "^17.0.38",
+    "@types/react-transition-group": "^4.4.5",
     "@types/styled-components": "^5.1.20",
+    "babel-core": "^6.26.3",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.3",
     "babel-loader": "^8.2.2",
     "babel-plugin-styled-components": "^1.12.0",
     "casual": "^1.6.2",
+    "dom-serializer": "^2.0.0",
     "eslint": "^7.17.0",
     "eslint-config-next": "11.0.1",
     "eslint-config-prettier": "^7.1.0",
@@ -72,8 +74,31 @@
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "jest": "^27.0.6",
+    "jest-transform-graphql": "^2.1.0",
     "prettier": "^2.3.1",
     "react-test-renderer": "^17.0.1",
     "typescript": "^4.5.4"
+  },
+	"resolutions": {},
+  "jest": {
+    "verbose": true,
+    "testEnvironment": "jsdom",
+    "transform": {
+      "\\.(gql|graphql)$": "jest-transform-graphql",
+      ".*": "babel-jest"
+    },
+    "setupFilesAfterEnv": [
+      "./jest.setup.ts"
+    ],
+    "moduleDirectories": [
+      "node_modules"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ]
   }
 }

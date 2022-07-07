@@ -30,6 +30,8 @@ const DeleteProduct = ({ id, children }: DeleteProductProps) => {
 			update,
 		},
 	);
+
+	// TODO: Style these buttons better.
 	return (
 		<StyledButtonLink
 			type="button"

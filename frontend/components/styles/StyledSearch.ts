@@ -1,5 +1,9 @@
 import styled, { keyframes } from 'styled-components';
 
+interface StyledDropDownItemProps {
+	highlighted: boolean;
+}
+
 const StyledDropDown = styled.div`
 	position: absolute;
 	width: 100%;
@@ -7,7 +11,7 @@ const StyledDropDown = styled.div`
 	border: 1px solid var(--lightGrey);
 `;
 
-const StyledDropDownItem = styled.div`
+const StyledDropDownItem = styled.div<StyledDropDownItemProps>`
 	border-bottom: 1px solid var(--lightGrey);
 	background: ${props => (props.highlighted ? '#f7f7f7' : 'white')};
 	padding: 1rem;

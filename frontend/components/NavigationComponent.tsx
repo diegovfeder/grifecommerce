@@ -11,7 +11,7 @@ const NavigationComponent = () => {
 	const { openCart } = useCartState();
 	return (
 		<StyledNavigation>
-			<Link href="/products">PRODUCTS</Link>
+			<Link href="/products/1">PRODUCTS</Link>
 			{user ? (
 				<>
 					<Link href="/sell">SELL</Link>

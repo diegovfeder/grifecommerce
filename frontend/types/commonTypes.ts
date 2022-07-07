@@ -33,6 +33,11 @@ export interface ProductFormInputProps {
 	image?: any;
 }
 
+export interface IUserModel {
+	id: string;
+	email: string;
+}
+
 export interface UserProps {
 	id: string;
 }
@@ -44,9 +49,39 @@ export interface ProductProps {
 	description: string;
 	photo: {
 		image: {
+			// FIXME:
+			// id
+			// altText
 			publicUrlTransformed: string;
 		};
 	};
+}
+
+export interface IPhoto {
+	image: {
+		// FIXME:
+		// id
+		// altText
+		publicUrlTransformed: string;
+	};
+}
+
+export interface IItem {
+	id: string;
+	name: string;
+	photo: IPhoto;
+	quantity: number;
+}
+
+export interface IOrder extends ProductProps{
+	id: string;
+	total: number;
+	items: IItem[]
+}
+
+export interface IOrderItem extends ProductProps{
+	title: string | undefined;
+	quantity: number;
 }
 
 export interface CartItemProps {

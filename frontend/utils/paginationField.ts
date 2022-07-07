@@ -1,4 +1,4 @@
-import { PAGINATION_QUERY } from '../components/Pagination';
+import { PRODUCTS_COUNT_QUERY } from '../gql/queries';
 
 const paginationField = () => {
 	return {
@@ -6,11 +6,11 @@ const paginationField = () => {
 		// FIXME: Add proper types
 		read(existing = [], { args, cache }: any) {
 			const { take, skip } = args;
-			const data = cache.readQuery({ query: PAGINATION_QUERY });
+			const data = cache.readQuery({ query: PRODUCTS_COUNT_QUERY });
 			const { productsCount } = data;
 			const page = skip / take + 1;
 			const pages = Math.ceil(productsCount / take);
-			const items = existing.slice(skip, skip + take).filter((x) => x);
+			const items = existing.slice(skip, skip + take).filter(x => x);
 
 			if (items.length && items.length !== take && page === pages) {
 				return items;
@@ -33,7 +33,6 @@ const paginationField = () => {
 			return merged;
 		},
 	};
-}
+};
 
 export default paginationField;
-

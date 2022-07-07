@@ -1,13 +1,15 @@
 import SingleProduct from '../../components/SingleProduct';
 
-// TODO: Properly type this
 interface ISingleProductPage {
-	query: any;
+	query: {
+		id: string;
+	};
 }
 
-// TODO: Style this page
+// TODO: Do we have state being handled in this page/component?
+// Should we check for loading, and error?
 const SingleProductPage = ({ query }: ISingleProductPage) => {
-	return <SingleProduct id={query.id} />;
-}
+	return <SingleProduct id={query?.id || ''} />;
+};
 
 export default SingleProductPage;

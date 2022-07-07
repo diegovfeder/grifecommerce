@@ -2,10 +2,10 @@ import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
 import Router from 'next/router';
 import ErrorMessage from './ErrorMessage';
-import { PRODUCTS_QUERY } from './ProductsGridComponent';
 import StyledForm from './styles/StyledForm';
 import useForm from '../hooks/useForm';
 import { EventProps, ProductFormInputProps } from '../types/commonTypes';
+import ALL_PRODUCTS_QUERY from '../gql/queryAllProducts.gql';
 
 export const CREATE_PRODUCT_MUTATION = gql`
 	mutation CREATE_PRODUCT_MUTATION(
@@ -43,7 +43,7 @@ const CreateProduct = () => {
 		CREATE_PRODUCT_MUTATION,
 		{
 			variables: inputs,
-			refetchQueries: [{ query: PRODUCTS_QUERY }],
+			refetchQueries: [{ query: ALL_PRODUCTS_QUERY }],
 		},
 	);
 
@@ -60,7 +60,10 @@ const CreateProduct = () => {
 		<StyledForm onSubmit={onSubmit}>
 			<ErrorMessage error={error} />
 			<fieldset disabled={loading} aria-busy={loading}>
-				<label htmlFor="name">
+				<label
+					style={{ display: 'flex', flex: 1, flexDirection: 'column' }}
+					htmlFor="name"
+				>
 					Name
 					<input
 						type="text"
@@ -71,7 +74,10 @@ const CreateProduct = () => {
 						onChange={handleChange}
 					/>
 				</label>
-				<label htmlFor="description">
+				<label
+					style={{ display: 'flex', flex: 1, flexDirection: 'column' }}
+					htmlFor="description"
+				>
 					Description
 					<textarea
 						id="description"
@@ -81,7 +87,10 @@ const CreateProduct = () => {
 						onChange={handleChange}
 					/>
 				</label>
-				<label htmlFor="price">
+				<label
+					style={{ display: 'flex', flex: 1, flexDirection: 'column' }}
+					htmlFor="price"
+				>
 					Price
 					<input
 						type="number"

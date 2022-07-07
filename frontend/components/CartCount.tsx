@@ -37,7 +37,7 @@ const StyledAnimation = styled.span`
 	}
 `;
 
-const CartCount = ({ count }: {count: number}) => {
+const CartCount = ({ count }: { count: number }) => {
 	return (
 		<StyledAnimation>
 			<TransitionGroup>
@@ -53,6 +53,6 @@ const CartCount = ({ count }: {count: number}) => {
 			</TransitionGroup>
 		</StyledAnimation>
 	);
-}
+};
 
 export default CartCount;

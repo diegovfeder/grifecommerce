@@ -22,6 +22,8 @@ const SignOut = () => {
 		});
 	};
 
+	// TODO: When SIGN OUT and MY CART gets to two-line text
+	// THe hover indicator (red underline) is broken. Cuts off text.
 	return (
 		<button type="button" onClick={resolveSignOut}>
 			SIGN OUT

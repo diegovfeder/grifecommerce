@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<PaginationComponent/> renders pagination for 36 items 1`] = `
+<div>
+  <div
+    class="Pagination__StyledPaginationContainer-sc-v2oj55-0 jifjaQ"
+    data-test-id="pagination"
+  >
+    <div
+      class="StyledPagination-sc-1vd1tt1-0 iAQRjh"
+    >
+      <a
+        aria-disabled="true"
+        href="/products/0"
+      >
+        ← Prev
+      </a>
+      <p
+        data-test-id="pageCount"
+      >
+        Page
+        1
+         of
+        9
+      </p>
+      <p>
+        Total Products:
+        36
+      </p>
+      <a
+        aria-disabled="false"
+        href="/products/2"
+      >
+        Next →
+      </a>
+    </div>
+  </div>
+</div>
+`;
