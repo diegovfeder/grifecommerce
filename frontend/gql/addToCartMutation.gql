@@ -1,0 +1,5 @@
+	mutation AddToCartMutation($id: ID!) {
+		addToCart(productId: $id) {
+			id
+		}
+	}

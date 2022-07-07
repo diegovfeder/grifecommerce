@@ -14,20 +14,14 @@ import type {
 import { lists } from "./schema";
 import { permissionsList } from "./schemas/Fields";
 import { extendGraphqlSchema } from "./mutations/index";
-import { sendPasswordResetEmail } from "./util/mail";
+import { sendPasswordResetEmail } from "./utils/mail";
 
-const databaseURL =
-	process.env.DATABASE_URL ||
-	"postgres://diego.feder:diegof94@localhost:5432/keystone";
+const { COOKIE_SECRET, DATABASE_URL, FRONTEND_URL, NODE_ENV } = process.env;
 
 const sessionConfig = {
-	secret:
-		process.env.COOKIE_SECRET ||
-		"Could not access COOKIE_SECRET environment variable",
+	secret: COOKIE_SECRET,
 	maxAge: 60 * 60 * 24 * 360,
-	secure: true,
-	path: "/",
-	domain: "localhost",
+	secure: false,
 };
 
 const { withAuth } = createAuth({
@@ -37,6 +31,8 @@ const { withAuth } = createAuth({
 	// sessionData: `id name email role {${permissionsList.join(' ')}}`,
 	initFirstItem: {
 		fields: ["name", "email", "password"],
+		// itemData: { isAdmin: true },
+    // skipKeystoneWelcome: false,
 	},
 	passwordResetLink: {
 		sendToken: async ({ token, identity }: any) => {
@@ -51,7 +47,7 @@ export default withAuth(
 		lists,
 		db: {
 			provider: "postgresql",
-			url: databaseURL,
+			url: DATABASE_URL,
 			enableLogging: true,
 			useMigrations: true,
 			idField: { kind: "uuid" },
@@ -61,7 +57,7 @@ export default withAuth(
 		} as AdminUIConfig<BaseKeystoneTypeInfo>,
 		server: {
 			cors: {
-				origin: [process.env.FRONTEND_URL || "http://localhost:7777"],
+				origin: [FRONTEND_URL],
 				credentials: true,
 			},
 			port: 3000,
@@ -72,12 +68,11 @@ export default withAuth(
 			sessionConfig
 		) as SessionStrategy<BaseKeystoneTypeInfo>,
 		graphql: {
-			debug: process.env.NODE_ENV !== "production",
+			debug: NODE_ENV !== "production",
 			queryLimits: { maxTotalResults: 100 },
 			path: "/api/graphql",
 			apolloConfig: {
 				debug: true,
-				/* ... */
 			},
 		} as GraphQLConfig,
 		extendGraphqlSchema,

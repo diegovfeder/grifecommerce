@@ -1,5 +1,5 @@
-import { list } from '@keystone-6/core';
-import { text, password, relationship } from '@keystone-6/core/fields';
+import { list } from "@keystone-6/core";
+import { text, password, relationship } from "@keystone-6/core/fields";
 
 export const User = list({
 	// access:
@@ -14,21 +14,20 @@ export const User = list({
 			validation: {
 				isRequired: true,
 			},
-			isIndexed: 'unique',
+			isIndexed: "unique",
 		}),
 		password: password(),
 		cart: relationship({
-			ref: 'CartItem.user',
+			ref: "CartItem.user",
 			many: true,
 			ui: {
-				createView: { fieldMode: 'hidden' },
-				itemView: { fieldMode: 'read' },
+				createView: { fieldMode: "hidden" },
+				itemView: { fieldMode: "read" },
 			},
 		}),
-		// TODO: add roles, cart and orders
-		// orders
+		orders: relationship({ ref: "Order.user", many: true }),
 		role: relationship({
-			ref: 'Role.assignedTo',
+			ref: "Role.assignedTo",
 			// TODO: Add access control
 		}),
 	},

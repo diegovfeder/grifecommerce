@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<NavigationComponent/> Renders and minimal nav when signed out 1`] = `
+<div>
+  <ul
+    class="StyledNavigation-sc-hq3jod-0 lnyikG"
+  >
+    <a
+      href="/products/1"
+    >
+      PRODUCTS
+    </a>
+    <a
+      href="/signin"
+    >
+      SIGN IN
+    </a>
+  </ul>
+</div>
+`;
+
+exports[`<NavigationComponent/> renders a full nav when signed in 1`] = `
+<div>
+  <ul
+    class="StyledNavigation-sc-hq3jod-0 lnyikG"
+  >
+    <a
+      href="/products/1"
+    >
+      PRODUCTS
+    </a>
+    <a
+      href="/sell"
+    >
+      SELL
+    </a>
+    <a
+      href="/orders"
+    >
+      ORDERS
+    </a>
+    <a
+      href="/account"
+    >
+      ACCOUNT
+    </a>
+    <button
+      type="button"
+    >
+      SIGN OUT
+    </button>
+    <button
+      type="button"
+    >
+      MY CART
+      <span
+        class="CartCount__StyledAnimation-sc-181jath-1 bIKWgK"
+      >
+        <div>
+          <div
+            class="CartCount__StyledDot-sc-181jath-0 dnDKcp count"
+          >
+            0
+          </div>
+        </div>
+      </span>
+    </button>
+  </ul>
+</div>
+`;
