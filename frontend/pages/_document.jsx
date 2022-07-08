@@ -35,27 +35,7 @@ export default class MyDocument extends Document {
 	render() {
 		return (
 			<Html lang="pt-BR">
-<<<<<<< HEAD:frontend/pages/_document.tsx
-				<Head>
-					<script
-						async
-						src="https://www.googletagmanager.com/gtag/js?id=[Tracking ID]"
-					/>
-
-					<script
-						dangerouslySetInnerHTML={{
-							__html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '[Tracking ID]', { page_path: window.location.pathname });
-            `,
-						}}
-					/>
-				</Head>
-=======
 				<Head />
->>>>>>> dev:frontend/pages/_document.jsx
 				<body>
 					<Main />
 					<NextScript />

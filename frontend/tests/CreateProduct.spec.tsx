@@ -6,16 +6,11 @@ import wait from 'waait';
 import CreateProduct, {
 	CREATE_PRODUCT_MUTATION,
 } from '../components/CreateProduct';
-<<<<<<< HEAD:frontend/tests/CreateProduct.test.js
-import { fakeItem, makePaginationMocksFor } from '../utils/testUtils';
-import { PRODUCTS_QUERY } from '../components/Products';
-=======
 import {
 	fakeItem,
 	// makePaginationMocksFor
 } from '../utils/testUtils';
 import PRODUCTS_QUERY from '../gql/queryProducts.gql';
->>>>>>> dev:frontend/tests/CreateProduct.spec.tsx
 
 import { logRoles } from '@testing-library/dom';
 

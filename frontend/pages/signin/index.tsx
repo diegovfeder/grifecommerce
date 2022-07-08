@@ -1,14 +1,8 @@
 import Head from 'next/head';
 import styled from 'styled-components';
-<<<<<<< HEAD:frontend/pages/signin.tsx
-import RequestPasswordReset from '../components/RequestPasswordReset';
-import SignIn from '../components/SignIn';
-import SignUp from '../components/SignUp';
-=======
 import RequestPasswordReset from '../../components/RequestPasswordReset';
 import SignIn from '../../components/SignIn';
 import SignUp from '../../components/SignUp';
->>>>>>> dev:frontend/pages/signin/index.tsx
 
 const StyledGrid = styled.div`
 	display: grid;
