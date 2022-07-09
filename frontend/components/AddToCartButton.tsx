@@ -41,6 +41,6 @@ const AddToCartButton = ({ id, children }: AddToCartButtonProps) => {
 			{children}
 		</StyledButtonLink>
 	);
-}
+};
 
 export default AddToCartButton;

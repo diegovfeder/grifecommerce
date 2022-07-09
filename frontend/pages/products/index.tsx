@@ -1,18 +1,44 @@
+// TODO: Fix error, query is not being passed from useRouter()
+// can I mock it?
+import { useQuery, useLazyQuery } from '@apollo/client';
 import { useRouter } from 'next/dist/client/router';
-import Pagination from '../../components/Pagination';
-import Products from '../../components/ProductsGridComponent';
+import { LoadingLabel, LoadingSkeleton } from '../../components/loading';
+import PaginationComponent from '../../components/PaginationComponent';
+import ProductsGridComponent from '../../components/ProductsGridComponent';
+// TODO: How can I add vscode / graphql vscode reccomendations?
+// If we have that similar to the dx we get from typescript,
+// we could write files with .gql extension...
+// -- on the other hand, the second option is to
+// simply use a .ts file like this below...
+import { PRODUCTS_COUNT_QUERY } from '../../gql/queries';
+import ErrorMessage from '../../components/ErrorMessage';
 
 const ProductsPage = () => {
 	const { query } = useRouter();
-	// FIXME: Create tests for this. Check when it return an array.
-	// Q: How do I remove the value from this string array and transform to a simple number
-	// const pageNumber = parseInt(query?.page);
-	const queryPageNumber = query.page ? Number(query.page) : 1;
+	const { error, loading, data } = useQuery(PRODUCTS_COUNT_QUERY);
+
+	if (loading)
+		return (
+			<>
+				<LoadingLabel />
+				<LoadingSkeleton />
+			</>
+		);
+
+	if (error) return <ErrorMessage error={error} />;
+
+	const queryPageNumber = !!query?.page ? Number(query.page) : 1;
 	return (
 		<div>
-			<Pagination page={queryPageNumber || 1} />
-			<Products page={queryPageNumber || 1} />
-			<Pagination page={queryPageNumber || 1} />
+			<PaginationComponent
+				page={queryPageNumber || 1}
+				productsCount={data?.productsCount || 0}
+			/>
+			<ProductsGridComponent page={queryPageNumber || 1} />
+			<PaginationComponent
+				page={queryPageNumber || 1}
+				productsCount={data?.productsCount || 0}
+			/>
 		</div>
 	);
 };

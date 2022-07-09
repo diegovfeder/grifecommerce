@@ -10,7 +10,7 @@ jobs:
       CLOUDINARY_SECRET: ${{secrets.CLOUDINARY_SECRET}}
     steps:
       - name: Frontend Actions
-        run: cd Frontend
+        run: cd frontend
       - name: Checkout on repository
         uses: actions/checkout@v2
       - name: Setup Node.js
@@ -22,5 +22,3 @@ jobs:
         run: yarn --frozen-lockfile
       - name: Run Tests
       - run: yarn test
-      # - name: Build Packages
-      #   run: yarn next:build

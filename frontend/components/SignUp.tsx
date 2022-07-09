@@ -1,34 +1,27 @@
-import gql from 'graphql-tag';
-import { useMutation } from '@apollo/client';
+import { useState } from 'react';
+import { ApolloError, useMutation } from '@apollo/client';
 import StyledForm from './styles/StyledForm';
 import useForm from '../hooks/useForm';
 import ErrorMessage from './ErrorMessage';
 import { EventProps, SignUpFormInputProps } from '../types/commonTypes';
-
-const SIGNUP_MUTATION = gql`
-	mutation SIGNUP_MUTATION(
-		$email: String!
-		$name: String!
-		$password: String!
-	) {
-		createUser(data: { email: $email, name: $name, password: $password }) {
-			id
-			email
-			name
-		}
-	}
-`;
+import { SIGN_UP_MUTATION } from '../gql/mutations';
+import LoadingLabel from './loading/LoadingLabel';
 
 const SignUp = () => {
+	const [error, setError] = useState<ApolloError | null>(null);
 	const { inputs, handleChange, resetForm } = useForm<SignUpFormInputProps>({
 		email: '',
 		name: '',
 		password: '',
 	});
 
-	const [signup, { loading, data, error }] = useMutation(SIGNUP_MUTATION, {
+	const [signup, { loading, data }] = useMutation(SIGN_UP_MUTATION, {
 		variables: inputs,
-		// refectch the currently logged in user
+		onError: err => {
+			// console.error(err);
+			setError(err);
+		},
+		// TODO: refectch the currently logged in user
 		// refetchQueries: [{ query: CURRENT_USER_QUERY }],
 	});
 
@@ -38,20 +31,20 @@ const SignUp = () => {
 		resetForm();
 	};
 
+	if (loading) {
+		<LoadingLabel />;
+	}
+	if (error) return <ErrorMessage error={error} />;
+
 	// TODO: Change UX: After SignIn, route directly to Home
 	return (
 		<StyledForm method="POST" onSubmit={handleSubmit}>
 			<h2>Sign Up For an Account</h2>
-			<ErrorMessage error={error} />
 			<fieldset>
-				{data?.createUser && (
-					<p>
-						Signed up with {data.createUser.email} - Please Go Head and Sign in!
-					</p>
-				)}
 				<label htmlFor="email">
-					Your Name
+					Name
 					<input
+						aria-label="name"
 						type="text"
 						name="name"
 						placeholder="Your Name"
@@ -82,7 +75,13 @@ const SignUp = () => {
 						onChange={handleChange}
 					/>
 				</label>
-				<button type="submit">Sign In!</button>
+				<button type="submit">Sign Up!</button>
+				{data?.createUser && (
+					<p>
+						Signed up with {data.createUser.email} - Please Go Head and Sign in!
+					</p>
+				)}
+				{data?.createUser === undefined && <p>Error</p>}
 			</fieldset>
 		</StyledForm>
 	);

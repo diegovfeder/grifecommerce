@@ -25,7 +25,7 @@ export const CREATE_PRODUCT_MUTATION = gql`
 		) {
 			id
 			price
-			descriptio
+			description
 			name
 		}
 	}

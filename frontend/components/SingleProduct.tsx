@@ -1,60 +1,62 @@
 import { useQuery } from '@apollo/client';
-import gql from 'graphql-tag';
+import styled from 'styled-components';
 import Image from 'next/image';
 import Head from 'next/head';
-import styled from 'styled-components';
 import ErrorMessage from './ErrorMessage';
+import { PRODUCT_QUERY } from '../gql/queries';
+import LoadingLabel from './loading/LoadingLabel';
+import LoadingSkeleton from './loading/LoadingSkeleton';
+import Supreme, { SupremeDescription } from './styles/Supreme';
+import formatMoney from '../utils/formatMoney';
 
 interface SingleProductProps {
 	id: string;
 }
 
-export const SINGLE_ITEM_QUERY = gql`
-	query SINGLE_ITEM_QUERY($id: ID!) {
-		product(where: { id: $id }) {
-			name
-			price
-			description
-			id
-			photo {
-				id
-				altText
-				image {
-					publicUrlTransformed
-				}
-			}
-		}
-	}
-`;
-
 const SingleProduct = ({ id }: SingleProductProps) => {
-	const { loading, data, error } = useQuery(SINGLE_ITEM_QUERY, {
+	const { loading, data, error } = useQuery(PRODUCT_QUERY, {
 		variables: {
 			id,
 		},
 	});
-	if (loading) return <p>Loading...</p>;
+
+	if (loading)
+		return (
+			<>
+				<LoadingLabel />
+				<LoadingSkeleton />
+			</>
+		);
+
 	if (error) return <ErrorMessage error={error} />;
+
 	const { product } = data;
 	return (
-		<ProductStyles>
+		<ProductStyles data-test-id="singleProduct">
 			<Head>
 				<title>GRIFE | {product.name}</title>
 			</Head>
-			<Image
-				src={product.photo.image.publicUrlTransformed}
-				alt={product.photo.altText}
-				width={320}
-				height={320}
-			/>
-			<div className="details">
-				<h1>{product.name}</h1>
-				<h2>{product.description}</h2>
-				<h3>{product.price}</h3>
+			<div style={{ display: 'flex', flex: 1, flexDirection: 'column' }}>
+				<h1 style={{ borderBottom: '4px solid gray', fontWeight: '100' }}>
+					{product.name}
+				</h1>
+				{/* TODO: Style this */}
+				<Supreme>{formatMoney(product.price)}</Supreme>
+				<Image
+					src={product?.photo?.image?.publicUrlTransformed || ''}
+					alt={product.photo.altText}
+					width={'80%'}
+					height={'80%'}
+					loading="eager"
+				/>
+				{/* TODO: Style this */}
+				<div className="details">
+					<SupremeDescription>{product.description}</SupremeDescription>
+				</div>
 			</div>
 		</ProductStyles>
 	);
-}
+};
 
 const ProductStyles = styled.div`
 	display: grid;
