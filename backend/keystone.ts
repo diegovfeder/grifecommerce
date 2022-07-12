@@ -32,7 +32,7 @@ const { withAuth } = createAuth({
 	initFirstItem: {
 		fields: ["name", "email", "password"],
 		// itemData: { isAdmin: true },
-    // skipKeystoneWelcome: false,
+		// skipKeystoneWelcome: false,
 	},
 	passwordResetLink: {
 		sendToken: async ({ token, identity }: any) => {
@@ -53,7 +53,11 @@ export default withAuth(
 			idField: { kind: "uuid" },
 		} as DatabaseConfig<BaseKeystoneTypeInfo>,
 		ui: {
-			isAccessAllowed: async (context) => !!context.session,
+			// isAccessAllowed: async (context) => !!context.session?.data,
+			isAccessAllowed: async (context) => {
+				console.log("isAccessAllowed", { context: context.session });
+				return !!context.session?.data;
+			},
 		} as AdminUIConfig<BaseKeystoneTypeInfo>,
 		server: {
 			cors: {

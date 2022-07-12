@@ -1,5 +1,5 @@
 name: GH Actions
-on: [push, pull_request]
+on: [pull_request]
 jobs:
   test-frontend:
     runs-on: ubuntu-latest
