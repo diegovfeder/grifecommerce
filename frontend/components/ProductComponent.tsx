@@ -10,6 +10,8 @@ import AddToCartButton from './AddToCartButton';
 import { ProductProps } from '../types/commonTypes';
 import { SupremeDescription } from './styles/Supreme';
 import { LoadingLabel, LoadingSkeleton } from './loading';
+import { TEXT_NO_DESCRIPTION } from '../utils/constants';
+import UpdateProductButton from './UpdateProductButton';
 
 const ProductComponent = ({
 	product,
@@ -34,16 +36,16 @@ const ProductComponent = ({
 				</>
 			) : (
 				<>
-					{/* TODO: Test what happens if no image is found */}
 					{isPhotoImageUrlDefined ? (
 						<Image
 							src={product.photo.image.publicUrlTransformed}
 							alt={product.name}
-							width={'100%'}
-							height={'100%'}
+							width="100%"
+							height="100%"
 						/>
 					) : (
 						<>
+							<LoadingLabel />
 							<LoadingSkeleton />
 						</>
 					)}
@@ -65,21 +67,10 @@ const ProductComponent = ({
 					overflow: 'scroll',
 				}}
 			>
-				{product?.description || '- No description available'}
+				{product?.description || TEXT_NO_DESCRIPTION}
 			</p>
 			<div className="buttonList">
-				{/* TODO: Move this Update Product Button  */}
-				{/* TODO: Also change its UI and wrap in a custom component  */}
-				<Link
-					href={{
-						pathname: '/update-product',
-						query: {
-							id: product.id,
-						},
-					}}
-				>
-					Update ✏️
-				</Link>
+				<UpdateProductButton id={product.id}>Update ✏️</UpdateProductButton>
 				<AddToCartButton id={product.id}>Add To Cart 🛒</AddToCartButton>
 				<DeleteProduct id={product.id}>Delete</DeleteProduct>
 			</div>
