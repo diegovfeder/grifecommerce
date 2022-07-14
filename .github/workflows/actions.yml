@@ -1,26 +1,19 @@
-name: Github Actions
-on: [push]
+name: GH Actions
+on: [pull_request]
 jobs:
-  node:
+  test-frontend:
     runs-on: ubuntu-latest
-    env:
-      COOKIE_SECRET: ARandomSecretWithMoreThan32Characters
-      CLOUDINARY_CLOUD_NAME: grifemusic
-      CLOUDINARY_KEY: 597576948711519
-      CLOUDINARY_SECRET: ${{secrets.CLOUDINARY_SECRET}}
     steps:
-      - name: Frontend Actions
-        run: cd Frontend
-      - name: Checkout on repository
-        uses: actions/checkout@v2
-      - name: Setup Node.js
+      - uses: actions/checkout@v2
+      - name: Setup node
         uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
+          node-version: '14.17.x'
           cache: 'yarn'
+          cache-dependency-path: ./frontend/yarn.lock
       - name: Install dependencies
-        run: yarn --frozen-lockfile
-      - name: Run Tests
-      - run: yarn test
-      # - name: Build Packages
-      #   run: yarn next:build
+        working-directory: ./frontend
+        run: yarn --immutable --immutable-cache --check-cache
+      - name: Run tests
+        working-directory: ./frontend
+        run: yarn test

@@ -8,6 +8,7 @@ const StyledCloseButton = styled.button`
 	position: absolute;
 	z-index: 2;
 	right: 0;
+	margin-top: 24px;
 	&:hover {
 		color: white;
 		background: red;
