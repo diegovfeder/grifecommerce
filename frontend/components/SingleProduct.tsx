@@ -8,6 +8,7 @@ import LoadingLabel from './loading/LoadingLabel';
 import LoadingSkeleton from './loading/LoadingSkeleton';
 import Supreme, { SupremeDescription } from './styles/Supreme';
 import formatMoney from '../utils/formatMoney';
+import { TEXT_NO_DESCRIPTION } from '../utils/constants';
 
 interface SingleProductProps {
 	id: string;
@@ -17,6 +18,9 @@ const SingleProduct = ({ id }: SingleProductProps) => {
 	const { loading, data, error } = useQuery(PRODUCT_QUERY, {
 		variables: {
 			id,
+		},
+		onCompleted: data => {
+			console.log({ data });
 		},
 	});
 
@@ -31,6 +35,8 @@ const SingleProduct = ({ id }: SingleProductProps) => {
 	if (error) return <ErrorMessage error={error} />;
 
 	const { product } = data;
+	const isPhotoImageUrlDefined = !!product.photo?.image?.publicUrlTransformed;
+
 	return (
 		<ProductStyles data-test-id="singleProduct">
 			<Head>
@@ -40,18 +46,25 @@ const SingleProduct = ({ id }: SingleProductProps) => {
 				<h1 style={{ borderBottom: '4px solid gray', fontWeight: '100' }}>
 					{product.name}
 				</h1>
-				{/* TODO: Style this */}
 				<Supreme>{formatMoney(product.price)}</Supreme>
-				<Image
-					src={product?.photo?.image?.publicUrlTransformed || ''}
-					alt={product.photo.altText}
-					width={'80%'}
-					height={'80%'}
-					loading="eager"
-				/>
-				{/* TODO: Style this */}
-				<div className="details">
-					<SupremeDescription>{product.description}</SupremeDescription>
+				{isPhotoImageUrlDefined ? (
+					<Image
+						src={product?.photo?.image?.publicUrlTransformed || ''}
+						alt={product?.photo?.altText || ''}
+						width="80%"
+						height="80%"
+						loading="eager"
+					/>
+				) : (
+					<>
+						<LoadingLabel />
+						<LoadingSkeleton />
+					</>
+				)}
+				<div style={{ display: 'flex', flex: 1, flexDirection: 'column' }}>
+					<SupremeDescription>
+						{product?.description || TEXT_NO_DESCRIPTION}
+					</SupremeDescription>
 				</div>
 			</div>
 		</ProductStyles>

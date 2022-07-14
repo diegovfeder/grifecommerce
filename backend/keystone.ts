@@ -21,18 +21,18 @@ const { COOKIE_SECRET, DATABASE_URL, FRONTEND_URL, NODE_ENV } = process.env;
 const sessionConfig = {
 	secret: COOKIE_SECRET,
 	maxAge: 60 * 60 * 24 * 360,
-	secure: false,
+	secure: true,
 };
 
 const { withAuth } = createAuth({
 	listKey: "User",
 	identityField: "email",
 	secretField: "password",
-	// sessionData: `id name email role {${permissionsList.join(' ')}}`,
+	sessionData: "id name email",
 	initFirstItem: {
 		fields: ["name", "email", "password"],
-		// itemData: { isAdmin: true },
-    // skipKeystoneWelcome: false,
+		itemData: { isAdmin: true },
+		skipKeystoneWelcome: false,
 	},
 	passwordResetLink: {
 		sendToken: async ({ token, identity }: any) => {
@@ -53,7 +53,8 @@ export default withAuth(
 			idField: { kind: "uuid" },
 		} as DatabaseConfig<BaseKeystoneTypeInfo>,
 		ui: {
-			isAccessAllowed: async (context) => !!context.session,
+			// isAccessAllowed: async (context) => !!context.session?.data,
+			isAccessAllowed: async (context) => true,
 		} as AdminUIConfig<BaseKeystoneTypeInfo>,
 		server: {
 			cors: {
@@ -72,7 +73,7 @@ export default withAuth(
 			queryLimits: { maxTotalResults: 100 },
 			path: "/api/graphql",
 			apolloConfig: {
-				debug: true,
+				debug: NODE_ENV !== "production",
 			},
 		} as GraphQLConfig,
 		extendGraphqlSchema,
