@@ -16,7 +16,7 @@ import { permissionsList } from "./schemas/Fields";
 import { extendGraphqlSchema } from "./mutations/index";
 import { sendPasswordResetEmail } from "./utils/mail";
 
-const { COOKIE_SECRET, DATABASE_URL, FRONTEND_URL, NODE_ENV } = process.env;
+const { COOKIE_SECRET, DATABASE_URL, FRONTEND_URL, PORT, NODE_ENV } = process.env;
 
 const sessionConfig = {
 	secret: COOKIE_SECRET,
@@ -61,7 +61,7 @@ export default withAuth(
 				origin: [FRONTEND_URL],
 				credentials: true,
 			},
-			port: 3000,
+			port: PORT || 3000,
 			maxFileSize: 200 * 1024 * 1024,
 			healthCheck: true,
 		} as ServerConfig<BaseKeystoneTypeInfo>,
