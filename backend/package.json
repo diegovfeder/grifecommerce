@@ -8,7 +8,7 @@
     "dev": "keystone dev",
     "post": "keystone postinstall",
     "build": "NODE_ENV=production keystone build && keystone prisma migrate deploy",
-    "start": "keystone start",
+    "start": "NODE_ENV=production keystone start",
     "test": "yarn jest",
     "push": "NODE_ENV=production keystone prisma db push"
   },
