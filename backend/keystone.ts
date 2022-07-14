@@ -57,10 +57,10 @@ export default withAuth(
 			isAccessAllowed: async (context) => true,
 		} as AdminUIConfig<BaseKeystoneTypeInfo>,
 		server: {
-			cors: {
-				origin: [FRONTEND_URL],
-				credentials: true,
-			},
+			// cors: {
+			// 	origin: [FRONTEND_URL, 'http://localhost:7777'],
+			// 	credentials: true,
+			// },
 			port: PORT || 3000,
 			maxFileSize: 200 * 1024 * 1024,
 			healthCheck: true,
