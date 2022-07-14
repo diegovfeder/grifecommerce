@@ -73,7 +73,7 @@ export default withAuth(
 			queryLimits: { maxTotalResults: 100 },
 			path: "/api/graphql",
 			apolloConfig: {
-				debug: true,
+				debug: NODE_ENV !== "production",
 			},
 		} as GraphQLConfig,
 		extendGraphqlSchema,
