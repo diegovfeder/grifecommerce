@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
 import { useQuery } from '@apollo/client';
-import { totalProductsPerPage } from '../config';
+import { NUM_TOTAL_PRODUCTS_PER_PAGE } from '../utils/constants';
 import { ProductProps } from '../types/commonTypes';
 import PRODUCTS_QUERY from '../gql/queryProducts.gql';
 import ProductComponent from './ProductComponent';
@@ -15,8 +15,8 @@ interface ProductsGridComponentProps {
 const ProductsGridComponent = ({ page }: ProductsGridComponentProps) => {
 	const { loading, data, error } = useQuery(PRODUCTS_QUERY, {
 		variables: {
-			take: totalProductsPerPage,
-			skip: page * totalProductsPerPage - totalProductsPerPage,
+			take: NUM_TOTAL_PRODUCTS_PER_PAGE,
+			skip: page * NUM_TOTAL_PRODUCTS_PER_PAGE - NUM_TOTAL_PRODUCTS_PER_PAGE,
 		},
 		// onCompleted: data => console.log(data),
 	});
