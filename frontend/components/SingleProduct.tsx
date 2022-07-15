@@ -4,8 +4,7 @@ import Image from 'next/image';
 import Head from 'next/head';
 import ErrorMessage from './ErrorMessage';
 import { PRODUCT_QUERY } from '../gql/queries';
-import LoadingLabel from './loading/LoadingLabel';
-import LoadingSkeleton from './loading/LoadingSkeleton';
+import { LoadingSkeleton } from './loading';
 import Supreme, { SupremeDescription } from './styles/Supreme';
 import formatMoney from '../utils/formatMoney';
 import { TEXT_NO_DESCRIPTION } from '../utils/constants';
@@ -24,13 +23,7 @@ const SingleProduct = ({ id }: SingleProductProps) => {
 		},
 	});
 
-	if (loading)
-		return (
-			<>
-				<LoadingLabel />
-				<LoadingSkeleton />
-			</>
-		);
+	if (loading) return <LoadingSkeleton />;
 
 	if (error) return <ErrorMessage error={error} />;
 
@@ -56,10 +49,7 @@ const SingleProduct = ({ id }: SingleProductProps) => {
 						loading="eager"
 					/>
 				) : (
-					<>
-						<LoadingLabel />
-						<LoadingSkeleton />
-					</>
+					<LoadingSkeleton />
 				)}
 				<div style={{ display: 'flex', flex: 1, flexDirection: 'column' }}>
 					<SupremeDescription>

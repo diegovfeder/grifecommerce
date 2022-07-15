@@ -5,8 +5,7 @@ import { NUM_TOTAL_PRODUCTS_PER_PAGE } from '../utils/constants';
 import { ProductProps } from '../types/commonTypes';
 import PRODUCTS_QUERY from '../gql/queryProducts.gql';
 import ProductComponent from './ProductComponent';
-import LoadingLabel from './loading/LoadingLabel';
-import LoadingSkeleton from './loading/LoadingSkeleton';
+import { LoadingLabel } from './loading';
 
 interface ProductsGridComponentProps {
 	page: number;
@@ -21,13 +20,7 @@ const ProductsGridComponent = ({ page }: ProductsGridComponentProps) => {
 		// onCompleted: data => console.log(data),
 	});
 
-	if (loading)
-		return (
-			<>
-				<LoadingLabel />
-				<LoadingSkeleton />
-			</>
-		);
+	if (loading) return <LoadingLabel />;
 
 	if (error) return <p>Error: {error.message}</p>;
 

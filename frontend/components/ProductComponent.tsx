@@ -9,7 +9,7 @@ import DeleteProduct from './DeleteProduct';
 import AddToCartButton from './AddToCartButton';
 import { ProductProps } from '../types/commonTypes';
 import { SupremeDescription } from './styles/Supreme';
-import { LoadingLabel, LoadingSkeleton } from './loading';
+import { LoadingSkeleton } from './loading';
 import { TEXT_NO_DESCRIPTION } from '../utils/constants';
 import UpdateProductButton from './UpdateProductButton';
 
@@ -30,10 +30,7 @@ const ProductComponent = ({
 	return (
 		<StyledItem>
 			{!!loading ? (
-				<>
-					<LoadingLabel />
-					<LoadingSkeleton />
-				</>
+				<LoadingSkeleton />
 			) : (
 				<>
 					{isPhotoImageUrlDefined ? (
@@ -44,10 +41,7 @@ const ProductComponent = ({
 							height="100%"
 						/>
 					) : (
-						<>
-							<LoadingLabel />
-							<LoadingSkeleton />
-						</>
+						<LoadingSkeleton />
 					)}
 				</>
 			)}

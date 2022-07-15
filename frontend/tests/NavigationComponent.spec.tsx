@@ -48,7 +48,7 @@ describe('<NavigationComponent/>', () => {
 		expect(link).toHaveAttribute('href', '/signin');
 		const productsLink = screen.getByText(/products/i);
 		expect(productsLink).toBeInTheDocument();
-		expect(productsLink).toHaveAttribute('href', '/products');
+		expect(productsLink).toHaveAttribute('href', '/products/1');
 	});
 
 	it('renders a full nav when signed in', async () => {

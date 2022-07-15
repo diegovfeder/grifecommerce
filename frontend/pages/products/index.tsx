@@ -1,8 +1,8 @@
-// TODO: Fix error, query is not being passed from useRouter()
+// TODO: Fix error, query is not being passed from useRouter() on tests too
 // can I mock it?
 import { useQuery, useLazyQuery } from '@apollo/client';
 import { useRouter } from 'next/dist/client/router';
-import { LoadingLabel, LoadingSkeleton } from '../../components/loading';
+import { LoadingLabel } from '../../components/loading';
 import PaginationComponent from '../../components/PaginationComponent';
 import ProductsGridComponent from '../../components/ProductsGridComponent';
 // TODO: How can I add vscode / graphql vscode reccomendations?
@@ -17,13 +17,7 @@ const ProductsPage = () => {
 	const { query } = useRouter();
 	const { error, loading, data } = useQuery(PRODUCTS_COUNT_QUERY);
 
-	if (loading)
-		return (
-			<>
-				<LoadingLabel />
-				<LoadingSkeleton />
-			</>
-		);
+	if (loading) return <LoadingLabel />;
 
 	if (error) return <ErrorMessage error={error} />;
 
