@@ -1,5 +1,3 @@
-// TODO: Fix error, query is not being passed from useRouter() on tests too
-// can I mock it?
 import { useQuery } from '@apollo/client';
 import { useRouter } from 'next/dist/client/router';
 import { LoadingLabel } from '../../components/loading';
