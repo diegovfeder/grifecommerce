@@ -41,8 +41,8 @@ describe('<Single Product/>', () => {
 				<SingleProduct id="718b7ac6-7cf1-47e7-b1de-c4a13ca92f2d" />
 			</MockedProvider>,
 		);
-		await screen.findAllByLabelText('Loading...');
-		await screen.findByTestId('loading-label');
+		await screen.getByLabelText('Loading...');
+		await screen.getByTestId('loading-label');
 		await resolveMockState();
 		await screen.findByTestId('single-product-component');
 		expect(container).toMatchSnapshot();
