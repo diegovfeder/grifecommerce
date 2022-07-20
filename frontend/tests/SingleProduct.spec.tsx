@@ -41,10 +41,10 @@ describe('<Single Product/>', () => {
 				<SingleProduct id="718b7ac6-7cf1-47e7-b1de-c4a13ca92f2d" />
 			</MockedProvider>,
 		);
-		screen.findAllByLabelText('Loading...');
-		screen.findByTestId('loading-label');
+		await screen.findAllByLabelText('Loading...');
+		await screen.findByTestId('loading-label');
 		await resolveMockState();
-		screen.findByTestId('singleProduct');
+		await screen.findByTestId('single-product-component');
 		expect(container).toMatchSnapshot();
 	});
 
@@ -68,7 +68,7 @@ describe('<Single Product/>', () => {
 			</MockedProvider>,
 		);
 		await screen.findByTestId('graphql-error');
-		expect(container).toHaveTextContent('Shoot!');
+		expect(container).toHaveTextContent('Error:');
 		expect(container).toHaveTextContent('Product not found');
 	});
 });

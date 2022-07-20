@@ -2,7 +2,6 @@
 import casual from 'casual';
 import { PRODUCTS_COUNT_QUERY } from '../gql/queries';
 
-// seed it so we get consistent results
 casual.seed(777);
 
 const fakeItem = () => ({
@@ -14,9 +13,8 @@ const fakeItem = () => ({
 	price: 5000,
 	// user: null,
 	photo: {
-		// FIXME:
-		// id: 'abc123',
-		// altText: 'dogs are best',
+		id: 'abc123',
+		altText: 'GRIFE Sample Pack - (Yellow)',
 		image: {
 			publicUrlTransformed: '/samplepack_yellow.jpg',
 		},
@@ -65,8 +63,6 @@ const fakeCartItem = (rest?: any) => ({
 	...rest,
 });
 
-// FIXME: Properly type this class
-// Fake LocalStorage
 class LocalStorageMock {
 	store: { [key: string]: any } = {};
 	constructor() {

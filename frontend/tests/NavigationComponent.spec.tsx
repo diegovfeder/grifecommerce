@@ -5,7 +5,6 @@ import { CURRENT_USER_QUERY } from '../hooks/useUserQuery';
 import { fakeUser, fakeCartItem } from '../utils/testUtils';
 import CartStateProvider from '../providers/CartStateProvider';
 
-// Make some Mocks for being logged out, logged in, and loggedin with cart items
 const notSignedInMocks = [
 	{
 		request: { query: CURRENT_USER_QUERY },

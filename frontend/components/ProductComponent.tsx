@@ -10,7 +10,7 @@ import AddToCartButton from './AddToCartButton';
 import { ProductProps } from '../types/commonTypes';
 import { SupremeDescription } from './styles/Supreme';
 import { LoadingSkeleton } from './loading';
-import { TEXT_NO_DESCRIPTION } from '../utils/constants';
+import { TEXT_NO_PRODUCT_DESCRIPTION } from '../utils/constants';
 import UpdateProductButton from './UpdateProductButton';
 
 const ProductComponent = ({
@@ -61,7 +61,7 @@ const ProductComponent = ({
 					overflow: 'scroll',
 				}}
 			>
-				{product?.description || TEXT_NO_DESCRIPTION}
+				{product?.description || TEXT_NO_PRODUCT_DESCRIPTION}
 			</p>
 			<div className="buttonList">
 				<UpdateProductButton id={product.id}>Update ✏️</UpdateProductButton>

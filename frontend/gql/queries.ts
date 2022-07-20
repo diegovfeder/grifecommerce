@@ -62,7 +62,7 @@ export const PRODUCTS_QUERY = gql`
 `;
 
 export const PRODUCTS_COUNT_QUERY = gql`
-	query Pagination {
+	query ProductsCount {
 		productsCount
 	}
 `;

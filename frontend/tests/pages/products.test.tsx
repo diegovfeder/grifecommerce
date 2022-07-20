@@ -1,16 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
-import { PRODUCTS_COUNT_QUERY } from '../../gql/queries';
-import { PRODUCTS_QUERY } from '../../gql/queries';
-import ProductsPage from '../../pages/products';
 import { resolveMockState } from '../utils';
-
-const useRouter = jest.spyOn(require('next/router'), 'useRouter');
-
-useRouter.mockImplementationOnce(() => ({
-	query: { page: 1 },
-	// asPath: '/posts'
-}));
+import { PRODUCTS_QUERY, PRODUCTS_COUNT_QUERY } from '../../gql/queries';
+import ProductsPage from '../../pages/products';
 
 const mocks = [
 	{

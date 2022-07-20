@@ -73,7 +73,7 @@ const SearchComponent = () => {
 		},
 		// FIXME: Properly type this
 		onSelectedItemChange({ selectedItem }: any) {
-			// FIXME: Can we test this route action?
+			// FIXME: Can we create ui test for this route action?
 			router.push({
 				pathname: `/product/${selectedItem?.id}`,
 			});
@@ -103,11 +103,13 @@ const SearchComponent = () => {
 							key={item.id}
 							highlighted={index === highlightedIndex}
 						>
-							<img
-								src={item.photo.image.publicUrlTransformed}
-								alt={item.name}
-								width="50"
-							/>
+							{!!item?.photo?.image?.publicUrlTransformed && (
+								<img
+									src={item?.photo?.image?.publicUrlTransformed}
+									alt={item.name}
+									width="50"
+								/>
+							)}
 							{item.name}
 						</StyledDropDownItem>
 					))}

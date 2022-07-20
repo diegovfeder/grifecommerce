@@ -1,4 +1,4 @@
-// import withApollo from 'next-with-apollo';
+import withData from './withData';
 
 describe('withData', () => {
 	it('should return a function', () => {
