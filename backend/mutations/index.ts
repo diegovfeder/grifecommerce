@@ -103,7 +103,6 @@ export const extendGraphqlSchema = graphql.extend(base => {
 							tally + product.price * cartItems[index].quantity,
 						0,
 					);
-					// console.log({ amount });
 
 					const charge = await stripeConfig.paymentIntents
 						.create({

@@ -17,10 +17,7 @@ import { CREATE_ORDER_MUTATION } from '../gql/mutations';
 import { CURRENT_USER_QUERY } from '../gql/queries';
 import LoadingLabel from './loading/LoadingLabel';
 
-const { STRIPE_PUBLISHABLE } = process.env;
-console.log({ STRIPE_PUBLISHABLE });
-
-const stripeLib = loadStripe(STRIPE_PUBLISHABLE || '');
+const stripeLib = loadStripe(process.env.STRIPE_PUBLISHABLE || '');
 
 const CheckoutForm = () => {
 	const [error, setError] = useState<StripeError | null>(null);
