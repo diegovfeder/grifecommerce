@@ -1,4 +1,3 @@
-import gql from 'graphql-tag';
 import { useMutation } from '@apollo/client';
 import Error from './ErrorMessage';
 import StyledForm from './styles/StyledForm';
@@ -7,25 +6,9 @@ import {
 	EventProps,
 	RedeemPasswordResetFormInputProps,
 } from '../types/commonTypes';
+import { RESET_PASSWORD_MUTATION } from '../gql/mutations';
 
-const RESET_MUTATION = gql`
-	mutation RESET_MUTATION(
-		$email: String!
-		$password: String!
-		$token: String!
-	) {
-		redeemUserPasswordResetToken(
-			email: $email
-			token: $token
-			password: $password
-		) {
-			code
-			message
-		}
-	}
-`;
-
-const Reset = ({ token }: any) => {
+const ResetPasswordComponent = ({ token }: any) => {
 	const { inputs, handleChange, resetForm } =
 		useForm<RedeemPasswordResetFormInputProps>({
 			email: '',
@@ -33,7 +16,7 @@ const Reset = ({ token }: any) => {
 			token,
 		});
 
-	const [reset, { data, loading, error }] = useMutation(RESET_MUTATION, {
+	const [reset, { data, error }] = useMutation(RESET_PASSWORD_MUTATION, {
 		variables: inputs,
 	});
 
@@ -83,4 +66,4 @@ const Reset = ({ token }: any) => {
 	);
 };
 
-export default Reset;
+export default ResetPasswordComponent;

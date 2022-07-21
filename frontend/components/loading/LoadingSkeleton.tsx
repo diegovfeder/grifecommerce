@@ -1,4 +1,8 @@
-// TODO: Finish loading skeleton component
+// TODO: Finish loading skeleton component with a skeleton animation,
+// TODO: Pass width and height as props
+// TODO: pass loading state as props?
+// TODO: override styles as props...
+// TODO: ...
 const LoadingSkeleton = () => {
 	return (
 		<div

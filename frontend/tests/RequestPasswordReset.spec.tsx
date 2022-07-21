@@ -36,7 +36,7 @@ const mocks = [
 ];
 
 describe('<RequestPasswordReset/>', () => {
-	it('renders and matches snapshot', () => {
+	it('renders component and matches snapshot', () => {
 		const { container } = render(
 			<MockedProvider mocks={mocks} addTypename={false}>
 				<RequestPasswordReset />

@@ -3,6 +3,7 @@ module.exports = {
 	images: {
 		domains: ['res.cloudinary.com'],
 	},
+	swcMinify: false,
 	webpack: (config, { webpack }) => {
 		config.module.rules.push({
 			test: /\.(graphql|gql)$/,

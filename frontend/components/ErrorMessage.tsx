@@ -13,7 +13,7 @@ const ErrorMessage = ({ error }: { error: ApolloError | null | undefined }) => {
 			(error: ApolloError, i: number) => (
 				<StyledErrorMessage key={i}>
 					<p data-test-id="graphql-error">
-						<strong>Shoot!</strong>
+						<strong>Error:</strong>
 						{error.message.replace('GraphQL error: ', '')}
 					</p>
 				</StyledErrorMessage>
@@ -21,9 +21,9 @@ const ErrorMessage = ({ error }: { error: ApolloError | null | undefined }) => {
 		);
 	}
 	return (
-		<StyledErrorMessage data-test-id="ErrorMessage">
+		<StyledErrorMessage data-test-id="error-message-component">
 			<p data-test-id="graphql-error">
-				<strong>Shoot!</strong>
+				<strong>Error:</strong>
 				{error.message.replace('GraphQL error: ', '')}
 			</p>
 		</StyledErrorMessage>

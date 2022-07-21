@@ -6,30 +6,7 @@ import StyledForm from './styles/StyledForm';
 import useForm from '../hooks/useForm';
 import { EventProps, ProductFormInputProps } from '../types/commonTypes';
 import ALL_PRODUCTS_QUERY from '../gql/queryAllProducts.gql';
-
-export const CREATE_PRODUCT_MUTATION = gql`
-	mutation CREATE_PRODUCT_MUTATION(
-		$name: String!
-		$description: String!
-		$price: Int!
-		$image: Upload
-	) {
-		createProduct(
-			data: {
-				name: $name
-				description: $description
-				price: $price
-				status: "AVAILABLE"
-				photo: { create: { image: $image, altText: $name } }
-			}
-		) {
-			id
-			price
-			description
-			name
-		}
-	}
-`;
+import { CREATE_PRODUCT_MUTATION } from '../gql/mutations';
 
 const CreateProduct = () => {
 	const { inputs, handleChange, clearForm } = useForm<ProductFormInputProps>({

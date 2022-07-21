@@ -1,34 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<ProductComponent/> Renders and matches the snapshot 1`] = `
+exports[`<ProductComponent/> renders component and matches the snapshot 1`] = `
 <div>
   <div
-    class="StyledItem-sc-n8xnjs-0 dCHmEZ"
+    class="StyledItem-sc-n8xnjs-0 dihOBH"
   >
-    <div
-      style="display: inline-block; max-width: 100%; overflow: hidden; position: relative; box-sizing: border-box; margin: 0px;"
-    >
-      <div
-        style="box-sizing: border-box; display: block; max-width: 100%;"
-      >
-        <img
-          alt=""
-          aria-hidden="true"
-          role="presentation"
-          src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="
-          style="max-width: 100%; display: block; margin: 0px; padding: 0px;"
-        />
-      </div>
-      <noscript />
-      <img
-        alt="GRIFE Sample Pack - (Yellow)"
-        decoding="async"
-        src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-        style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; padding: 0px; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"
-      />
-    </div>
+    next/image stub
     <h3
-      class="StyledTitle-sc-xu1dk-0 AeOwD"
+      class="StyledTitle-sc-xu1dk-0 dcnXgl"
     >
       <a
         href="/product/718b7ac6-7cf1-47e7-b1de-c4a13ca92f2d"
@@ -37,12 +16,12 @@ exports[`<ProductComponent/> Renders and matches the snapshot 1`] = `
       </a>
     </h3>
     <span
-      class="StyledPriceTag-sc-hnq0ox-0 iAEVwB"
+      class="StyledPriceTag-sc-hnq0ox-0 bXelVj"
     >
       R$ 50,00
     </span>
     <h3
-      class="Supreme__SupremeDescription-sc-2anpcp-1 cEBCgi"
+      class="Supreme__SupremeDescription-sc-2anpcp-1 eSreBk"
     >
       Description:
     </h3>
@@ -54,19 +33,19 @@ exports[`<ProductComponent/> Renders and matches the snapshot 1`] = `
     <div
       class="buttonList"
     >
-      <a
-        href="/update-product?id=718b7ac6-7cf1-47e7-b1de-c4a13ca92f2d"
+      <div
+        style="flex: 1; display: flex; justify-content: center;"
       >
         Update ✏️
-      </a>
+      </div>
       <button
-        class="AddToCartButton__StyledButtonLink-sc-er42vj-0 jJITkP"
+        class="AddToCartButton__StyledButtonLink-sc-er42vj-0 gWqWhB"
         type="button"
       >
         Add To Cart 🛒
       </button>
       <button
-        class="DeleteProduct__StyledButtonLink-sc-93lcvg-0 lfefWs"
+        class="DeleteProduct__StyledButtonLink-sc-93lcvg-0 hwfyeu"
         type="button"
       >
         Delete

@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import StyledPagination from './styles/StyledPagination';
 import StyledPaginationContainer from './styles/StyledPaginationContainer';
-import { totalProductsPerPage } from '../config';
+import { NUM_TOTAL_PRODUCTS_PER_PAGE } from '../utils/constants';
 
 interface PaginationComponentProps {
 	page: number;
@@ -13,7 +13,7 @@ const PaginationComponent = ({
 	page,
 	productsCount,
 }: PaginationComponentProps) => {
-	const pagesTotal = Math.ceil(productsCount / totalProductsPerPage);
+	const pagesTotal = Math.ceil(productsCount / NUM_TOTAL_PRODUCTS_PER_PAGE);
 
 	return (
 		<StyledPaginationContainer data-test-id="pagination">

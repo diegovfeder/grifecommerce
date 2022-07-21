@@ -1,4 +1,4 @@
-export default function formatMoney(amount = 0) {
+const formatMoney = (amount = 0) => {
 	const options = {
 		style: 'currency',
 		currency: 'BRL',
@@ -12,4 +12,6 @@ export default function formatMoney(amount = 0) {
 	const formatter = Intl.NumberFormat('pt-BR', options);
 
 	return formatter.format(amount / 100);
-}
+};
+
+export default formatMoney;
