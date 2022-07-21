@@ -1,9 +1,13 @@
-const formatter = new Intl.NumberFormat("en-US", {
-	style: "currency",
-	currency: "USD",
-});
+const formatterOptions = {
+	style: 'currency',
+	currency: 'BRL',
+	minimumFractionDigits: 2,
+};
 
-export default function formatMoney(cents: number) {
-	const dollars = cents / 100;
-	return formatter.format(dollars);
-}
+const formatter = new Intl.NumberFormat('pt-BR', formatterOptions);
+
+const formatMoney = (amount = 0) => {
+	return formatter.format(amount / 100);
+};
+
+export default formatMoney;

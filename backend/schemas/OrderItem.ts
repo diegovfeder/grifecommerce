@@ -1,31 +1,31 @@
-import { integer, relationship, text } from "@keystone-6/core/fields";
-import { list } from "@keystone-6/core";
+import { integer, relationship, text } from '@keystone-6/core/fields';
+import { list } from '@keystone-6/core';
 
 export const OrderItem = list({
 	fields: {
 		name: text({ validation: { isRequired: true } }),
 		description: text({
 			ui: {
-				displayMode: "textarea",
+				displayMode: 'textarea',
 			},
 		}),
 		photo: relationship({
-			ref: "ProductImage",
+			ref: 'ProductImage',
 			ui: {
-				displayMode: "cards",
-				cardFields: ["image", "altText"],
+				displayMode: 'cards',
+				cardFields: ['image', 'altText'],
 				inlineCreate: {
-					fields: ["image", "altText"],
+					fields: ['image', 'altText'],
 				},
 				inlineEdit: {
-					fields: ["image", "altText"],
+					fields: ['image', 'altText'],
 				},
 			},
 		}),
 		price: integer(),
 		quantity: integer(),
 		order: relationship({
-			ref: "Order.items",
+			ref: 'Order.items',
 		}),
 	},
 });

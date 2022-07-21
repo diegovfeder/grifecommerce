@@ -1,13 +1,13 @@
-import { graphql } from "@keystone-6/core";
-import { ICartItemModel, IProductModel } from "../types/models";
-import stripeConfig from "../utils/stripe";
+import { graphql } from '@keystone-6/core';
+import { ICartItemModel, IProductModel } from '../types/models';
+import stripeConfig from '../utils/stripe';
 
-export const extendGraphqlSchema = graphql.extend((base) => {
+export const extendGraphqlSchema = graphql.extend(base => {
 	return {
 		// query: {}
 		mutation: {
 			addToCart: graphql.field({
-				type: base.object("CartItem"),
+				type: base.object('CartItem'),
 				args: {
 					productId: graphql.arg({ type: graphql.nonNull(graphql.ID) }),
 				},
@@ -15,7 +15,7 @@ export const extendGraphqlSchema = graphql.extend((base) => {
 					const session = context.session;
 					if (!session.itemId) {
 						throw new Error(
-							"You must be logged in to add a product to your cart"
+							'You must be logged in to add a product to your cart',
 						);
 					}
 
@@ -51,7 +51,7 @@ export const extendGraphqlSchema = graphql.extend((base) => {
 				},
 			}),
 			checkout: graphql.field({
-				type: base.object("Order"),
+				type: base.object('Order'),
 				args: {
 					token: graphql.arg({ type: graphql.nonNull(graphql.String) }),
 				},
@@ -59,7 +59,7 @@ export const extendGraphqlSchema = graphql.extend((base) => {
 					const userId = context.session.itemId;
 					if (!userId) {
 						throw new Error(
-							"You must be signed in to create an order and checkout!"
+							'You must be signed in to create an order and checkout!',
 						);
 					}
 
@@ -75,22 +75,22 @@ export const extendGraphqlSchema = graphql.extend((base) => {
 						},
 					});
 
-					const cartItems = allCartItems.filter((cartItem) => {
+					const cartItems = allCartItems.filter(cartItem => {
 						return cartItem.productId;
 					});
 					console.log({ cartItems });
 
 					if (!cartItems) {
-						throw new Error("You have no items in your cart");
+						throw new Error('You have no items in your cart');
 					}
 
 					const findProducts = async () => {
-						const unresolvedPromises = cartItems.map((cartItem) =>
+						const unresolvedPromises = cartItems.map(cartItem =>
 							context.prisma.product.findUnique({
 								where: {
 									id: cartItem.productId,
 								},
-							})
+							}),
 						);
 						return await Promise.all(unresolvedPromises);
 					};
@@ -101,18 +101,18 @@ export const extendGraphqlSchema = graphql.extend((base) => {
 					const amount = products.reduce(
 						(tally: number, product: IProductModel, index: number) =>
 							tally + product.price * cartItems[index].quantity,
-						0
+						0,
 					);
 					// console.log({ amount });
 
 					const charge = await stripeConfig.paymentIntents
 						.create({
 							amount,
-							currency: "BRL",
+							currency: 'BRL',
 							confirm: true,
 							payment_method: token,
 						})
-						.catch((err) => {
+						.catch(err => {
 							console.log(err);
 							throw new Error(err.message);
 						});
@@ -141,7 +141,7 @@ export const extendGraphqlSchema = graphql.extend((base) => {
 						},
 					});
 
-					const cartItemIds = cartItems.map((cartItem) => cartItem.id);
+					const cartItemIds = cartItems.map(cartItem => cartItem.id);
 					await context.prisma.cartItem.deleteMany({
 						ids: cartItemIds,
 					});

@@ -17,16 +17,10 @@ import { CREATE_ORDER_MUTATION } from '../gql/mutations';
 import { CURRENT_USER_QUERY } from '../gql/queries';
 import LoadingLabel from './loading/LoadingLabel';
 
-const CheckoutFormStyles = styled.form`
-	box-shadow: 0 1px 2px 2px rgba(0, 0, 0, 0.04);
-	border: 1px solid rgba(0, 0, 0, 0.06);
-	border-radius: 5px;
-	padding: 1rem;
-	display: grid;
-	grid-gap: 1rem;
-`;
+const { STRIPE_PUBLISHABLE } = process.env;
+console.log({ STRIPE_PUBLISHABLE });
 
-const stripeLib = loadStripe(process.env.STRIPE_PUBLISHABLE || '');
+const stripeLib = loadStripe(STRIPE_PUBLISHABLE || '');
 
 const CheckoutForm = () => {
 	const [error, setError] = useState<StripeError | null>(null);
@@ -118,5 +112,14 @@ const Checkout = () => {
 		</Elements>
 	);
 };
+
+const CheckoutFormStyles = styled.form`
+	box-shadow: 0 1px 2px 2px rgba(0, 0, 0, 0.04);
+	border: 1px solid rgba(0, 0, 0, 0.06);
+	border-radius: 5px;
+	padding: 1rem;
+	display: grid;
+	grid-gap: 1rem;
+`;
 
 export { Checkout };

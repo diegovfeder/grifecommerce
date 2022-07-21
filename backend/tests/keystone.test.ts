@@ -1,4 +1,4 @@
-describe("# Keystone", () => {
+describe('# Keystone', () => {
 	// TODO: write tests, on keystone.
 	// It should render keystone ui
 	// it should have a database connection
@@ -10,7 +10,7 @@ describe("# Keystone", () => {
 	// it should have a database model with a schema with a field with a type
 	// it should have a database model with a schema with a field with a type with a value
 	// it should have a database model with a schema with a field with a type with a default value
-	it("should work", () => {
+	it('should work', () => {
 		expect(true).toBe(true);
 	});
 });
