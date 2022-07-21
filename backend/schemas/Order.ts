@@ -1,6 +1,6 @@
-import { integer, relationship, text, virtual } from "@keystone-6/core/fields";
-import { list, graphql } from "@keystone-6/core";
-import formatMoney from "../utils/formatMoney";
+import { integer, relationship, text, virtual } from '@keystone-6/core/fields';
+import { list, graphql } from '@keystone-6/core';
+import formatMoney from '../utils/formatMoney';
 
 // TODO: Properly type item.
 export const Order = list({
@@ -15,11 +15,11 @@ export const Order = list({
 		}),
 		total: integer(),
 		items: relationship({
-			ref: "OrderItem.order",
+			ref: 'OrderItem.order',
 			many: true,
 		}),
 		user: relationship({
-			ref: "User.orders",
+			ref: 'User.orders',
 		}),
 		charge: text(),
 	},

@@ -1,12 +1,15 @@
+import 'dotenv/config';
 import { createTransport, SentMessageInfo } from 'nodemailer';
+
+const { MAIL_USER, MAIL_PASS, FRONTEND_URL } = process.env;
 
 const transporter = createTransport({
 	host: 'smtp.ethereal.email',
 	port: 587,
 	secure: false,
 	auth: {
-		user: process.env.MAIL_USER || 'username',
-		pass: process.env.MAIL_PASS || 'password',
+		user: MAIL_USER || 'username',
+		pass: MAIL_PASS || 'password',
 	},
 });
 
@@ -30,15 +33,16 @@ const sendPasswordResetEmail = async (
 	token: string,
 	identity: string,
 ): Promise<void> => {
-	let info = (await transporter.sendMail({
+	let info: SentMessageInfo = await transporter.sendMail({
 		from: '"GRIFE 🦅" <grifemusic@gmail.com>',
 		to: identity,
 		subject: 'Your password reset token!',
 		text: 'Your Password Reset Token is here!',
 		html: makeANiceEmail(`Your Password Reset Token is here!
-			<a href="${process.env.FRONTEND_URL}/reset?token=${token}">Click Here to reset</a>
+			<a href="${FRONTEND_URL}/reset?token=${token}">Click Here to reset</a>
 		`),
-	})) as SentMessageInfo;
+	});
+	console.log('Message sent: ', JSON.stringify(info, null, 2));
 };
 
 export { sendPasswordResetEmail };

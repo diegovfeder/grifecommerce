@@ -7,8 +7,6 @@ haters/
 .build/
 layout.md
 variables.env
-*.env
-*.env.*
 .keystone
 *.db
 
@@ -42,10 +40,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# local env files
+# env files
 .env
 .env.test
-.env.development
+.env.local
 .env.production
 
 # vercel

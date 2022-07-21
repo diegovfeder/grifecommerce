@@ -15,8 +15,8 @@ export interface IProductModel {
 }
 
 export interface ICartItemModel {
-		id: string;
-		quantity: number;
-		productId: string;
-		userId: string;
+	id: string;
+	quantity: number;
+	productId: string;
+	userId: string;
 }

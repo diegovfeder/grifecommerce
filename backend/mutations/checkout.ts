@@ -1,11 +1,11 @@
-import { graphql } from "@keystone-6/core";
+import { graphql } from '@keystone-6/core';
 
 // TODO: Create checkout mutation using keystone-6 api
-const checkout = graphql.extend((base) => {
+const checkout = graphql.extend(base => {
 	return {
 		mutation: {
 			checkout: graphql.field({
-				type: base.object("Order"),
+				type: base.object('Order'),
 				args: {
 					productId: graphql.arg({ type: graphql.nonNull(graphql.ID) }),
 					quantity: graphql.arg({
