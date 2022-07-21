@@ -1,52 +1,68 @@
-import { useQuery } from '@apollo/client';
+import { useState } from 'react';
+import { ApolloError, useQuery } from '@apollo/client';
 import styled from 'styled-components';
 import Image from 'next/image';
 import Head from 'next/head';
 import ErrorMessage from './ErrorMessage';
-import { PRODUCT_QUERY } from '../gql/queries';
-import LoadingLabel from './loading/LoadingLabel';
-import LoadingSkeleton from './loading/LoadingSkeleton';
+import { LoadingSkeleton } from './loading';
 import Supreme, { SupremeDescription } from './styles/Supreme';
 import formatMoney from '../utils/formatMoney';
-import { TEXT_NO_DESCRIPTION } from '../utils/constants';
+import {
+	TEXT_NO_PRODUCT_NAME,
+	TEXT_NO_PRODUCT_DESCRIPTION,
+} from '../utils/constants';
+import { PRODUCT_QUERY } from '../gql/queries';
+import { ProductProps } from '../types/commonTypes';
 
 interface SingleProductProps {
 	id: string;
 }
 
 const SingleProduct = ({ id }: SingleProductProps) => {
-	const { loading, data, error } = useQuery(PRODUCT_QUERY, {
+	const [product, setProduct] = useState<ProductProps | null>(null);
+	const { loading, error } = useQuery(PRODUCT_QUERY, {
 		variables: {
 			id,
 		},
-		onCompleted: data => {
-			console.log({ data });
+		skip: !id,
+		onCompleted: (data: { product: ProductProps }) => {
+			setProduct(data.product);
 		},
 	});
 
-	if (loading)
-		return (
-			<>
-				<LoadingLabel />
-				<LoadingSkeleton />
-			</>
-		);
+	if (loading) return <LoadingSkeleton />;
 
 	if (error) return <ErrorMessage error={error} />;
 
-	const { product } = data;
-	const isPhotoImageUrlDefined = !!product.photo?.image?.publicUrlTransformed;
+	if (!product) {
+		return (
+			<ProductStyles data-test-id="single-product-component-null">
+				<Head>
+					<title>GRIFE | {TEXT_NO_PRODUCT_NAME}</title>
+				</Head>
+				<ErrorMessage
+					error={
+						new ApolloError({
+							errorMessage: 'Product not found.',
+						})
+					}
+				/>
+			</ProductStyles>
+		);
+	}
+
+	const isPhotoImageUrlDefined = !!product?.photo?.image?.publicUrlTransformed;
 
 	return (
-		<ProductStyles data-test-id="singleProduct">
+		<ProductStyles data-test-id="single-product-component">
 			<Head>
-				<title>GRIFE | {product.name}</title>
+				<title>GRIFE | {product?.name || TEXT_NO_PRODUCT_NAME}</title>
 			</Head>
 			<div style={{ display: 'flex', flex: 1, flexDirection: 'column' }}>
 				<h1 style={{ borderBottom: '4px solid gray', fontWeight: '100' }}>
 					{product.name}
 				</h1>
-				<Supreme>{formatMoney(product.price)}</Supreme>
+				<Supreme>{formatMoney(product?.price)}</Supreme>
 				{isPhotoImageUrlDefined ? (
 					<Image
 						src={product?.photo?.image?.publicUrlTransformed || ''}
@@ -56,14 +72,11 @@ const SingleProduct = ({ id }: SingleProductProps) => {
 						loading="eager"
 					/>
 				) : (
-					<>
-						<LoadingLabel />
-						<LoadingSkeleton />
-					</>
+					<LoadingSkeleton />
 				)}
 				<div style={{ display: 'flex', flex: 1, flexDirection: 'column' }}>
 					<SupremeDescription>
-						{product?.description || TEXT_NO_DESCRIPTION}
+						{product?.description || TEXT_NO_PRODUCT_DESCRIPTION}
 					</SupremeDescription>
 				</div>
 			</div>

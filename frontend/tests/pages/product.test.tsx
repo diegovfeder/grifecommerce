@@ -1,15 +1,9 @@
 import { render, screen } from '@testing-library/react';
-import SingleProductPage from '../../pages/product/[id]';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
-import { PRODUCT_QUERY } from '../../gql/queries';
+import { ApolloError } from '@apollo/client';
 import { resolveMockState } from '../utils';
-
-const useRouter = jest.spyOn(require('next/router'), 'useRouter');
-
-useRouter.mockImplementationOnce(() => ({
-	query: { page: 1 },
-	// asPath: '/posts'
-}));
+import { PRODUCT_QUERY } from '../../gql/queries';
+import SingleProductPage from '../../pages/product/[id]';
 
 const mocks = [
 	{
@@ -32,7 +26,9 @@ const mocks = [
 				id: 'invalid-id',
 			},
 		},
-		error: new Error('No product found for id: invalid-id'),
+		error: new ApolloError({
+			errorMessage: 'No product found for id: invalid-id',
+		}),
 	},
 	{
 		request: {
@@ -64,30 +60,24 @@ const mocks = [
 
 describe('product/[id] page', () => {
 	describe('when query contains empty id', () => {
-		it('renders page  in loading state properly', () => {
+		it('renders page with error', async () => {
 			render(
 				<MockedProvider mocks={mocks} addTypename={false}>
 					<SingleProductPage query={{ id: '' }} />
 				</MockedProvider>,
 			);
-			expect(screen.getByLabelText('Loading...')).toBeInTheDocument();
-		});
-
-		it('renders page  in loaded state properly', async () => {
-			render(
-				<MockedProvider mocks={mocks} addTypename={false}>
-					<SingleProductPage query={{ id: '' }} />
-				</MockedProvider>,
-			);
-			expect(screen.getByLabelText('Loading...')).toBeInTheDocument();
-			await resolveMockState();
 			expect(screen.queryByText('Loading...')).toBe(null);
-			// TODO: Check if we have the image, check if we have the price,
+			expect(screen.getByTestId('error-message-component')).toBeVisible();
+			expect(screen.getByTestId('graphql-error')).toBeVisible();
+			expect(screen.getByText('Error:')).toBeVisible();
+			expect(screen.getByText('Product not found.')).toBeVisible();
+			expect(screen.queryByTestId('single-product-component')).toBe(null);
+			expect(screen.queryByTestId('single-product-component-null')).toBeVisible();
 		});
 	});
 
-	describe('when query has invalid id', () => {
-		it('renders an error message', async () => {
+	describe('when query contains an invalid id', () => {
+		it('renders page with error', async () => {
 			render(
 				<MockedProvider mocks={mocks} addTypename={false}>
 					<SingleProductPage query={{ id: 'invalid-id' }} />
@@ -95,14 +85,18 @@ describe('product/[id] page', () => {
 			);
 			expect(screen.getByLabelText('Loading...')).toBeInTheDocument();
 			await resolveMockState();
+			expect(screen.queryByText('Loading...')).toBe(null);
+			expect(screen.getByTestId('error-message-component')).toBeVisible();
+			expect(screen.getByTestId('graphql-error')).toBeVisible();
+			expect(screen.getByText('Error:')).toBeVisible();
 			expect(
 				screen.getByText('No product found for id: invalid-id'),
-			).toBeInTheDocument();
+			).toBeVisible();
 		});
 	});
 
 	describe('when query contains a valid id', () => {
-		it('renders the page properly', async () => {
+		it('renders the single product page properly', async () => {
 			render(
 				<MockedProvider mocks={mocks} addTypename={false}>
 					<SingleProductPage
@@ -112,9 +106,12 @@ describe('product/[id] page', () => {
 			);
 			expect(screen.getByLabelText('Loading...')).toBeInTheDocument();
 			await resolveMockState();
-			//TODO: Check what do we have here?..
-			// TODO: What is being loaded here?
-			expect(screen.getByText('404')).toBeInTheDocument();
+			expect(screen.queryByTestId('single-product-component')).toBeVisible();
+			expect(screen.queryByTestId('single-product-component-null')).toBe(null);
+			expect(screen.getByText('Sample Pack')).toBeVisible();
+			expect(screen.getByText('R$ 20,00')).toBeVisible();
+			expect(screen.getByText('next/image stub')).toBeVisible();
+			expect(screen.getByText('- No description available')).toBeVisible();
 		});
 	});
 });

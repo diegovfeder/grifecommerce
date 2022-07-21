@@ -1,3 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Single Product/> renders with proper data 1`] = `<div />`;
+exports[`<Single Product/> renders with proper data 1`] = `
+<div>
+  <div
+    class="SingleProduct__ProductStyles-sc-14jd9my-0 jPWReR"
+    data-test-id="single-product-component"
+  >
+    <div
+      style="display: flex; flex: 1; flex-direction: column;"
+    >
+      <h1
+        style="border-bottom: 4px solid gray; font-weight: 100;"
+      >
+        Sample Pack
+      </h1>
+      <h3
+        class="Supreme-sc-2anpcp-0 cenBAL"
+      >
+        R$ 20,00
+      </h3>
+      next/image stub
+      <div
+        style="display: flex; flex: 1; flex-direction: column;"
+      >
+        <h3
+          class="Supreme__SupremeDescription-sc-2anpcp-1 eSreBk"
+        >
+          - No description available
+        </h3>
+      </div>
+    </div>
+  </div>
+</div>
+`;

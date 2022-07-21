@@ -1,11 +1,10 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 import { makePaginationMocksFor } from '../utils/testUtils';
-import Pagination from '../components/PaginationComponent';
+import PaginationComponent from '../components/PaginationComponent';
 
 describe('<PaginationComponent/>', () => {
-	it('displays a loading message', () => {
+	it('renders pagonation for a single page and product', () => {
 		const { container } = render(
 			<MockedProvider mocks={makePaginationMocksFor(1)}>
 				<PaginationComponent page={1} productsCount={1} />
@@ -14,9 +13,9 @@ describe('<PaginationComponent/>', () => {
 		expect(container).toHaveTextContent(
 			'← PrevPage 1 of 1Total Products: 1Next →',
 		);
-		// expect(container).toHaveTextContent('Loading...');
 	});
-	it('renders pagination for 36 items', async () => {
+
+	it('renders pagination for 36 products', async () => {
 		const { container, debug } = render(
 			<MockedProvider mocks={makePaginationMocksFor(36)}>
 				<PaginationComponent page={1} productsCount={36} />
@@ -29,8 +28,8 @@ describe('<PaginationComponent/>', () => {
 		expect(container).toMatchSnapshot();
 	});
 
-	it('disables the prev page on first page', async () => {
-		const { container, debug } = render(
+	it('disables the prev and next button on a single page', async () => {
+		render(
 			<MockedProvider mocks={makePaginationMocksFor(2)}>
 				<PaginationComponent page={1} productsCount={2} />
 			</MockedProvider>,
@@ -39,10 +38,11 @@ describe('<PaginationComponent/>', () => {
 		const prevButton = screen.getByText(/Prev/);
 		const nextButton = screen.getByText(/Next/);
 		expect(prevButton).toHaveAttribute('aria-disabled', 'true');
-		// expect(nextButton).toHaveAttribute('aria-disabled', 'false');
+		expect(nextButton).toHaveAttribute('aria-disabled', 'true');
 	});
+
 	it('disables the next page on last page', async () => {
-		const { container, debug } = render(
+		render(
 			<MockedProvider mocks={makePaginationMocksFor(11)}>
 				<PaginationComponent page={3} productsCount={11} />
 			</MockedProvider>,
@@ -53,8 +53,9 @@ describe('<PaginationComponent/>', () => {
 		expect(prevButton).toHaveAttribute('aria-disabled', 'false');
 		expect(nextButton).toHaveAttribute('aria-disabled', 'true');
 	});
+
 	it('enables all on middle page', async () => {
-		const { container, debug } = render(
+		render(
 			<MockedProvider mocks={makePaginationMocksFor(24)}>
 				<PaginationComponent page={4} productsCount={24} />
 			</MockedProvider>,

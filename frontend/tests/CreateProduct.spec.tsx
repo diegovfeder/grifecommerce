@@ -1,25 +1,18 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 import userEvent from '@testing-library/user-event';
-import Router from 'next/router'; // We will MOCK THIS
+import Router from 'next/router';
 import wait from 'waait';
-import CreateProduct, {
-	CREATE_PRODUCT_MUTATION,
-} from '../components/CreateProduct';
-import {
-	fakeItem,
-	// makePaginationMocksFor
-} from '../utils/testUtils';
-import PRODUCTS_QUERY from '../gql/queryProducts.gql';
-
-import { logRoles } from '@testing-library/dom';
-
-// TODO: Enforce typing for this fakeItem();
-const item = fakeItem();
+import { fakeItem } from '../utils/testUtils';
+import { PRODUCTS_QUERY, PRODUCTS_COUNT_QUERY } from '../gql/queries';
+import { CREATE_PRODUCT_MUTATION } from '../gql/mutations';
+import CreateProduct from '../components/CreateProduct';
 
 jest.mock('next/router', () => ({
 	push: jest.fn(),
 }));
+
+const item = fakeItem();
 
 const mocks = [
 	{
@@ -33,7 +26,17 @@ const mocks = [
 		result: {
 			data: {
 				products: [item],
-				productsCount: 1,
+			},
+		},
+	},
+	{
+		request: {
+			query: PRODUCTS_QUERY,
+			variables: { take: 2, skip: 0 },
+		},
+		result: {
+			data: {
+				allProducts: [item, item],
 			},
 		},
 	},
@@ -48,18 +51,63 @@ const mocks = [
 		result: {
 			data: {
 				products: [item, item, item, item],
+			},
+		},
+	},
+	{
+		request: {
+			query: PRODUCTS_COUNT_QUERY,
+		},
+		result: {
+			data: {
+				productsCount: 1,
+			},
+		},
+	},
+	{
+		request: {
+			query: PRODUCTS_COUNT_QUERY,
+		},
+		result: {
+			data: {
+				productsCount: 2,
+			},
+		},
+	},
+	{
+		request: {
+			query: PRODUCTS_COUNT_QUERY,
+		},
+		result: {
+			data: {
 				productsCount: 4,
+			},
+		},
+	},
+	{
+		request: {
+			query: CREATE_PRODUCT_MUTATION,
+			variables: {
+				name: item.name,
+				description: item.description,
+				image: '',
+				price: item.price,
+			},
+		},
+		result: {
+			data: {
+				createProduct: {
+					...item,
+					id: 'abc123',
+				},
 			},
 		},
 	},
 ];
 
 describe('<CreateProduct/>', () => {
-	it('renders and matches snapshot', () => {
-		const {
-			container,
-			// debug
-		} = render(
+	it('renders component and matches snapshot', () => {
+		const { container } = render(
 			<MockedProvider mocks={mocks} addTypename={false}>
 				<CreateProduct />
 			</MockedProvider>,
@@ -67,15 +115,13 @@ describe('<CreateProduct/>', () => {
 		expect(container).toMatchSnapshot();
 	});
 
-	it('handles the updating', async () => {
-		const { container } = render(
+	it('handles updating the product', async () => {
+		render(
 			<MockedProvider mocks={mocks} addTypename={false}>
 				<CreateProduct />
 			</MockedProvider>,
 		);
-		logRoles(container);
 
-		// 2. type into the boxes
 		await userEvent.type(screen.getByPlaceholderText(/Name/i), item.name);
 		await userEvent.type(
 			screen.getByPlaceholderText(/Price/i),
@@ -86,55 +132,18 @@ describe('<CreateProduct/>', () => {
 			item.description,
 		);
 
-		// 3.  check that those boxes are populated!
 		expect(screen.getByDisplayValue(item.name)).toBeInTheDocument();
 		expect(screen.getByDisplayValue(item.price)).toBeInTheDocument();
 		expect(screen.getByDisplayValue(item.description)).toBeInTheDocument();
 	});
 
-	it('creates the items when the form is submitted', async () => {
-		const mocks = [
-			{
-				request: {
-					query: CREATE_PRODUCT_MUTATION,
-					variables: {
-						name: item.name,
-						description: item.description,
-						image: '',
-						price: item.price,
-					},
-				},
-				result: {
-					data: {
-						createProduct: {
-							...item, // TODO: Pass down all fake item fields
-							id: 'abc123',
-						},
-					},
-				},
-			},
-			{
-				request: {
-					query: PRODUCTS_QUERY,
-					variables: { take: 2, skip: 0 },
-				},
-				result: {
-					data: {
-						allProducts: [item],
-					},
-				},
-			},
-		];
-
-		const { container } = render(
+	it('creates the product when the form is submitted', async () => {
+		render(
 			<MockedProvider mocks={mocks} addTypename={false}>
 				<CreateProduct />
 			</MockedProvider>,
 		);
-		logRoles(container);
 
-		// Type into the inputs
-		// 2. type into the boxes
 		await userEvent.type(screen.getByPlaceholderText(/Name/i), item.name);
 		await userEvent.type(
 			screen.getByPlaceholderText(/Price/i),
@@ -144,13 +153,10 @@ describe('<CreateProduct/>', () => {
 			screen.getByPlaceholderText(/Description/i),
 			item.description,
 		);
-
-		// Submit it and see if the page change has been called
 		await userEvent.click(screen.getByText(/Add Product/));
 		await waitFor(() => wait(0));
-		expect(Router.push).toHaveBeenCalled();
 
-		// FIXME: Check this
+		expect(Router.push).toHaveBeenCalled();
 		expect(Router.push).toHaveBeenCalledWith({ pathname: '/product/abc123' });
 	});
 });

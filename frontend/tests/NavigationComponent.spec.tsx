@@ -5,7 +5,6 @@ import { CURRENT_USER_QUERY } from '../hooks/useUserQuery';
 import { fakeUser, fakeCartItem } from '../utils/testUtils';
 import CartStateProvider from '../providers/CartStateProvider';
 
-// Make some Mocks for being logged out, logged in, and loggedin with cart items
 const notSignedInMocks = [
 	{
 		request: { query: CURRENT_USER_QUERY },
@@ -48,7 +47,7 @@ describe('<NavigationComponent/>', () => {
 		expect(link).toHaveAttribute('href', '/signin');
 		const productsLink = screen.getByText(/products/i);
 		expect(productsLink).toBeInTheDocument();
-		expect(productsLink).toHaveAttribute('href', '/products');
+		expect(productsLink).toHaveAttribute('href', '/products/1');
 	});
 
 	it('renders a full nav when signed in', async () => {

@@ -48,20 +48,18 @@ export interface ProductProps {
 	price: number;
 	description: string;
 	photo: {
+		id: string;
+		altText: string;
 		image: {
-			// FIXME:
-			// id
-			// altText
 			publicUrlTransformed: string;
 		};
 	};
 }
 
 export interface IPhoto {
+	id: string;
+	altText: string;
 	image: {
-		// FIXME:
-		// id
-		// altText
 		publicUrlTransformed: string;
 	};
 }
@@ -73,13 +71,13 @@ export interface IItem {
 	quantity: number;
 }
 
-export interface IOrder extends ProductProps{
+export interface IOrder extends ProductProps {
 	id: string;
 	total: number;
-	items: IItem[]
+	items: IItem[];
 }
 
-export interface IOrderItem extends ProductProps{
+export interface IOrderItem extends ProductProps {
 	title: string | undefined;
 	quantity: number;
 }
