@@ -59,7 +59,8 @@ export default withAuth(
 		} as AdminUIConfig<BaseKeystoneTypeInfo>,
 		server: {
 			cors: {
-				origin: [FRONTEND_URL, 'http://localhost:7777'],
+				// origin: [FRONTEND_URL, 'http://localhost:7777', /\.grife\.app$/],
+				origin: false,
 				credentials: true,
 			},
 			port: PORT || 3000,
