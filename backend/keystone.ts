@@ -12,7 +12,7 @@ import type {
 	SessionStrategy,
 } from '@keystone-6/core/types';
 import { lists } from './schema';
-// import { permissionsList } from './schemas/Fields';
+import { permissionsList } from './schemas/Fields';
 import { extendGraphqlSchema } from './mutations/index';
 import { sendPasswordResetEmail } from './utils/mail';
 
@@ -29,16 +29,15 @@ const { withAuth } = createAuth({
 	listKey: 'User',
 	identityField: 'email',
 	secretField: 'password',
-	sessionData: 'id name email',
+	sessionData: `id name email role { ${permissionsList.join(' ')} }`,
 	initFirstItem: {
 		fields: ['name', 'email', 'password'],
 		itemData: { isAdmin: true },
 		skipKeystoneWelcome: false,
 	},
 	passwordResetLink: {
-		sendToken: async ({ token, identity }: any) => {
-			await sendPasswordResetEmail(token, identity);
-		},
+		sendToken: async ({ token, identity }: any) =>
+			await sendPasswordResetEmail(token, identity),
 		tokensValidForMins: 24 * 60,
 	},
 });
@@ -54,13 +53,16 @@ export default withAuth(
 			idField: { kind: 'uuid' },
 		} as DatabaseConfig<BaseKeystoneTypeInfo>,
 		ui: {
-			// isAccessAllowed: async (context) => !!context.session?.data,
-			isAccessAllowed: async context => true,
+			// isAccessAllowed: async context => true,
+			isAccessAllowed: async context => {
+				console.log({ context });
+				return !!context.session?.data;
+			},
 		} as AdminUIConfig<BaseKeystoneTypeInfo>,
 		server: {
 			cors: {
-				// origin: [FRONTEND_URL, 'http://localhost:7777', /\.grife\.app$/],
-				origin: false,
+				// origin: false,
+				origin: [FRONTEND_URL, 'http://localhost:7777', /\.grife\.app$/],
 				credentials: true,
 			},
 			port: PORT || 3000,
