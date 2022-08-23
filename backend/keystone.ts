@@ -9,20 +9,45 @@ import type {
 	GraphQLConfig,
 	KeystoneConfig,
 	ServerConfig,
-	SessionStrategy,
 } from '@keystone-6/core/types';
 import { lists } from './schema';
 import { permissionsList } from './schemas/Fields';
 import { extendGraphqlSchema } from './mutations/index';
 import { sendPasswordResetEmail } from './utils/mail';
 
+/* Session Store */
+// https://keystonejs.com/docs/apis/session
+// import redis from 'redis';
+// import { redisSessionStore } from '@keystone-6/session-store-redis';
+// import { storedSessions } from '@keystone-6/core/session';
+
+// export default config({
+//   session: storedSessions({
+//     store: redisSessionStore({ client: redis.createClient() }),
+//     /* ... */,
+//     }),
+//   /* ... */
+// });
+
+type StatelessSessionsOptions = {
+	secret: string;
+	maxAge?: number;
+	secure?: boolean;
+	path?: string;
+	domain?: string;
+	sameSite?: true | false | 'lax' | 'strict' | 'none';
+};
+
 const { COOKIE_SECRET, DATABASE_URL, FRONTEND_URL, PORT, NODE_ENV } =
 	process.env;
 
-const sessionConfig = {
+console.log({ COOKIE_SECRET, DATABASE_URL, FRONTEND_URL, PORT, NODE_ENV });
+console.log(process.env.COOKIE_SECRET);
+
+const sessionConfig: StatelessSessionsOptions = {
 	secret: COOKIE_SECRET,
 	maxAge: 60 * 60 * 24 * 360,
-	secure: true,
+	secure: NODE_ENV === 'production',
 };
 
 const { withAuth } = createAuth({
@@ -69,9 +94,7 @@ export default withAuth(
 			maxFileSize: 200 * 1024 * 1024,
 			healthCheck: true,
 		} as ServerConfig<BaseKeystoneTypeInfo>,
-		session: statelessSessions(
-			sessionConfig,
-		) as SessionStrategy<BaseKeystoneTypeInfo>,
+		session: statelessSessions(sessionConfig),
 		graphql: {
 			debug: NODE_ENV !== 'production',
 			queryLimits: { maxTotalResults: 100 },

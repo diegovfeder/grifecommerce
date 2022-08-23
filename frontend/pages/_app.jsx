@@ -24,12 +24,14 @@ function MyApp({ Component, pageProps, apollo }) {
 }
 
 MyApp.getInitialProps = async function ({ Component, ctx }) {
+	console.log('MyApp, getInitialProps');
 	let pageProps = {};
-	if (Component.getInitialProps) {
+	if (!!Component.getInitialProps) {
 		pageProps = await Component.getInitialProps(ctx);
-		console.log({ pageProps });
 	}
-	pageProps.query = ctx?.query || '';
+	console.log({ pageProps });
+	console.log({ ctx });
+	pageProps.query = ctx?.query || {};
 	return { pageProps };
 };
 
