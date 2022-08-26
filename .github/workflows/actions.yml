@@ -16,4 +16,4 @@ jobs:
         run: yarn --immutable --immutable-cache --check-cache
       - name: Run tests
         working-directory: ./frontend
-        run: yarn test
+        run: yarn test -u
