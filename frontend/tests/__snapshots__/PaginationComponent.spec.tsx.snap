@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<PaginationComponent/> renders pagination for 36 products 1`] = `
+exports[`<PaginationComponent/> renders pagination, multiple products 1`] = `
 <div>
   <div
     class="StyledPaginationContainer-sc-nom4q0-0 ckpGyi"

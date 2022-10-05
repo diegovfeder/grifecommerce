@@ -6,7 +6,6 @@ const { MAIL_USER, MAIL_PASS, FRONTEND_URL } = process.env;
 const transporter = createTransport({
 	host: 'smtp.ethereal.email',
 	port: 587,
-	secure: false,
 	auth: {
 		user: MAIL_USER || 'username',
 		pass: MAIL_PASS || 'password',

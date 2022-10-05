@@ -1,14 +1,23 @@
 import { integer, relationship, text, virtual } from '@keystone-6/core/fields';
 import { list, graphql } from '@keystone-6/core';
 import formatMoney from '../utils/formatMoney';
+import { isSignedIn, permissions } from '../access';
 
-// TODO: Properly type item.
 export const Order = list({
+	access: {
+		operation: {
+			create: isSignedIn,
+			query: permissions.canManageOrders,
+			update: () => false,
+			delete: () => false,
+		},
+	},
 	fields: {
 		label: virtual({
+			// FIXME: virtual field type
 			field: graphql.field({
 				type: graphql.String,
-				resolve(item) {
+				resolve(item: { total: number }) {
 					return `${formatMoney(item.total)}`;
 				},
 			}),

@@ -1,7 +1,7 @@
 import DELETE_PRODUCT_MUTATION from '../gql/deleteProductMutation.gql';
 import ADD_TO_CART_MUTATION from '../gql/addToCartMutation.gql';
 
-const mockMutations = {
+const mockedMutations = {
 	addToCart: {
 		request: {
 			query: ADD_TO_CART_MUTATION,
@@ -38,4 +38,4 @@ const mockMutations = {
 	},
 };
 
-export default mockMutations;
+export default mockedMutations;

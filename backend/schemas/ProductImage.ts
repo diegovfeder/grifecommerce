@@ -1,7 +1,9 @@
 import 'dotenv/config';
-import { relationship, text } from '@keystone-6/core/fields';
 import { list } from '@keystone-6/core';
+import { relationship, text } from '@keystone-6/core/fields';
 import { cloudinaryImage } from '@keystone-6/cloudinary';
+
+import { isSignedIn, permissions } from '../access';
 
 const { CLOUDINARY_CLOUD_NAME, CLOUDINARY_KEY, CLOUDINARY_SECRET } =
 	process.env;
@@ -13,7 +15,16 @@ export const cloudinary = {
 	folder: 'grifecommerce',
 };
 
+// TODO: Test this accessControl
 export const ProductImage = list({
+	access: {
+		operation: {
+			create: isSignedIn,
+			query: () => true,
+			update: permissions.canManageProducts,
+			delete: permissions.canManageProducts,
+		},
+	},
 	fields: {
 		image: cloudinaryImage({
 			cloudinary,

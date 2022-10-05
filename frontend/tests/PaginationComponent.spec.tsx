@@ -1,10 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
+
 import { makePaginationMocksFor } from '../utils/testUtils';
 import PaginationComponent from '../components/PaginationComponent';
 
 describe('<PaginationComponent/>', () => {
-	it('renders pagonation for a single page and product', () => {
+	it('renders pagination, single page and one product', () => {
 		const { container } = render(
 			<MockedProvider mocks={makePaginationMocksFor(1)}>
 				<PaginationComponent page={1} productsCount={1} />
@@ -15,7 +16,7 @@ describe('<PaginationComponent/>', () => {
 		);
 	});
 
-	it('renders pagination for 36 products', async () => {
+	it('renders pagination, multiple products', async () => {
 		const { container, debug } = render(
 			<MockedProvider mocks={makePaginationMocksFor(36)}>
 				<PaginationComponent page={1} productsCount={36} />
@@ -28,7 +29,7 @@ describe('<PaginationComponent/>', () => {
 		expect(container).toMatchSnapshot();
 	});
 
-	it('disables the prev and next button on a single page', async () => {
+	it('disables the previous and next button when in single page', async () => {
 		render(
 			<MockedProvider mocks={makePaginationMocksFor(2)}>
 				<PaginationComponent page={1} productsCount={2} />
@@ -41,7 +42,7 @@ describe('<PaginationComponent/>', () => {
 		expect(nextButton).toHaveAttribute('aria-disabled', 'true');
 	});
 
-	it('disables the next page on last page', async () => {
+	it('disables the next button when in the last page', async () => {
 		render(
 			<MockedProvider mocks={makePaginationMocksFor(11)}>
 				<PaginationComponent page={3} productsCount={11} />
@@ -54,7 +55,7 @@ describe('<PaginationComponent/>', () => {
 		expect(nextButton).toHaveAttribute('aria-disabled', 'true');
 	});
 
-	it('enables all on middle page', async () => {
+	it('enables previous and next buttons when in a middle page', async () => {
 		render(
 			<MockedProvider mocks={makePaginationMocksFor(24)}>
 				<PaginationComponent page={4} productsCount={24} />

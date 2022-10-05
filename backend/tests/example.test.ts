@@ -3,7 +3,9 @@ import {
 	setupTestRunner,
 	TestEnv,
 } from '@keystone-6/core/testing';
+
 import config from '../keystone';
+import { Product } from '../schemas/Product';
 
 // Setup a test runner which will provide a clean test environment
 // with access to our GraphQL API for each test.
@@ -51,91 +53,122 @@ describe('Example tests using test runner', () => {
 	);
 
 	test(
-	  'Check access control by running updateTask as a specific user via context.withSession()',
-	  runner(async ({ context }) => {
-	    // We can modify the value of context.session via context.withSession() to masquerade
-	    // as different logged in users. This allows us to test that our access control rules
-	    // are behaving as expected.
+		'Check access control by running updateTask as a specific user via context.withSession()',
+		runner(async ({ context }) => {
+			// We can modify the value of context.session via context.withSession() to masquerade
+			// as different logged in users. This allows us to test that our access control rules
+			// are behaving as expected.
 
-	    // Create some users
-	    const [diego, dan] = await context.query.User.createMany({
-	      data: [
-	        { name: 'Diego', email: 'diego@grifemusic.com', password: 'super-secret' },
-	        { name: 'Dan', email: 'dan@grifemusic.com', password: 'super-secret' },
-	      ],
-	      query: 'id name',
-	    });
-	    expect(diego.name).toEqual('Diego');
-	    expect(dan.name).toEqual('Dan');
+			// Create some users
+			const [diego, dan] = await context.query.User.createMany({
+				data: [
+					{
+						name: 'Diego',
+						email: 'diego@grifemusic.com',
+						password: 'super-secret',
+					},
+					{
+						name: 'Dan',
+						email: 'dan@grifemusic.com',
+						password: 'super-secret',
+					},
+				],
+				query: 'id name',
+			});
+			expect(diego.name).toEqual('Diego');
+			expect(dan.name).toEqual('Dan');
 
-	    // Create a task assigned to Diego
-	    // const task = await context.query.Task.createOne({
-	    //   data: {
-	    //     label: 'Experiment with Keystone',
-	    //     priority: 'high',
-	    //     isComplete: false,
-	    //     assignedTo: { connect: { id: diego.id } },
-	    //   },
-	    //   query: 'id label priority isComplete assignedTo { name }',
-	    // });
-	    // expect(task.label).toEqual('Experiment with Keystone');
-	    // expect(task.priority).toEqual('high');
-	    // expect(task.isComplete).toEqual(false);
-	    // expect(task.assignedTo.name).toEqual('Diego');
+			// TODO: Create ProductImage
+			const productImage = await context.query.ProductImage.createOne({
+				data: {
+					image: {},
+					altText: 'Sample Pack',
+					product: ,
+				},
+			});
 
-	    // Check that we can't update the task (not logged in)
-	    // {
-	    //   const { data, errors } = await context.graphql.raw({
-	    //     query: `mutation update($id: ID!) {
-	    //       updateTask(where: { id: $id }, data: { isComplete: true }) {
-	    //         id
-	    //       }
-	    //     }`,
-	    //     variables: { id: task.id },
-	    //   });
-	    //   expect(data!.updateTask).toBe(null);
-	    //   expect(errors).toHaveLength(1);
-	    //   expect(errors![0].path).toEqual(['updateTask']);
-	    //   expect(errors![0].message).toEqual(
-	    //     `Access denied: You cannot perform the 'update' operation on the item '{"id":"${task.id}"}'. It may not exist.`
-	    //   );
-	    // }
+			// TODO: Create an order instead of orderItem,?
+			// const order = await context.query.Order.createOne({
+			// 	data: {
+			// 		total: 0,
+			// 		user: diego,
+			// 		userId: diego.id,
+			// 		charge: '',
+			// 	},
+			// });
 
-	    // {
-	    //   // Check that we can update the task when logged in as Diego
-	    //   const { data, errors } = await context
-	    //     .withSession({ itemId: diego.id, data: {} })
-	    //     .graphql.raw({
-	    //       query: `mutation update($id: ID!) {
-	    //         updateTask(where: { id: $id }, data: { isComplete: true }) {
-	    //           id
-	    //         }
-	    //       }`,
-	    //       variables: { id: task.id },
-	    //     });
-	    //   expect(data!.updateTask.id).toEqual(task.id);
-	    //   expect(errors).toBe(undefined);
-	    // }
+			// Create an orderItem referenced to Diego
+			const orderItem = await context.query.OrderItem.createOne({
+				data: {
+					name: 'An order item',
+					description: 'some description for this item',
+					price: 1000,
+					quantity: 5,
+					order: 'some-order-id',
+					photo: 'some-product-image-id',
+				},
+				query: 'id name description price quantity order photo',
+			});
+			expect(orderItem.name).toEqual('An order item');
+			expect(orderItem.description).toEqual('some description for this item');
+			expect(orderItem.price).toEqual(1000);
+			expect(orderItem.quantity).toEqual(5);
+			expect(orderItem.order).toEqual('some-order-id');
+			expect(orderItem.photo).toEqual('some-product-image-id');
 
-	    // Check that we can't update the task when logged in as Bob
-	    // {
-	    //   const { data, errors } = await context
-	    //     .withSession({ itemId: dan.id, data: {} })
-	    //     .graphql.raw({
-	    //       query: `mutation update($id: ID!) {
-	    //         updateTask(where: { id: $id }, data: { isComplete: true }) {
-	    //           id
-	    //         }
-	    //       }`,
-	    //       variables: { id: task.id },
-	    //     });
-	    //   expect(data!.updateTask).toBe(null);
-	    //   expect(errors).toHaveLength(1);
-	    //   expect(errors![0].path).toEqual(['updateTask']);
-	    //   expect(errors![0].message).toEqual(
-	    //     `Access denied: You cannot perform the 'update' operation on the item '{"id":"${task.id}"}'. It may not exist.`
-	    //   );
-	    // }
-	  })
+			// Check that we can't update the orderItem (not logged in)
+			// {
+			// 	const { data, errors } = await context.graphql.raw({
+			// 		query: `mutation update($id: ID!) {
+			// 			updateOrderItem(where: { id: $id }, data: { quantity: 1 }) {
+			// 				id
+			//       }
+			//     }`,
+			// 		variables: { id: orderItem.id },
+			// 	});
+			// 	expect(data!.updateOrderItem).toBe(null);
+			// 	expect(errors).toHaveLength(1);
+			// 	expect(errors![0].path).toEqual(['updateOrderItem']);
+			// 	expect(errors![0].message).toEqual(
+			// 		`Access denied: You cannot perform the 'update' operation on the item '{"id":"${orderItem.id}"}'. It may not exist.`,
+			// 	);
+			// }
+
+			//   // Check that we can update the task when logged in as Diego
+			// {
+			// 	const { data, errors } = await context
+			// 		.withSession({ itemId: diego.id, data: {} })
+			// 		.graphql.raw({
+			// 			query: `mutation update($id: ID!) {
+			// 			updateOrderItem(where: { id: $id }, data: { quantity: 1 }) {
+			// 				id
+			// 			}
+			// 		}`,
+			// 			variables: { id: orderItem.id },
+			// 		});
+			// 	expect(data!.updateTask.id).toEqual(orderItem.id);
+			// 	expect(errors).toBe(undefined);
+			// }
+
+			// Check that we can't update the task when logged in as Bob
+			// {
+			// 	const { data, errors } = await context
+			// 		.withSession({ itemId: dan.id, data: {} })
+			// 		.graphql.raw({
+			// 			query: `mutation update($id: ID!) {
+			//         updateOrderItem(where: { id: $id }, data: { quantity: 1 }) {
+			//           id
+			//         }
+			//       }`,
+			// 			variables: { id: orderItem.id },
+			// 		});
+			// 	expect(data!.updateOrderItem).toBe(null);
+			// 	expect(errors).toHaveLength(1);
+			// 	expect(errors![0].path).toEqual(['updateOrderItem']);
+			// 	expect(errors![0].message).toEqual(
+			// 		`Access denied: You cannot perform the 'update' operation on the item '{"id":"${orderItem.id}"}'. It may not exist.`,
+			// 	);
+			// }
+		}),
 	);
 });

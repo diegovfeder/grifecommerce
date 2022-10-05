@@ -1,26 +1,36 @@
-import { ApolloError, useMutation } from '@apollo/client';
+import { useState } from 'react';
+import { useMutation } from '@apollo/client';
+
 import StyledForm from './styles/StyledForm';
-import ErrorMessage from './ErrorMessage';
 import useForm from '../hooks/useForm';
 import { EventProps, SignUpFormInputProps } from '../types/commonTypes';
 import { SIGN_UP_MUTATION } from '../gql/mutations';
 import { CURRENT_USER_QUERY } from '../gql/queries';
-import { useState } from 'react';
+import { LoadingSpinner } from './loading';
+import ErrorMessage from './ErrorMessage';
 
 const SignUp = () => {
-	const [message, setMessage] = useState<string | null>(null);
 	const { inputs, handleChange, resetForm } = useForm<SignUpFormInputProps>({
 		email: '',
 		name: '',
 		password: '',
 	});
+	const [message, setMessage] = useState<string | null>(null);
 
-	const [signup, { data, error }] = useMutation(SIGN_UP_MUTATION, {
+	const [signup, { loading, error }] = useMutation(SIGN_UP_MUTATION, {
 		variables: inputs,
 		refetchQueries: [{ query: CURRENT_USER_QUERY }],
+		onCompleted: () => {
+			setMessage('Account created successfully!');
+			resetForm();
+		},
+		onError: error => {
+			console.error(error);
+		},
 	});
 
 	const handleSubmit = async (e: EventProps) => {
+		setMessage('');
 		e.preventDefault();
 		if (inputs.email === '' || inputs.name === '' || inputs.password === '') {
 			setMessage('Please fill in all fields.');
@@ -34,61 +44,63 @@ const SignUp = () => {
 				password: inputs.password,
 			},
 		});
-		resetForm();
 	};
 
-	// TODO: Change UX: After SignIn, route directly to Home
 	return (
-		<StyledForm method="POST" onSubmit={handleSubmit}>
-			<h2>Sign Up For an Account</h2>
-			<fieldset>
-				<label htmlFor="email">
-					Name
-					<input
-						aria-label="name"
-						type="text"
-						name="name"
-						placeholder="Your Name"
-						autoComplete="name"
-						value={inputs.name}
-						onChange={handleChange}
-					/>
-				</label>
-				<label htmlFor="email">
-					Email
-					<input
-						aria-label="email"
-						type="email"
-						name="email"
-						placeholder="Your Email Address"
-						autoComplete="email"
-						value={inputs.email}
-						onChange={handleChange}
-					/>
-				</label>
-				<label htmlFor="password">
-					Password
-					<input
-						aria-label="password"
-						type="password"
-						name="password"
-						placeholder="Password"
-						autoComplete="password"
-						value={inputs.password}
-						onChange={handleChange}
-					/>
-				</label>
-				<button type="submit">Sign Up!</button>
-				{message && <p>{message}</p>}
-				{data?.createUser && (
-					<p>
-						Signed Up with {data.createUser.email} - Please Go Ahead and Sign
-						In!
-					</p>
-				)}
+		<>
+			<StyledForm
+				method="POST"
+				onSubmit={handleSubmit}
+				autoComplete="new-password"
+			>
+				<h2>Sign Up For an Account</h2>
 				<ErrorMessage error={error} />
-			</fieldset>
-		</StyledForm>
+				<fieldset>
+					<label htmlFor="email">
+						Name
+						<input
+							aria-label="name"
+							type="text"
+							name="name"
+							placeholder="Your Name"
+							// autoComplete="name"
+							autoComplete="new-password"
+							value={inputs.name}
+							onChange={handleChange}
+						/>
+					</label>
+					<label htmlFor="email">
+						Email
+						<input
+							aria-label="email"
+							type="email"
+							name="email"
+							placeholder="Your Email Address"
+							// autoComplete="email"
+							autoComplete="new-password"
+							value={inputs.email}
+							onChange={handleChange}
+						/>
+					</label>
+					<label htmlFor="password">
+						Password
+						<input
+							aria-label="password"
+							type="password"
+							name="password"
+							placeholder="Password"
+							// autoComplete="password"
+							autoComplete="new-password"
+							value={inputs.password}
+							onChange={handleChange}
+						/>
+					</label>
+					<button type="submit">Sign Up!</button>
+					{message && <p>{message}</p>}
+					{loading && <LoadingSpinner />}
+				</fieldset>
+			</StyledForm>
+		</>
 	);
 };
 

@@ -1,9 +1,21 @@
 import { list } from '@keystone-6/core';
 import { text, password, relationship } from '@keystone-6/core/fields';
 
+import { permissions } from '../access';
+
 export const User = list({
-	// access:
-	// ui:
+	access: {
+		operation: {
+			create: () => true,
+			query: () => true,
+			update: permissions.canManageUsers,
+			delete: permissions.canManageUsers,
+		},
+	},
+	ui: {
+		hideCreate: args => !permissions.canManageUsers(args),
+		hideDelete: args => !permissions.canManageUsers(args),
+	},
 	fields: {
 		name: text({
 			validation: {
@@ -28,7 +40,14 @@ export const User = list({
 		orders: relationship({ ref: 'Order.user', many: true }),
 		role: relationship({
 			ref: 'Role.assignedTo',
-			// TODO: Add access control
+			access: {
+				create: permissions.canManageUsers,
+				update: permissions.canManageUsers,
+			},
+		}),
+		products: relationship({
+			ref: 'Product.user',
+			many: true,
 		}),
 	},
 });

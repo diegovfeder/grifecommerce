@@ -1,6 +1,6 @@
 import formatMoney from '../utils/formatMoney';
 
-describe('format Money function', () => {
+describe('formatMoney', () => {
 	it('works with fractional reals', () => {
 		expect(formatMoney(1)).toEqual('R$\xa00,01');
 		expect(formatMoney(10)).toEqual('R$\xa00,10');

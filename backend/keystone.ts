@@ -10,24 +10,10 @@ import type {
 	KeystoneConfig,
 	ServerConfig,
 } from '@keystone-6/core/types';
+
 import { lists } from './schema';
-import { permissionsList } from './schemas/Fields';
 import { extendGraphqlSchema } from './mutations/index';
 import { sendPasswordResetEmail } from './utils/mail';
-
-/* Session Store */
-// https://keystonejs.com/docs/apis/session
-// import redis from 'redis';
-// import { redisSessionStore } from '@keystone-6/session-store-redis';
-// import { storedSessions } from '@keystone-6/core/session';
-
-// export default config({
-//   session: storedSessions({
-//     store: redisSessionStore({ client: redis.createClient() }),
-//     /* ... */,
-//     }),
-//   /* ... */
-// });
 
 type StatelessSessionsOptions = {
 	secret: string;
@@ -38,10 +24,33 @@ type StatelessSessionsOptions = {
 	sameSite?: true | false | 'lax' | 'strict' | 'none';
 };
 
-const { COOKIE_SECRET, DATABASE_URL, FRONTEND_URL, PORT, NODE_ENV } =
-	process.env;
+const {
+	CLOUDINARY_CLOUD_NAME,
+	CLOUDINARY_KEY,
+	CLOUDINARY_SECRET,
+	COOKIE_SECRET,
+	DATABASE_URL,
+	FRONTEND_URL,
+	MAIL_USER,
+	MAIL_PASS,
+	NODE_ENV,
+	PORT,
+	STRIPE_SECRET,
+} = process.env;
 
-console.log({ COOKIE_SECRET, DATABASE_URL, FRONTEND_URL, PORT, NODE_ENV });
+console.log({
+	CLOUDINARY_CLOUD_NAME,
+	CLOUDINARY_KEY,
+	CLOUDINARY_SECRET,
+	COOKIE_SECRET,
+	DATABASE_URL,
+	FRONTEND_URL,
+	MAIL_USER,
+	MAIL_PASS,
+	NODE_ENV,
+	PORT,
+	STRIPE_SECRET,
+});
 console.log(process.env.COOKIE_SECRET);
 
 const sessionConfig: StatelessSessionsOptions = {
@@ -54,11 +63,31 @@ const { withAuth } = createAuth({
 	listKey: 'User',
 	identityField: 'email',
 	secretField: 'password',
-	sessionData: `id name email role { ${permissionsList.join(' ')} }`,
+	sessionData: `id name email role {
+		canManageProducts
+		canSeeOtherUsers
+		canManageUsers
+		canManageRoles
+		canManageCart
+		canManageOrders
+	}`,
 	initFirstItem: {
 		fields: ['name', 'email', 'password'],
-		itemData: { isAdmin: true },
-		skipKeystoneWelcome: false,
+		itemData: {
+			role: {
+				create: {
+					name: 'Owner',
+					canManageCart: true,
+					canManageOrderItems: true,
+					canManageOrders: true,
+					canManageProducts: true,
+					canManageRoles: true,
+					canManageUsers: true,
+					canSeeOtherUsers: true,
+				},
+			},
+		},
+		skipKeystoneWelcome: true,
 	},
 	passwordResetLink: {
 		sendToken: async ({ token, identity }: any) =>
@@ -78,7 +107,6 @@ export default withAuth(
 			idField: { kind: 'uuid' },
 		} as DatabaseConfig<BaseKeystoneTypeInfo>,
 		ui: {
-			// isAccessAllowed: async context => true,
 			isAccessAllowed: async context => {
 				console.log({ context });
 				return !!context.session?.data;
@@ -86,7 +114,6 @@ export default withAuth(
 		} as AdminUIConfig<BaseKeystoneTypeInfo>,
 		server: {
 			cors: {
-				// origin: false,
 				origin: [FRONTEND_URL, 'http://localhost:7777', /\.grife\.app$/],
 				credentials: true,
 			},

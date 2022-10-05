@@ -1,6 +1,6 @@
 import { CURRENT_USER_QUERY } from '../hooks/useUserQuery';
 
-const mockQueries = {
+const mockedQueries = {
 	currentUser: {
 		request: {
 			query: CURRENT_USER_QUERY,
@@ -33,4 +33,4 @@ const mockQueries = {
 	},
 };
 
-export default mockQueries;
+export default mockedQueries;

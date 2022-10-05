@@ -21,6 +21,13 @@ type User {
   ): [Order!]
   ordersCount(where: OrderWhereInput! = {}): Int
   role: Role
+  products(
+    where: ProductWhereInput! = {}
+    orderBy: [ProductOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Product!]
+  productsCount(where: ProductWhereInput! = {}): Int
   passwordResetToken: PasswordState
   passwordResetIssuedAt: DateTime
   passwordResetRedeemedAt: DateTime
@@ -49,6 +56,7 @@ input UserWhereInput {
   cart: CartItemManyRelationFilter
   orders: OrderManyRelationFilter
   role: RoleWhereInput
+  products: ProductManyRelationFilter
   passwordResetToken: PasswordFilter
   passwordResetIssuedAt: DateTimeNullableFilter
   passwordResetRedeemedAt: DateTimeNullableFilter
@@ -115,6 +123,12 @@ input OrderManyRelationFilter {
   none: OrderWhereInput
 }
 
+input ProductManyRelationFilter {
+  every: ProductWhereInput
+  some: ProductWhereInput
+  none: ProductWhereInput
+}
+
 input DateTimeNullableFilter {
   equals: DateTime
   in: [DateTime!]
@@ -146,6 +160,7 @@ input UserUpdateInput {
   cart: CartItemRelateToManyForUpdateInput
   orders: OrderRelateToManyForUpdateInput
   role: RoleRelateToOneForUpdateInput
+  products: ProductRelateToManyForUpdateInput
   passwordResetToken: String
   passwordResetIssuedAt: DateTime
   passwordResetRedeemedAt: DateTime
@@ -171,6 +186,13 @@ input RoleRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
+input ProductRelateToManyForUpdateInput {
+  disconnect: [ProductWhereUniqueInput!]
+  set: [ProductWhereUniqueInput!]
+  create: [ProductCreateInput!]
+  connect: [ProductWhereUniqueInput!]
+}
+
 input UserUpdateArgs {
   where: UserWhereUniqueInput!
   data: UserUpdateInput!
@@ -183,6 +205,7 @@ input UserCreateInput {
   cart: CartItemRelateToManyForCreateInput
   orders: OrderRelateToManyForCreateInput
   role: RoleRelateToOneForCreateInput
+  products: ProductRelateToManyForCreateInput
   passwordResetToken: String
   passwordResetIssuedAt: DateTime
   passwordResetRedeemedAt: DateTime
@@ -203,6 +226,11 @@ input RoleRelateToOneForCreateInput {
   connect: RoleWhereUniqueInput
 }
 
+input ProductRelateToManyForCreateInput {
+  create: [ProductCreateInput!]
+  connect: [ProductWhereUniqueInput!]
+}
+
 type Product {
   id: ID!
   name: String
@@ -210,6 +238,7 @@ type Product {
   photo: ProductImage
   status: String
   price: Int
+  user: User
 }
 
 input ProductWhereUniqueInput {
@@ -226,6 +255,7 @@ input ProductWhereInput {
   photo: ProductImageWhereInput
   status: StringNullableFilter
   price: IntNullableFilter
+  user: UserWhereInput
 }
 
 input StringNullableFilter {
@@ -282,11 +312,18 @@ input ProductUpdateInput {
   photo: ProductImageRelateToOneForUpdateInput
   status: String
   price: Int
+  user: UserRelateToOneForUpdateInput
 }
 
 input ProductImageRelateToOneForUpdateInput {
   create: ProductImageCreateInput
   connect: ProductImageWhereUniqueInput
+  disconnect: Boolean
+}
+
+input UserRelateToOneForUpdateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -301,11 +338,17 @@ input ProductCreateInput {
   photo: ProductImageRelateToOneForCreateInput
   status: String
   price: Int
+  user: UserRelateToOneForCreateInput
 }
 
 input ProductImageRelateToOneForCreateInput {
   create: ProductImageCreateInput
   connect: ProductImageWhereUniqueInput
+}
+
+input UserRelateToOneForCreateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 type ProductImage {
@@ -458,12 +501,6 @@ input CartItemUpdateInput {
   user: UserRelateToOneForUpdateInput
 }
 
-input UserRelateToOneForUpdateInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
-  disconnect: Boolean
-}
-
 input CartItemUpdateArgs {
   where: CartItemWhereUniqueInput!
   data: CartItemUpdateInput!
@@ -475,19 +512,14 @@ input CartItemCreateInput {
   user: UserRelateToOneForCreateInput
 }
 
-input UserRelateToOneForCreateInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
-}
-
 type OrderItem {
   id: ID!
   name: String
   description: String
-  photo: ProductImage
   price: Int
   quantity: Int
   order: Order
+  photo: ProductImage
 }
 
 input OrderItemWhereUniqueInput {
@@ -501,10 +533,10 @@ input OrderItemWhereInput {
   id: IDFilter
   name: StringFilter
   description: StringFilter
-  photo: ProductImageWhereInput
   price: IntNullableFilter
   quantity: IntNullableFilter
   order: OrderWhereInput
+  photo: ProductImageWhereInput
 }
 
 input OrderItemOrderByInput {
@@ -518,10 +550,10 @@ input OrderItemOrderByInput {
 input OrderItemUpdateInput {
   name: String
   description: String
-  photo: ProductImageRelateToOneForUpdateInput
   price: Int
   quantity: Int
   order: OrderRelateToOneForUpdateInput
+  photo: ProductImageRelateToOneForUpdateInput
 }
 
 input OrderRelateToOneForUpdateInput {
@@ -538,10 +570,10 @@ input OrderItemUpdateArgs {
 input OrderItemCreateInput {
   name: String
   description: String
-  photo: ProductImageRelateToOneForCreateInput
   price: Int
   quantity: Int
   order: OrderRelateToOneForCreateInput
+  photo: ProductImageRelateToOneForCreateInput
 }
 
 input OrderRelateToOneForCreateInput {
@@ -625,12 +657,13 @@ input OrderItemRelateToManyForCreateInput {
 type Role {
   id: ID!
   name: String
-  canManageProducts: Boolean
-  canSeeOtherUsers: Boolean
-  canManageUsers: Boolean
-  canManageRoles: Boolean
   canManageCart: Boolean
+  canManageOrderItems: Boolean
   canManageOrders: Boolean
+  canManageProducts: Boolean
+  canManageRoles: Boolean
+  canManageUsers: Boolean
+  canSeeOtherUsers: Boolean
   assignedTo(
     where: UserWhereInput! = {}
     orderBy: [UserOrderByInput!]! = []
@@ -650,12 +683,13 @@ input RoleWhereInput {
   NOT: [RoleWhereInput!]
   id: IDFilter
   name: StringFilter
-  canManageProducts: BooleanFilter
-  canSeeOtherUsers: BooleanFilter
-  canManageUsers: BooleanFilter
-  canManageRoles: BooleanFilter
   canManageCart: BooleanFilter
+  canManageOrderItems: BooleanFilter
   canManageOrders: BooleanFilter
+  canManageProducts: BooleanFilter
+  canManageRoles: BooleanFilter
+  canManageUsers: BooleanFilter
+  canSeeOtherUsers: BooleanFilter
   assignedTo: UserManyRelationFilter
 }
 
@@ -673,22 +707,24 @@ input UserManyRelationFilter {
 input RoleOrderByInput {
   id: OrderDirection
   name: OrderDirection
-  canManageProducts: OrderDirection
-  canSeeOtherUsers: OrderDirection
-  canManageUsers: OrderDirection
-  canManageRoles: OrderDirection
   canManageCart: OrderDirection
+  canManageOrderItems: OrderDirection
   canManageOrders: OrderDirection
+  canManageProducts: OrderDirection
+  canManageRoles: OrderDirection
+  canManageUsers: OrderDirection
+  canSeeOtherUsers: OrderDirection
 }
 
 input RoleUpdateInput {
   name: String
-  canManageProducts: Boolean
-  canSeeOtherUsers: Boolean
-  canManageUsers: Boolean
-  canManageRoles: Boolean
   canManageCart: Boolean
+  canManageOrderItems: Boolean
   canManageOrders: Boolean
+  canManageProducts: Boolean
+  canManageRoles: Boolean
+  canManageUsers: Boolean
+  canSeeOtherUsers: Boolean
   assignedTo: UserRelateToManyForUpdateInput
 }
 
@@ -706,12 +742,13 @@ input RoleUpdateArgs {
 
 input RoleCreateInput {
   name: String
-  canManageProducts: Boolean
-  canSeeOtherUsers: Boolean
-  canManageUsers: Boolean
-  canManageRoles: Boolean
   canManageCart: Boolean
+  canManageOrderItems: Boolean
   canManageOrders: Boolean
+  canManageProducts: Boolean
+  canManageRoles: Boolean
+  canManageUsers: Boolean
+  canSeeOtherUsers: Boolean
   assignedTo: UserRelateToManyForCreateInput
 }
 

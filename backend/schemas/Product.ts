@@ -1,13 +1,19 @@
 import { integer, relationship, select, text } from '@keystone-6/core/fields';
 import { list } from '@keystone-6/core';
-import { isSignedIn } from '../access';
 
+import { isSignedIn, rules } from '../access';
+
+// FIXME: access control / operation
 export const Product = list({
 	access: {
 		operation: {
 			create: isSignedIn,
+			query: isSignedIn,
+			// query: rules.canReadProducts,
 			update: isSignedIn,
+			// update: () => rules.canManageProducts,
 			delete: isSignedIn,
+			// delete: () => rules.canManageProducts,
 		},
 	},
 	fields: {
@@ -43,5 +49,34 @@ export const Product = list({
 			},
 		}),
 		price: integer(),
+		// FIXME: defaultValue to relationship
+		user: relationship({
+			ref: 'User.products',
+			// defaultValue: ({ context }) => ({
+			// 	connect: { id: context.session.itemId },
+			// }),
+			hooks: {
+				resolveInput: async ({
+					listKey,
+					fieldKey,
+					operation,
+					inputData,
+					item,
+					resolvedData,
+					context,
+				}) => {
+					console.log('hooks/resolveInput: ', {
+						listKey,
+						fieldKey,
+						operation,
+						inputData,
+						item,
+						resolvedData,
+						context,
+					});
+					return resolvedData['user'];
+				},
+			},
+		}),
 	},
 });
