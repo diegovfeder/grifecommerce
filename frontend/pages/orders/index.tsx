@@ -1,9 +1,9 @@
-import React from 'react';
 import { useQuery } from '@apollo/client';
 import Head from 'next/head';
 import styled from 'styled-components';
 import Link from 'next/link';
-import ErrorMessage from '../../components/ErrorMessage';
+
+import ErrorMessage from '../../components/error/ErrorMessage';
 import formatMoney from '../../utils/formatMoney';
 import StyledOrderItem from '../../components/styles/StyledOrderItem';
 import GET_ORDERS_QUERY from '../../gql/queryOrders.gql';

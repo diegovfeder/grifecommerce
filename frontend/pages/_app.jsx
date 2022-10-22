@@ -1,7 +1,7 @@
-import React from 'react';
 import Router from 'next/router';
 import { ApolloProvider } from '@apollo/client';
 import NProgress from 'nprogress';
+
 import withData from '../utils/withData';
 import CartStateProvider from '../providers/CartStateProvider';
 import Page from '../components/PageComponent';

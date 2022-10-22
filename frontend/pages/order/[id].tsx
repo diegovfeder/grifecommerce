@@ -1,8 +1,8 @@
-import React from 'react';
 import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import Head from 'next/head';
-import ErrorMessage from '../../components/ErrorMessage';
+
+import ErrorMessage from '../../components/error/ErrorMessage';
 import StyledOrder from '../../components/styles/StyledOrder';
 import formatMoney from '../../utils/formatMoney';
 import { IOrderItem } from '../../types/commonTypes';
@@ -71,23 +71,18 @@ export default function SingleOrderPage({
 				<span>{order.items.length}</span>
 			</p>
 			<div className="items">
-				{order.items.map(
-					(item: IOrderItem) => (
-						<div className="order-item" key={item.id}>
-							<img
-								src={item.photo.image.publicUrlTransformed}
-								alt={item.title}
-							/>
-							<div className="item-details">
-								<h2>{item.name}</h2>
-								<p>Qty: {item.quantity}</p>
-								<p>Each: {formatMoney(item.price)}</p>
-								<p>Sub Total: {formatMoney(item?.price * item?.quantity)}</p>
-								<p>{item.description}</p>
-							</div>
+				{order.items.map((item: IOrderItem) => (
+					<div className="order-item" key={item.id}>
+						<img src={item.photo.image.publicUrlTransformed} alt={item.title} />
+						<div className="item-details">
+							<h2>{item.name}</h2>
+							<p>Qty: {item.quantity}</p>
+							<p>Each: {formatMoney(item.price)}</p>
+							<p>Sub Total: {formatMoney(item?.price * item?.quantity)}</p>
+							<p>{item.description}</p>
 						</div>
-					),
-				)}
+					</div>
+				))}
 			</div>
 		</StyledOrder>
 	);

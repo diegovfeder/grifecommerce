@@ -1,8 +1,9 @@
+import { ReactNode } from 'react';
 import Link from 'next/link';
 
 interface UpdateProductButtonProps {
 	id: string;
-	children: React.ReactNode;
+	children: ReactNode;
 }
 
 const UpdateProductButton = ({ id, children }: UpdateProductButtonProps) => {

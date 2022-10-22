@@ -46,14 +46,16 @@ exports[`<CreateProduct/> renders component and matches snapshot 1`] = `
         />
       </label>
       <label
-        for="image"
+        for="file"
+        style="display: flex; flex: 1; flex-direction: column;"
       >
         Image
         <input
-          id="image"
-          name="image"
-          required=""
+          id="file"
+          name="file"
+          placeholder="file"
           type="file"
+          value=""
         />
       </label>
       <button

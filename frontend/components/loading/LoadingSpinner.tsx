@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import LoadingLabel from './LoadingLabel';
+
 const StyledLoadingSpinner = styled.div`
 	border: 8px solid pink;
 	border-top: 8px red solid;
@@ -19,7 +21,18 @@ const StyledLoadingSpinner = styled.div`
 	}
 `;
 
-const LoadingSpinner = () => {
+interface LoadingSpinnerProps {
+	testId?: string;
+	loading?: boolean;
+	size?: 'small' | 'medium' | 'large';
+	// theme="grayscale"
+}
+
+const LoadingSpinner = ({ testId, loading, size }: LoadingSpinnerProps) => {
+	if (loading) {
+		return <StyledLoadingSpinner data-testid={testId} />;
+	}
+
 	return (
 		<div
 			style={{
@@ -29,9 +42,11 @@ const LoadingSpinner = () => {
 				height: '100%',
 				justifyContent: 'center',
 				alignItems: 'center',
-				margin: '2rem',
+				marginTop: '1rem',
+				marginBottom: '1rem',
 			}}
 		>
+			<LoadingLabel />
 			<StyledLoadingSpinner />
 		</div>
 	);

@@ -8,6 +8,8 @@ import { PRODUCTS_QUERY, PRODUCTS_COUNT_QUERY } from '../gql/queries';
 import { CREATE_PRODUCT_MUTATION } from '../gql/mutations';
 import CreateProduct from '../components/CreateProduct';
 
+// TODO: Test creation of product
+
 jest.mock('next/router', () => ({
 	push: jest.fn(),
 }));

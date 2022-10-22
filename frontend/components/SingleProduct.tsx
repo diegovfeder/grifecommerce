@@ -1,10 +1,9 @@
-import { useState } from 'react';
 import { ApolloError, useQuery } from '@apollo/client';
-import styled from 'styled-components';
+import { useState } from 'react';
 import Image from 'next/image';
 import Head from 'next/head';
-import ErrorMessage from './ErrorMessage';
-import { LoadingSkeleton } from './loading';
+import styled from 'styled-components';
+
 import Supreme, { SupremeDescription } from './styles/Supreme';
 import formatMoney from '../utils/formatMoney';
 import {
@@ -13,6 +12,11 @@ import {
 } from '../utils/constants';
 import { PRODUCT_QUERY } from '../gql/queries';
 import { ProductProps } from '../types/commonTypes';
+import ErrorMessage from './error/ErrorMessage';
+import { LoadingSkeleton } from './loading';
+import AddToCartButton from './AddToCartButton';
+import DeleteProduct from './DeleteProduct';
+import UpdateProductButton from './UpdateProductButton';
 
 interface SingleProductProps {
 	id: string;
@@ -78,6 +82,11 @@ const SingleProduct = ({ id }: SingleProductProps) => {
 					<SupremeDescription>
 						{product?.description || TEXT_NO_PRODUCT_DESCRIPTION}
 					</SupremeDescription>
+				</div>
+				<div className="buttonList">
+					<AddToCartButton id={product.id}>Add To Cart 🛒</AddToCartButton>
+					<UpdateProductButton id={product.id}>Update ✏️</UpdateProductButton>
+					<DeleteProduct id={product.id}>Delete</DeleteProduct>
 				</div>
 			</div>
 		</ProductStyles>

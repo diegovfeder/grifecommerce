@@ -28,6 +28,7 @@ export const Product = list({
 			ui: {
 				displayMode: 'cards',
 				cardFields: ['image', 'altText'],
+				
 				inlineCreate: {
 					fields: ['image', 'altText'],
 				},

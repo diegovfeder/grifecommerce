@@ -1,4 +1,5 @@
-import React, {
+import {
+	ReactNode,
 	createContext,
 	useState,
 	Dispatch,
@@ -22,7 +23,7 @@ export const LocalCartStateContext = createContext<LocalCartStateProps>({
 });
 const LocalCartStateProvider = LocalCartStateContext.Provider;
 
-const CartStateProvider = ({ children }: { children: React.ReactNode }) => {
+const CartStateProvider = ({ children }: { children: ReactNode }) => {
 	const [cartOpen, setCartOpen] = useState(false);
 
 	const closeCart = () => {

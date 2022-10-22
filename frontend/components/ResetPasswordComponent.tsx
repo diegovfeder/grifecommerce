@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import Error from './ErrorMessage';
+import Error from './error/ErrorMessage';
 import StyledForm from './styles/StyledForm';
 import useForm from '../hooks/useForm';
 import {

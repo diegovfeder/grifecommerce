@@ -4,7 +4,7 @@ import { LoadingLabel } from '../../components/loading';
 import PaginationComponent from '../../components/PaginationComponent';
 import ProductsGridComponent from '../../components/ProductsGridComponent';
 import { PRODUCTS_COUNT_QUERY } from '../../gql/queries';
-import ErrorMessage from '../../components/ErrorMessage';
+import ErrorMessage from '../../components/error/ErrorMessage';
 
 const ProductsPage = () => {
 	const { query } = useRouter() || { query: { page: 1 } };

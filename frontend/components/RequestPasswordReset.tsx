@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ApolloError, useLazyQuery, useMutation } from '@apollo/client';
 
 import StyledForm from './styles/StyledForm';
@@ -10,7 +10,7 @@ import {
 import { USER_EMAIL_QUERY } from '../gql/queries';
 import { SEND_USER_PASSWORD_RESET_LINK_MUTATION } from '../gql/mutations';
 import { LoadingSpinner } from './loading';
-import Error from './ErrorMessage';
+import Error from './error/ErrorMessage';
 
 const RequestPasswordReset = () => {
 	const { inputs, handleChange, resetForm } =
@@ -18,19 +18,19 @@ const RequestPasswordReset = () => {
 			email: '',
 		});
 	const [message, setMessage] = useState<string | null>(null);
+	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<ApolloError>();
 
-	// FIXME: loading flashes on screen when user submits form
 	const [verifyUserEmail, { loading: loadingVerifyUserQuery }] = useLazyQuery(
 		USER_EMAIL_QUERY,
 		{
 			variables: inputs,
 			onCompleted: async data => {
-				console.log({ data });
 				if (!data?.user?.email) {
 					setMessage('Email not found...');
 					return;
 				}
+				setLoading(true);
 				await sendUserPasswordResetLink({
 					variables: { email: data.user.email },
 				});
@@ -46,28 +46,32 @@ const RequestPasswordReset = () => {
 		useMutation(SEND_USER_PASSWORD_RESET_LINK_MUTATION, {
 			variables: inputs,
 			onCompleted: (data: { sendUserPasswordResetLink: boolean }) => {
-				console.log({ data });
+				setLoading(false);
 				if (data.sendUserPasswordResetLink) {
 					setMessage('Password reset link sent!');
 					resetForm();
 				}
 			},
 			onError: err => {
+				setLoading(false);
 				console.error(err);
 				setError(err);
 			},
 		});
 
+	useEffect(() => {
+		if (loadingVerifyUserQuery || loadingResetLinkMutation) {
+			setLoading(true);
+		}
+	}, [loadingVerifyUserQuery, loadingResetLinkMutation]);
+
 	const handleSubmit = async (e: EventProps) => {
 		setMessage('');
-		console.log('handleSubmit');
 		e.preventDefault();
 		if (inputs.email === '') {
-			console.log('returning void');
 			setMessage('Please fill in all fields.');
 			return;
 		}
-		console.log('verifyUserEmail called');
 		await verifyUserEmail({ variables: { email: inputs.email } });
 	};
 
@@ -94,9 +98,7 @@ const RequestPasswordReset = () => {
 				</label>
 				<button type="submit">Request Reset!</button>
 				{message && <p>{message}</p>}
-				{(loadingResetLinkMutation || loadingVerifyUserQuery) && (
-					<LoadingSpinner />
-				)}
+				{loading && <LoadingSpinner />}
 			</fieldset>
 		</StyledForm>
 	);

@@ -1,8 +1,9 @@
-import React from 'react';
+import nProgress from 'nprogress';
+import { useEffect } from 'react';
 import gql from 'graphql-tag';
 import { useMutation, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
-import ErrorMessage from './ErrorMessage';
+import ErrorMessage from './error/ErrorMessage';
 import useForm from '../hooks/useForm';
 import StyledForm from './styles/StyledForm';
 import { EventProps, ProductFormInputProps } from '../types/commonTypes';
@@ -25,6 +26,8 @@ const PRODUCT_QUERY = gql`
 `;
 
 const UpdateProductComponent = ({ id }: EditProductProps) => {
+	const router = useRouter();
+
 	const {
 		data,
 		loading: queryLoading,
@@ -32,11 +35,6 @@ const UpdateProductComponent = ({ id }: EditProductProps) => {
 	} = useQuery(PRODUCT_QUERY, {
 		variables: { id },
 	});
-	const router = useRouter();
-
-	const onMutationComplete = (data: any) => {
-		console.log({ data });
-	};
 
 	const [
 		updateProductMutation,
@@ -58,12 +56,22 @@ const UpdateProductComponent = ({ id }: EditProductProps) => {
 				id,
 				...inputs,
 			},
-			onCompleted: onMutationComplete,
+			onCompleted: data => {
+				console.log({ data });
+			},
 		});
-		// TODO: Update UX: When success, show something as feedback to the user
 		clearForm();
 		router.push(`/product/${res.data.updateProduct.id}`);
 	};
+
+	// TODO: if loading is true for more than 10s then disable it
+	useEffect(() => {
+		if (queryLoading || mutationLoading) {
+			nProgress.start();
+			return;
+		}
+		nProgress.done();
+	}, [queryLoading, mutationLoading]);
 
 	if (queryLoading || mutationLoading) return <LoadingLabel />;
 

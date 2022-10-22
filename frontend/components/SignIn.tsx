@@ -6,7 +6,7 @@ import StyledForm from './styles/StyledForm';
 import useForm from '../hooks/useForm';
 import { CURRENT_USER_QUERY } from '../hooks/useUserQuery';
 import { EventProps, SignInFormInputProps } from '../types/commonTypes';
-import Error from './ErrorMessage';
+import Error from './error/ErrorMessage';
 import { LoadingSpinner } from './loading';
 
 const SIGNIN_MUTATION = gql`

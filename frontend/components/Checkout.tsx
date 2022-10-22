@@ -1,5 +1,8 @@
+import nProgress from 'nprogress';
+import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { useMutation } from '@apollo/client';
+import { useRouter } from 'next/dist/client/router';
 import { loadStripe, PaymentMethod, StripeError } from '@stripe/stripe-js';
 import {
 	CardElement,
@@ -7,29 +10,38 @@ import {
 	useElements,
 	useStripe,
 } from '@stripe/react-stripe-js';
-import { useRouter } from 'next/dist/client/router';
-import useCartState from '../hooks/useCartState';
-import styled from 'styled-components';
-import nProgress from 'nprogress';
+
 import StyledButton from './styles/StyledButton';
+import useCartState from '../hooks/useCartState';
 import { EventProps } from '../types/commonTypes';
 import { CREATE_ORDER_MUTATION } from '../gql/mutations';
 import { CURRENT_USER_QUERY } from '../gql/queries';
 import LoadingLabel from './loading/LoadingLabel';
+import { LoadingSpinner } from './loading';
 
 const stripeLib = loadStripe(process.env.STRIPE_PUBLISHABLE || '');
 
 const CheckoutForm = () => {
-	const [error, setError] = useState<StripeError | null>(null);
-	const [loading, setLoading] = useState(false);
+	const router = useRouter();
 	const stripe = useStripe();
 	const elements = useElements();
-	const router = useRouter();
+
 	const { closeCart } = useCartState();
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<StripeError | null>(null);
+
 	const [checkout, { error: graphQLError }] = useMutation(
 		CREATE_ORDER_MUTATION,
 		{
 			refetchQueries: [{ query: CURRENT_USER_QUERY }],
+			onCompleted: data => {
+				console.log({ data });
+				setLoading(false);
+			},
+			onError: error => {
+				console.error({ error });
+				setLoading(false);
+			},
 		},
 	);
 
@@ -44,7 +56,7 @@ const CheckoutForm = () => {
 	const handleSubmit = async (e: EventProps) => {
 		e.preventDefault();
 		setLoading(true);
-		// nProgress.start();
+		nProgress.start();
 
 		if (elements) {
 			const cardElement = elements.getElement(CardElement);
@@ -55,15 +67,16 @@ const CheckoutForm = () => {
 				});
 				const error: StripeError | null | undefined =
 					createPaymentMethodResult?.error;
+
 				const paymentMethod: PaymentMethod | undefined =
 					createPaymentMethodResult?.paymentMethod;
-				console.log(error);
 				console.log(paymentMethod);
 
 				if (error) {
+					console.error(error);
 					setError(error);
 					setLoading(false);
-					// nProgress.done();
+					nProgress.done();
 					return;
 				}
 
@@ -72,8 +85,12 @@ const CheckoutForm = () => {
 						token: paymentMethod?.id,
 					},
 				});
-				console.log(`Finished with the order!!`);
+
+				console.log(`Finished with the order!`);
 				console.log(order);
+
+				closeCart();
+				setLoading(false);
 
 				// TODO: Wait for the order to be created?..
 				router.push({
@@ -82,9 +99,6 @@ const CheckoutForm = () => {
 						id: order.data.checkout.id,
 					},
 				});
-
-				closeCart();
-				setLoading(false);
 				// nProgress.done();
 			}
 		} else {
@@ -93,7 +107,6 @@ const CheckoutForm = () => {
 
 	return (
 		<CheckoutFormStyles onSubmit={handleSubmit}>
-			{loading && <LoadingLabel />}
 			{error && <p style={{ fontSize: 12 }}>{error.message}</p>}
 			{graphQLError && <p style={{ fontSize: 12 }}>{graphQLError.message}</p>}
 			<CardElement />

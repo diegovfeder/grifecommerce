@@ -86,7 +86,17 @@ class LocalStorageMock {
 	}
 }
 
-function makePaginationMocksFor(length: number) {
+function makePaginationMocksFor(length: number): any[] {
+	if (length === 0)
+		return [
+			{
+				request: { query: PRODUCTS_COUNT_QUERY },
+				result: {
+					data: null,
+				},
+			},
+		];
+
 	return [
 		{
 			request: { query: PRODUCTS_COUNT_QUERY },

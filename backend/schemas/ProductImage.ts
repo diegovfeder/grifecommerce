@@ -5,17 +5,20 @@ import { cloudinaryImage } from '@keystone-6/cloudinary';
 
 import { isSignedIn, permissions } from '../access';
 
-const { CLOUDINARY_CLOUD_NAME, CLOUDINARY_KEY, CLOUDINARY_SECRET } =
-	process.env;
+const {
+	CLOUDINARY_API_KEY,
+	CLOUDINARY_API_SECRET,
+	CLOUDINARY_CLOUD_NAME,
+	CLOUDINARY_FOLDER,
+} = process.env;
 
 export const cloudinary = {
+	apiKey: CLOUDINARY_API_KEY,
+	apiSecret: CLOUDINARY_API_SECRET,
 	cloudName: CLOUDINARY_CLOUD_NAME,
-	apiKey: CLOUDINARY_KEY,
-	apiSecret: CLOUDINARY_SECRET,
-	folder: 'grifecommerce',
+	folder: CLOUDINARY_FOLDER,
 };
 
-// TODO: Test this accessControl
 export const ProductImage = list({
 	access: {
 		operation: {

@@ -7,7 +7,7 @@ import { EventProps, SignUpFormInputProps } from '../types/commonTypes';
 import { SIGN_UP_MUTATION } from '../gql/mutations';
 import { CURRENT_USER_QUERY } from '../gql/queries';
 import { LoadingSpinner } from './loading';
-import ErrorMessage from './ErrorMessage';
+import ErrorMessage from './error/ErrorMessage';
 
 const SignUp = () => {
 	const { inputs, handleChange, resetForm } = useForm<SignUpFormInputProps>({

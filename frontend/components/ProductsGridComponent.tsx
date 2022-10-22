@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import React from 'react';
 import { useQuery } from '@apollo/client';
 import { NUM_TOTAL_PRODUCTS_PER_PAGE } from '../utils/constants';
 import { ProductProps } from '../types/commonTypes';
 import PRODUCTS_QUERY from '../gql/queryProducts.gql';
 import ProductComponent from './ProductComponent';
+import ErrorMessage from './error/ErrorMessage';
 import { LoadingLabel } from './loading';
 
 interface ProductsGridComponentProps {
@@ -13,16 +13,16 @@ interface ProductsGridComponentProps {
 
 const ProductsGridComponent = ({ page }: ProductsGridComponentProps) => {
 	const { loading, data, error } = useQuery(PRODUCTS_QUERY, {
-		variables: {
+		variables:  {
 			take: NUM_TOTAL_PRODUCTS_PER_PAGE,
 			skip: page * NUM_TOTAL_PRODUCTS_PER_PAGE - NUM_TOTAL_PRODUCTS_PER_PAGE,
 		},
-		// onCompleted: data => console.log(data),
+		onCompleted: data => console.log(data),
 	});
 
 	if (loading) return <LoadingLabel />;
 
-	if (error) return <p>Error: {error.message}</p>;
+	if (error) return <ErrorMessage error={error} />;
 
 	return (
 		<div>

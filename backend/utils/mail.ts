@@ -28,6 +28,8 @@ const makeANiceEmail = (text: string): string => {
 	`;
 };
 
+// FIXME: Not receiving email
+// Could be nodemailer service issue, maybe update to another service?..
 const sendPasswordResetEmail = async (
 	token: string,
 	identity: string,

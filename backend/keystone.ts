@@ -26,8 +26,8 @@ type StatelessSessionsOptions = {
 
 const {
 	CLOUDINARY_CLOUD_NAME,
-	CLOUDINARY_KEY,
-	CLOUDINARY_SECRET,
+	CLOUDINARY_API_KEY,
+	CLOUDINARY_API_SECRET,
 	COOKIE_SECRET,
 	DATABASE_URL,
 	FRONTEND_URL,
@@ -40,8 +40,8 @@ const {
 
 console.log({
 	CLOUDINARY_CLOUD_NAME,
-	CLOUDINARY_KEY,
-	CLOUDINARY_SECRET,
+	CLOUDINARY_API_KEY,
+	CLOUDINARY_API_SECRET,
 	COOKIE_SECRET,
 	DATABASE_URL,
 	FRONTEND_URL,
@@ -51,7 +51,6 @@ console.log({
 	PORT,
 	STRIPE_SECRET,
 });
-console.log(process.env.COOKIE_SECRET);
 
 const sessionConfig: StatelessSessionsOptions = {
 	secret: COOKIE_SECRET,
