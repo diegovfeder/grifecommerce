@@ -1,13 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import formatMoney from '../utils/formatMoney';
+import { TEXT_NO_PRODUCT_DESCRIPTION } from '../utils/constants';
+import { ProductProps } from '../types/commonTypes';
 import StyledItem from './styles/StyledItem';
 import StyledTitle from './styles/StyledTitle';
 import StyledPriceTag from './styles/StyledPriceTag';
 import { SupremeDescription } from './styles/Supreme';
-import formatMoney from '../utils/formatMoney';
-import { ProductProps } from '../types/commonTypes';
-import { TEXT_NO_PRODUCT_DESCRIPTION } from '../utils/constants';
 import { LoadingSkeleton } from './loading';
 import AddToCartButton from './AddToCartButton';
 import DeleteProduct from './DeleteProduct';
@@ -26,24 +26,19 @@ const ProductComponent = ({
 
 	const isPhotoImageUrlDefined = !!product.photo?.image?.publicUrlTransformed;
 
+	// TODO: Test loading state and loaded.
 	return (
 		<StyledItem>
-			{!!loading ? (
-				<LoadingSkeleton />
+			{isPhotoImageUrlDefined ? (
+				<Image
+					src={product.photo.image.publicUrlTransformed}
+					alt={product.name}
+					width="100%"
+					height="100%"
+					loading="eager"
+				/>
 			) : (
-				<>
-					{isPhotoImageUrlDefined ? (
-						<Image
-							src={product.photo.image.publicUrlTransformed}
-							alt={product.name}
-							width="100%"
-							height="100%"
-							loading="eager"
-						/>
-					) : (
-						<LoadingSkeleton />
-					)}
-				</>
+				loading && <LoadingSkeleton />
 			)}
 			<StyledTitle>
 				<Link href={`/product/${product.id}`}>{product.name}</Link>

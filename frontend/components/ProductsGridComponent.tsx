@@ -1,11 +1,12 @@
-import styled from 'styled-components';
 import { useQuery } from '@apollo/client';
+
 import { NUM_TOTAL_PRODUCTS_PER_PAGE } from '../utils/constants';
 import { ProductProps } from '../types/commonTypes';
 import PRODUCTS_QUERY from '../gql/queryProducts.gql';
-import ProductComponent from './ProductComponent';
-import ErrorMessage from './error/ErrorMessage';
+import { StyledProductGrid } from './styles/StyledProductGrid';
+import { ErrorMessage } from './error';
 import { LoadingLabel } from './loading';
+import ProductComponent from './ProductComponent';
 
 interface ProductsGridComponentProps {
 	page: number;
@@ -13,36 +14,28 @@ interface ProductsGridComponentProps {
 
 const ProductsGridComponent = ({ page }: ProductsGridComponentProps) => {
 	const { loading, data, error } = useQuery(PRODUCTS_QUERY, {
-		variables:  {
+		variables: {
 			take: NUM_TOTAL_PRODUCTS_PER_PAGE,
 			skip: page * NUM_TOTAL_PRODUCTS_PER_PAGE - NUM_TOTAL_PRODUCTS_PER_PAGE,
 		},
 		onCompleted: data => console.log(data),
 	});
 
-	if (loading) return <LoadingLabel />;
-
 	if (error) return <ErrorMessage error={error} />;
 
+	if (loading) return <LoadingLabel />;
+
 	return (
-		<div>
-			<ProductsListStyles>
-				{data.products.map((product: ProductProps) => (
-					<ProductComponent
-						key={product.id}
-						product={product}
-						loading={loading}
-					/>
-				))}
-			</ProductsListStyles>
-		</div>
+		<StyledProductGrid>
+			{data.products.map((product: ProductProps) => (
+				<ProductComponent
+					key={product.id}
+					product={product}
+					loading={loading}
+				/>
+			))}
+		</StyledProductGrid>
 	);
 };
-
-const ProductsListStyles = styled.div`
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	grid-gap: 60px;
-`;
 
 export default ProductsGridComponent;

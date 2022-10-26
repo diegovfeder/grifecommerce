@@ -16,7 +16,6 @@ import useCartState from '../hooks/useCartState';
 import { EventProps } from '../types/commonTypes';
 import { CREATE_ORDER_MUTATION } from '../gql/mutations';
 import { CURRENT_USER_QUERY } from '../gql/queries';
-import LoadingLabel from './loading/LoadingLabel';
 import { LoadingSpinner } from './loading';
 
 const stripeLib = loadStripe(process.env.STRIPE_PUBLISHABLE || '');
@@ -65,12 +64,9 @@ const CheckoutForm = () => {
 					type: 'card',
 					card: cardElement,
 				});
+
 				const error: StripeError | null | undefined =
 					createPaymentMethodResult?.error;
-
-				const paymentMethod: PaymentMethod | undefined =
-					createPaymentMethodResult?.paymentMethod;
-				console.log(paymentMethod);
 
 				if (error) {
 					console.error(error);
@@ -79,6 +75,10 @@ const CheckoutForm = () => {
 					nProgress.done();
 					return;
 				}
+
+				const paymentMethod: PaymentMethod | undefined =
+					createPaymentMethodResult?.paymentMethod;
+				console.log(paymentMethod);
 
 				const order = await checkout({
 					variables: {
@@ -89,19 +89,26 @@ const CheckoutForm = () => {
 				console.log(`Finished with the order!`);
 				console.log(order);
 
-				closeCart();
-				setLoading(false);
-
 				// TODO: Wait for the order to be created?..
+				// await orderResult
+
+				if (order) {
+					// TODO:
+				}
+
+				setLoading(false);
+				nProgress.done();
+				closeCart();
+
 				router.push({
 					pathname: `/order/[id]`,
 					query: {
 						id: order.data.checkout.id,
 					},
 				});
-				// nProgress.done();
 			}
 		} else {
+			// ???
 		}
 	};
 
@@ -110,7 +117,10 @@ const CheckoutForm = () => {
 			{error && <p style={{ fontSize: 12 }}>{error.message}</p>}
 			{graphQLError && <p style={{ fontSize: 12 }}>{graphQLError.message}</p>}
 			<CardElement />
-			<StyledButton>Check Out Now</StyledButton>
+			<StyledButton>
+				{loading && <LoadingSpinner />}
+				Check Out Now
+			</StyledButton>
 		</CheckoutFormStyles>
 	);
 };
@@ -132,4 +142,4 @@ const CheckoutFormStyles = styled.form`
 	grid-gap: 1rem;
 `;
 
-export { Checkout };
+export default Checkout;

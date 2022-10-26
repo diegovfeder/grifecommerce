@@ -1,7 +1,8 @@
 import { ReactNode } from 'react';
 import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
-import styled from 'styled-components';
+
+import { StyledButtonLink } from './styles/StyledButtonLink';
 
 interface DeleteProductProps {
 	id: string | undefined;
@@ -31,7 +32,6 @@ const DeleteProduct = ({ id, children }: DeleteProductProps) => {
 		},
 	);
 
-	// TODO: Style these buttons better.
 	return (
 		<StyledButtonLink
 			type="button"
@@ -41,18 +41,10 @@ const DeleteProduct = ({ id, children }: DeleteProductProps) => {
 					deleteProduct().catch(console.error);
 				}
 			}}
-		>
+		>```
 			{children}
 		</StyledButtonLink>
 	);
 };
-
-const StyledButtonLink = styled.button`
-	color: #393939;
-	&:hover {
-		cursor: pointer;
-		text-decoration: underline;
-	}
-`;
 
 export default DeleteProduct;

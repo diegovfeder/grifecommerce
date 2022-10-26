@@ -6,23 +6,36 @@ const StyledNavigation = styled.ul`
 	display: flex;
 	justify-self: end;
 	font-size: 2rem;
+
 	a,
 	button {
+		white-space: nowrap;
 		padding: 1rem 3rem;
 		display: flex;
 		align-items: center;
 		position: relative;
 		text-transform: uppercase;
 		font-weight: 900;
-		font-size: 1em;
+		font-size: 2em;
 		background: none;
 		border: 0;
 		cursor: pointer;
-		@media (max-width: 700px) {
+
+		@media (max-width: 15000px) {
+			font-size: 1em;
+			padding: 0.5rem 1.5rem;
+		}
+
+		@media (max-width: 1000px) {
 			font-size: 0.8em;
 			padding: 0.5rem 1.5rem;
-
 		}
+
+		@media (max-width: 768px) {
+			font-size: 0.6em;
+			padding: 0.5rem 1.5rem;
+		}
+
 		&:before {
 			content: '';
 			width: 2px;
@@ -34,6 +47,7 @@ const StyledNavigation = styled.ul`
 			top: 0;
 			bottom: 0;
 		}
+
 		&:after {
 			height: 2px;
 			background: red;
@@ -46,6 +60,7 @@ const StyledNavigation = styled.ul`
 			left: 50%;
 			margin-top: 2rem;
 		}
+
 		&:hover,
 		&:focus {
 			outline: none;
@@ -54,6 +69,7 @@ const StyledNavigation = styled.ul`
 			}
 		}
 	}
+
 	@media (max-width: 1300px) {
 		border-top: 1px solid var(--lightGrey);
 		justify-content: center;

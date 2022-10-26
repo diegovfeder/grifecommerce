@@ -28,13 +28,11 @@ interface LoadingSpinnerProps {
 	// theme="grayscale"
 }
 
+// TODO: size
 const LoadingSpinner = ({ testId, loading, size }: LoadingSpinnerProps) => {
-	if (loading) {
-		return <StyledLoadingSpinner data-testid={testId} />;
-	}
-
-	return (
+	return loading ? (
 		<div
+			data-testid={testId}
 			style={{
 				display: 'flex',
 				flex: 1,
@@ -49,7 +47,7 @@ const LoadingSpinner = ({ testId, loading, size }: LoadingSpinnerProps) => {
 			<LoadingLabel />
 			<StyledLoadingSpinner />
 		</div>
-	);
+	) : null;
 };
 
 export default LoadingSpinner;

@@ -9,7 +9,7 @@ const StyledPaginationContainer = styled.div`
 	margin-bottom: 2rem;
 
 	& :last-child {
-		margin-top: 2rem;
+		margin-top: 1rem;
 		margin-bottom: 0;
 	}
 `;

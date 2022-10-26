@@ -25,7 +25,14 @@ const PaginationComponent = ({
 					</title>
 				</Head>
 				<Link href={`/products/${page - 1}`}>
-					<a aria-disabled={page <= 1}>← Prev</a>
+					<a
+						style={{
+							whiteSpace: 'nowrap',
+						}}
+						aria-disabled={page <= 1}
+					>
+						← Prev
+					</a>
 				</Link>
 				<p data-test-id="pageCount">
 					Page {page} of {pagesTotal}

@@ -18,7 +18,7 @@ const RequestPasswordReset = () => {
 			email: '',
 		});
 	const [message, setMessage] = useState<string | null>(null);
-	const [loading, setLoading] = useState<boolean>(true);
+	const [loading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<ApolloError>();
 
 	const [verifyUserEmail, { loading: loadingVerifyUserQuery }] = useLazyQuery(
