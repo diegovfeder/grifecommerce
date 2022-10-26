@@ -33,6 +33,7 @@ const CreateProduct = () => {
 		resolver: yupResolver(schema),
 	});
 
+	// FIXME:
 	const [createProductImage] = useMutation(CREATE_PRODUCT_MUTATION, {
 		variables: {
 			image: '',
@@ -61,11 +62,10 @@ const CreateProduct = () => {
 			},
 			refetchQueries: [{ query: ALL_PRODUCTS_QUERY }],
 			onCompleted: data => {
-				console.log({ data });
 				reset();
-				// Router.push({
-				// 	pathname: `/product/${data?.createProduct?.id || ''}`,
-				// });
+				Router.push({
+					pathname: `/product/${data?.createProduct?.id || ''}`,
+				});
 			},
 			onError: err => {
 				console.error({ err });
