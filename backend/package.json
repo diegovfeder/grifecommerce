@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "keystone dev",
-    "test": "jest --runInBand --testTimeout=60000",
+    "test": "NODE_ENV=test jest --runInBand --testTimeout=60000",
     "post": "keystone postinstall",
     "build": "NODE_ENV=production keystone build && keystone prisma migrate deploy",
     "start": "NODE_ENV=production keystone start",

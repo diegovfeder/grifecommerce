@@ -29,6 +29,28 @@ exports[`<SingleProduct/> renders with proper data 1`] = `
           - No description available
         </h3>
       </div>
+      <div
+        class="buttonList"
+      >
+        <button
+          class="StyledButtonLink-sc-zq7nji-0 chkZRh"
+          type="button"
+        >
+          Add To Cart 🛒
+        </button>
+        <button
+          class="StyledButtonLink-sc-zq7nji-0 chkZRh"
+        >
+          Update ✏️
+        </button>
+        <button
+          class="StyledButtonLink-sc-zq7nji-0 chkZRh"
+          type="button"
+        >
+          \`\`\`
+          Delete
+        </button>
+      </div>
     </div>
   </div>
 </div>

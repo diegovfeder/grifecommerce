@@ -146,19 +146,24 @@ describe('<CreateProduct/>', () => {
 			</MockedProvider>,
 		);
 
-		await userEvent.type(screen.getByPlaceholderText(/Name/i), item.name);
+		await userEvent.type(screen.getByPlaceholderText(/name/i), item.name);
 		await userEvent.type(
-			screen.getByPlaceholderText(/Price/i),
+			screen.getByPlaceholderText(/price/i),
 			item.price.toString(),
 		);
 		await userEvent.type(
-			screen.getByPlaceholderText(/Description/i),
+			screen.getByPlaceholderText(/description/i),
 			item.description,
 		);
-		await userEvent.click(screen.getByText(/Add Product/));
+		await userEvent.click(screen.getByText(/add product/i));
+
+		// FIXME: Test
 		await waitFor(() => wait(0));
 
 		expect(Router.push).toHaveBeenCalled();
+		// expect(jest.fn()).toHaveBeenCalled()
+		// Expected number of calls: >= 1
+		// Received number of calls:    0
 		expect(Router.push).toHaveBeenCalledWith({ pathname: '/product/abc123' });
 	});
 });

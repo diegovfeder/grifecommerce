@@ -23,9 +23,9 @@ describe('<PaginationComponent/>', () => {
 			</MockedProvider>,
 		);
 		await screen.findByTestId('pagination');
-		expect(container).toHaveTextContent('Page 1 of 9');
+		expect(container).toHaveTextContent('Page 1 of 6');
 		const pageCountSpan = screen.getByTestId('pageCount');
-		expect(pageCountSpan).toHaveTextContent('9');
+		expect(pageCountSpan).toHaveTextContent('6');
 		expect(container).toMatchSnapshot();
 	});
 
@@ -71,7 +71,7 @@ describe('<PaginationComponent/>', () => {
 	it('enables previous and next buttons when in a middle page', async () => {
 		render(
 			<MockedProvider mocks={makePaginationMocksFor(24)}>
-				<PaginationComponent page={4} productsCount={24} />
+				<PaginationComponent page={3} productsCount={24} />
 			</MockedProvider>,
 		);
 		await screen.findByTestId('pagination');

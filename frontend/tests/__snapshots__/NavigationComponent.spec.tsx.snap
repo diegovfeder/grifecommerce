@@ -3,7 +3,7 @@
 exports[`<NavigationComponent/> renders navigation when signed in 1`] = `
 <div>
   <ul
-    class="StyledNavigation-sc-hq3jod-0 efkomq"
+    class="StyledNavigation-sc-hq3jod-0 cqDWxp"
   >
     <a
       href="/products/1"
@@ -53,7 +53,7 @@ exports[`<NavigationComponent/> renders navigation when signed in 1`] = `
 exports[`<NavigationComponent/> renders navigation when signed out 1`] = `
 <div>
   <ul
-    class="StyledNavigation-sc-hq3jod-0 efkomq"
+    class="StyledNavigation-sc-hq3jod-0 cqDWxp"
   >
     <a
       href="/products/1"

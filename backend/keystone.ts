@@ -38,19 +38,21 @@ const {
 	STRIPE_SECRET,
 } = process.env;
 
-console.log({
-	CLOUDINARY_CLOUD_NAME,
-	CLOUDINARY_API_KEY,
-	CLOUDINARY_API_SECRET,
-	COOKIE_SECRET,
-	DATABASE_URL,
-	FRONTEND_URL,
-	MAIL_USER,
-	MAIL_PASS,
-	NODE_ENV,
-	PORT,
-	STRIPE_SECRET,
-});
+if (NODE_ENV !== 'production') {
+	console.log({
+		CLOUDINARY_CLOUD_NAME,
+		CLOUDINARY_API_KEY,
+		CLOUDINARY_API_SECRET,
+		COOKIE_SECRET,
+		DATABASE_URL,
+		FRONTEND_URL,
+		MAIL_USER,
+		MAIL_PASS,
+		NODE_ENV,
+		PORT,
+		STRIPE_SECRET,
+	});
+}
 
 const sessionConfig: StatelessSessionsOptions = {
 	secret: COOKIE_SECRET,

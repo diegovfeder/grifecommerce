@@ -1,6 +1,7 @@
 {
   "name": "grifecommerce-frontend",
   "version": "0.0.1",
+	"private": true,
   "author": "@diegovfeder",
   "license": "ISC",
   "scripts": {
