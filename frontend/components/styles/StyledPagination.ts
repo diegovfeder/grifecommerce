@@ -9,7 +9,6 @@ const StyledPagination = styled.div`
 	justify-self: center;
 	justify-content: center;
 	align-content: center;
-	margin: 1rem 0;
 	border: 1px solid var(--lightGrey);
 	border-radius: 10px;
 	white-space: nowrap;

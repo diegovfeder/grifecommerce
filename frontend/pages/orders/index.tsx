@@ -37,6 +37,7 @@ export default function OrdersPage() {
 			<Head>
 				<title>Your Orders ({allOrders?.length})</title>
 			</Head>
+			<div style={{ height: '200px' }}></div>
 			{/* TODO: Style this page header */}
 			{/* Create a PageHeader component */}
 			{allOrders?.length > 0 ? (

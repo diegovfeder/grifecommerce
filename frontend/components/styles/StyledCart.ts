@@ -5,7 +5,7 @@ const CartStyles = styled.div<{ open: boolean }>`
 	position: relative;
 	background: white;
 	position: fixed;
-	height: 100%;
+	height: calc(100% - 140px);
 	top: 0;
 	right: 0;
 	width: 40%;
@@ -14,9 +14,10 @@ const CartStyles = styled.div<{ open: boolean }>`
 	transform: translateX(100%);
 	transition: all 0.3s;
 	box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.2);
-	z-index: 5;
 	display: grid;
 	grid-template-rows: auto 1fr auto;
+	top: 140px;
+	z-index: 101;
 
 	${props => props.open && `transform: translateX(0);`};
 	header {

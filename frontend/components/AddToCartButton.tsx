@@ -24,7 +24,6 @@ const AddToCartButton = ({ id, children }: AddToCartButtonProps) => {
 		refetchQueries: [{ query: CURRENT_USER_QUERY }],
 	});
 
-	// TODO: Style these buttons better.
 	return (
 		<StyledButtonLink
 			type="button"

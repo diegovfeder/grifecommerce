@@ -65,7 +65,7 @@ const StyledNavigation = styled.ul`
 		&:focus {
 			outline: none;
 			&:after {
-				width: calc(100% - 60px);
+				width: calc(100% - 30px);
 			}
 		}
 	}

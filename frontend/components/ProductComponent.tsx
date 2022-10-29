@@ -26,7 +26,7 @@ const ProductComponent = ({
 
 	const isPhotoImageUrlDefined = !!product.photo?.image?.publicUrlTransformed;
 
-	// TODO: Test loading state and loaded.
+	// TODO: Test loading state and loaded data state, maybe even handle error.
 	return (
 		<StyledItem>
 			{isPhotoImageUrlDefined ? (
@@ -63,7 +63,7 @@ const ProductComponent = ({
 			<div className="buttonList">
 				<AddToCartButton id={product.id}>Add To Cart 🛒</AddToCartButton>
 				<UpdateProductButton id={product.id}>Update ✏️</UpdateProductButton>
-				<DeleteProduct id={product.id}>Delete</DeleteProduct>
+				<DeleteProduct id={product.id}>Delete 🗑️</DeleteProduct>
 			</div>
 		</StyledItem>
 	);

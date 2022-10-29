@@ -9,6 +9,7 @@ const SellPage = () => {
 				<title>GRIFE | Create Product</title>
 			</Head>
 			<PleaseSignIn>
+				<div style={{ height: '200px' }}></div>
 				<CreateProduct />
 			</PleaseSignIn>
 		</>

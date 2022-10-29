@@ -11,11 +11,9 @@ const Supreme = styled.h3`
 `;
 
 export const SupremeDescription = styled.h3`
-	background: var(--red);
-	color: white;
+	color: var(--black);
 	display: inline-block;
 	padding: 1px 2px;
-	transform: skew(-3deg);
 	margin: 0;
 	margin-top: 2rem;
 	font-size: 2rem;

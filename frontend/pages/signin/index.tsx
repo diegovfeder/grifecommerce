@@ -16,6 +16,7 @@ const SignInPage = () => {
 			<Head>
 				<title>GRIFE | Sign In</title>
 			</Head>
+			<div style={{ height: '200px' }}></div>
 			<StyledGrid>
 				<SignIn />
 				<SignUp />
