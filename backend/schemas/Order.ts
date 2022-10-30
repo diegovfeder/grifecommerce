@@ -3,6 +3,8 @@ import { list, graphql } from '@keystone-6/core';
 import formatMoney from '../utils/formatMoney';
 import { isSignedIn, permissions } from '../access';
 
+// TODO: Finish Orders model in keystone
+// TODO: Test Orders model in keystone
 export const Order = list({
 	access: {
 		operation: {

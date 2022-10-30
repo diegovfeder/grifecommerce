@@ -5,7 +5,6 @@ export const StyledButtonLink = styled.button`
 	font-size: 1.4rem;
 
 	&:hover {
-		font-size: 1.5rem;
 		cursor: pointer;
 		text-decoration: underline;
 	}

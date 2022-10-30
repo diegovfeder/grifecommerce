@@ -19,8 +19,8 @@ const StyledItem = styled.div`
 		line-height: 2;
 		font-weight: 300;
 		flex-grow: 1;
-		padding: 0 3rem;
 		font-size: 1.5rem;
+		margin: 0 0 2rem 0;
 	}
 
 	.buttonList {
@@ -31,6 +31,7 @@ const StyledItem = styled.div`
 		grid-gap: 1px;
 		background: var(--lightGrey);
 		border-radius: 5px;
+		border-top: 0.2rem solid var(--darkGray);
 
 		& > * {
 			background: white;

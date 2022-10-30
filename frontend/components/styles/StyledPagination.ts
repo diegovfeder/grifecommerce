@@ -14,6 +14,8 @@ const StyledPagination = styled.div`
 	white-space: nowrap;
 	font-size: 1rem;
 	font-size: 1.5vw;
+	margin-top: 1.5rem;
+	margin-bottom: 2rem;
 
 	@media only screen and (min-width: 2401px) {
 		a,

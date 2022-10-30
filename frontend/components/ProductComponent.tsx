@@ -48,13 +48,7 @@ const ProductComponent = ({
 				Description:
 				<p
 					style={{
-						marginTop: 0,
-						marginBottom: 0,
-						paddingTop: '1rem',
-						paddingBottom: '2rem',
-						fontSize: '1.5rem',
-						maxHeight: '120px',
-						overflow: 'scroll',
+
 					}}
 				>
 					{product?.description || TEXT_NO_PRODUCT_DESCRIPTION}

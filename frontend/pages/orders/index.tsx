@@ -1,21 +1,15 @@
 import { useQuery } from '@apollo/client';
 import Head from 'next/head';
-import styled from 'styled-components';
 import Link from 'next/link';
 
-import ErrorMessage from '../../components/error/ErrorMessage';
-import formatMoney from '../../utils/formatMoney';
-import StyledOrderItem from '../../components/styles/StyledOrderItem';
 import GET_ORDERS_QUERY from '../../gql/queryOrders.gql';
+import formatMoney from '../../utils/formatMoney';
 import { IItem, IOrder } from '../../types/commonTypes';
 import { LoadingLabel } from '../../components/loading';
-
-// TODO: Create Orders model in keystone
-const OrderUl = styled.ul`
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-	grid-gap: 4rem;
-`;
+import { ErrorMessage } from '../../components/error';
+import StyledCard from '../../components/styles/StyledCard';
+import StyledListItem from '../../components/styles/StyledListItem';
+import StyledUnorderedList from '../../components/styles/StyledUnorderedList';
 
 function countItemsInAnOrder(order: IOrder) {
 	return order.items.reduce(
@@ -26,6 +20,7 @@ function countItemsInAnOrder(order: IOrder) {
 
 export default function OrdersPage() {
 	const { data, error, loading } = useQuery(GET_ORDERS_QUERY);
+	console.log({ data });
 	const { allOrders } = data || [];
 
 	if (loading) return <LoadingLabel />;
@@ -35,44 +30,45 @@ export default function OrdersPage() {
 	return (
 		<div>
 			<Head>
-				<title>Your Orders ({allOrders?.length})</title>
+				<title>GRIFE | Your have {allOrders?.length || 0} orders</title>
 			</Head>
 			<div style={{ height: '200px' }}></div>
-			{/* TODO: Style this page header */}
-			{/* Create a PageHeader component */}
-			{allOrders?.length > 0 ? (
-				<h2>You have {allOrders?.length} orders!</h2>
-			) : (
-				<h2>You have no orders!</h2>
-			)}
-			{/* TODO: Separate Order Item to its own component */}
-			<OrderUl>
-				{allOrders?.map((order: IOrder) => (
-					<StyledOrderItem>
-						<Link href={`/order/${order.id}`}>
-							<a>
-								<div className="order-meta">
-									<p>{countItemsInAnOrder(order)} Items</p>
-									<p>
-										{order.items.length} Product
-										{order.items.length === 1 ? '' : 's'}
-									</p>
-									<p>{formatMoney(order.total)}</p>
-								</div>
-								<div className="images">
-									{order.items.map((item: IItem) => (
-										<img
-											key={`image-${item.id}`}
-											src={item.photo?.image?.publicUrlTransformed}
-											alt={item.name}
-										/>
-									))}
-								</div>
-							</a>
-						</Link>
-					</StyledOrderItem>
-				))}
-			</OrderUl>
+			<StyledCard>
+				{allOrders?.length > 0 ? (
+					<h2>You have {allOrders?.length} orders:</h2>
+				) : (
+					<h2>You haven't ordered any product yet...</h2>
+				)}
+				{/* TODO: Separate Order Item to its own component */}
+				{/* TODO: Test / render order item / all orders in cards */}
+				<StyledUnorderedList>
+					{allOrders?.map((order: IOrder) => (
+						<StyledListItem>
+							<Link href={`/order/${order.id}`}>
+								<a>
+									<div className="order-meta">
+										<p>{countItemsInAnOrder(order)} Items</p>
+										<p>
+											{order.items.length} Product
+											{order.items.length === 1 ? '' : 's'}
+										</p>
+										<p>{formatMoney(order.total)}</p>
+									</div>
+									<div className="images">
+										{order.items.map((item: IItem) => (
+											<img
+												key={`image-${item.id}`}
+												src={item.photo?.image?.publicUrlTransformed}
+												alt={item.name}
+											/>
+										))}
+									</div>
+								</a>
+							</Link>
+						</StyledListItem>
+					))}
+				</StyledUnorderedList>
+			</StyledCard>
 		</div>
 	);
 }

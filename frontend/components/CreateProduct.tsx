@@ -102,6 +102,7 @@ const CreateProduct = () => {
 
 	return (
 		<StyledForm onSubmit={handleSubmit(onSubmit)}>
+			<h2>Sell Product</h2>
 			<ErrorMessage error={error} />
 			{errors.photo && <p>{errors.photo.message}</p>}
 			<fieldset disabled={loading} aria-busy={loading}>
@@ -114,7 +115,7 @@ const CreateProduct = () => {
 						{...register('name')}
 						id="name"
 						type="text"
-						placeholder="Name"
+						placeholder="Insert a name for your product"
 					/>
 				</label>
 				<label
@@ -125,7 +126,7 @@ const CreateProduct = () => {
 					<textarea
 						{...register('description')}
 						id="description"
-						placeholder="Description"
+						placeholder={`Insert a description for this product:\n\n- Year\n - Color\n - Size\n - Condition`}
 					/>
 				</label>
 				<label
@@ -137,7 +138,7 @@ const CreateProduct = () => {
 						{...register('price')}
 						id="price"
 						type="number"
-						placeholder="price"
+						placeholder="Insert a price value"
 					/>
 				</label>
 				<label
@@ -149,11 +150,10 @@ const CreateProduct = () => {
 						{...register('photo')}
 						id="photo"
 						type="file"
-						placeholder="photo"
+						placeholder="Photo"
 						accept=".jpg, .png, .gif, .jpeg"
 					/>
 				</label>
-
 				<button type="submit">+ Add Product</button>
 			</fieldset>
 		</StyledForm>

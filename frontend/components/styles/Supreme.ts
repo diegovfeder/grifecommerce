@@ -15,8 +15,14 @@ export const SupremeDescription = styled.h3`
 	display: inline-block;
 	padding: 1px 2px;
 	margin: 0;
-	margin-top: 2rem;
+	margin-top: 1rem;
 	font-size: 2rem;
+	padding-left: 1rem;
+	min-height: 120px;
+	max-height: 120px,
+	overflow: 'scroll',
+
+
 `;
 
 export default Supreme;
