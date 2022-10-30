@@ -62,8 +62,12 @@ const StyledForm = styled.form`
 
 	h2,
 	h3 {
-		margin-top: 0rem;
+		margin-top: 2rem;
 		margin-bottom: 1rem;
+
+		&:first-child {
+			margin-top: 0rem;
+		}
 	}
 
 	fieldset {

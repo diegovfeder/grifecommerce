@@ -112,6 +112,7 @@ const CheckoutForm = () => {
 		}
 	};
 
+	// TODO: Style CardElement (make text bigger, make form stand out more)
 	return (
 		<CheckoutFormStyles onSubmit={handleSubmit}>
 			{error && <p style={{ fontSize: 12 }}>{error.message}</p>}

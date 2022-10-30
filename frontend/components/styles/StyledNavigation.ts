@@ -64,6 +64,7 @@ const StyledNavigation = styled.ul`
 		&:hover,
 		&:focus {
 			outline: none;
+
 			&:after {
 				width: calc(100% - 30px);
 			}

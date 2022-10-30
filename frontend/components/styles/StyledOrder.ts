@@ -13,8 +13,10 @@ const OrderStyles = styled.div`
 		grid-template-columns: 1fr 5fr;
 		margin: 0;
 		border-bottom: 1px solid var(--offWhite);
+
 		span {
 			padding: 1rem;
+
 			&:first-child {
 				font-weight: 900;
 				text-align: right;

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const CartStyles = styled.div<{ open: boolean }>`
+const StyledCart = styled.div<{ open: boolean }>`
 	padding: 20px;
 	position: relative;
 	background: white;
@@ -48,4 +48,4 @@ const CartStyles = styled.div<{ open: boolean }>`
 	}
 `;
 
-export default CartStyles;
+export default StyledCart;
