@@ -3,7 +3,7 @@
 exports[`<SingleProduct/> renders with proper data 1`] = `
 <div>
   <div
-    class="SingleProduct__ProductStyles-sc-14jd9my-0 jPWReR"
+    class="SingleProduct__ProductStyles-sc-14jd9my-0 NUFoz"
     data-test-id="single-product-component"
   >
     <div
@@ -24,7 +24,7 @@ exports[`<SingleProduct/> renders with proper data 1`] = `
         style="display: flex; flex: 1; flex-direction: column;"
       >
         <h3
-          class="Supreme__SupremeDescription-sc-2anpcp-1 eSreBk"
+          class="Supreme__SupremeDescription-sc-2anpcp-1 gKpLq"
         >
           - No description available
         </h3>
@@ -33,18 +33,18 @@ exports[`<SingleProduct/> renders with proper data 1`] = `
         class="buttonList"
       >
         <button
-          class="StyledButtonLink-sc-zq7nji-0 chkZRh"
+          class="StyledButtonLink-sc-zq7nji-0 hcCIHD"
           type="button"
         >
           Add To Cart 🛒
         </button>
         <button
-          class="StyledButtonLink-sc-zq7nji-0 chkZRh"
+          class="StyledButtonLink-sc-zq7nji-0 hcCIHD"
         >
           Update ✏️
         </button>
         <button
-          class="StyledButtonLink-sc-zq7nji-0 chkZRh"
+          class="StyledButtonLink-sc-zq7nji-0 hcCIHD"
           type="button"
         >
           \`\`\`

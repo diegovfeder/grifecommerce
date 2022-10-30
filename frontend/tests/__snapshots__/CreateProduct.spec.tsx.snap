@@ -3,8 +3,11 @@
 exports[`<CreateProduct/> renders component and matches snapshot 1`] = `
 <div>
   <form
-    class="StyledForm-sc-44wenk-0 fSvYjc"
+    class="StyledForm-sc-44wenk-0 grZrFM"
   >
+    <h2>
+      Sell Product
+    </h2>
     <fieldset
       aria-busy="false"
     >
@@ -16,7 +19,7 @@ exports[`<CreateProduct/> renders component and matches snapshot 1`] = `
         <input
           id="name"
           name="name"
-          placeholder="Name"
+          placeholder="Insert a name for your product"
           type="text"
         />
       </label>
@@ -28,7 +31,12 @@ exports[`<CreateProduct/> renders component and matches snapshot 1`] = `
         <textarea
           id="description"
           name="description"
-          placeholder="Description"
+          placeholder="Insert a description for this product:
+
+- Year
+ - Color
+ - Size
+ - Condition"
         />
       </label>
       <label
@@ -39,7 +47,7 @@ exports[`<CreateProduct/> renders component and matches snapshot 1`] = `
         <input
           id="price"
           name="price"
-          placeholder="price"
+          placeholder="Insert a price value"
           type="number"
         />
       </label>
@@ -52,7 +60,7 @@ exports[`<CreateProduct/> renders component and matches snapshot 1`] = `
           accept=".jpg, .png, .gif, .jpeg"
           id="photo"
           name="photo"
-          placeholder="photo"
+          placeholder="Photo"
           type="file"
         />
       </label>

@@ -3,7 +3,7 @@
 exports[`<ProductComponent/> renders component and matches the snapshot 1`] = `
 <div>
   <div
-    class="StyledItem-sc-n8xnjs-0 dihOBH"
+    class="StyledItem-sc-n8xnjs-0 cqZiMF"
   >
     next/image stub
     <h3
@@ -21,12 +21,10 @@ exports[`<ProductComponent/> renders component and matches the snapshot 1`] = `
       R$ 50,00
     </span>
     <h3
-      class="Supreme__SupremeDescription-sc-2anpcp-1 eSreBk"
+      class="Supreme__SupremeDescription-sc-2anpcp-1 gKpLq"
     >
       Description:
-      <p
-        style="margin-top: 0px; margin-bottom: 0px; padding-top: 1rem; padding-bottom: 2rem; font-size: 1.5rem; max-height: 120px; overflow: scroll;"
-      >
+      <p>
         This our first sample pack for summer beats in a sunny day, when all is yellow :)
       </p>
     </h3>
@@ -34,22 +32,22 @@ exports[`<ProductComponent/> renders component and matches the snapshot 1`] = `
       class="buttonList"
     >
       <button
-        class="StyledButtonLink-sc-zq7nji-0 chkZRh"
+        class="StyledButtonLink-sc-zq7nji-0 hcCIHD"
         type="button"
       >
         Add To Cart 🛒
       </button>
       <button
-        class="StyledButtonLink-sc-zq7nji-0 chkZRh"
+        class="StyledButtonLink-sc-zq7nji-0 hcCIHD"
       >
         Update ✏️
       </button>
       <button
-        class="StyledButtonLink-sc-zq7nji-0 chkZRh"
+        class="StyledButtonLink-sc-zq7nji-0 hcCIHD"
         type="button"
       >
         \`\`\`
-        Delete
+        Delete 🗑️
       </button>
     </div>
   </div>

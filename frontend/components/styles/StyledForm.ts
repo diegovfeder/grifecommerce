@@ -60,6 +60,12 @@ const StyledForm = styled.form`
 		}
 	}
 
+	h2,
+	h3 {
+		margin-top: 0rem;
+		margin-bottom: 1rem;
+	}
+
 	fieldset {
 		border: 0;
 		padding: 0;

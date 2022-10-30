@@ -3,11 +3,11 @@
 exports[`<PaginationComponent/> renders pagination, multiple products 1`] = `
 <div>
   <div
-    class="StyledPaginationContainer-sc-nom4q0-0 eqreFF"
+    class="StyledPaginationContainer-sc-nom4q0-0 fJUohV"
     data-test-id="pagination"
   >
     <div
-      class="StyledPagination-sc-1vd1tt1-0 zPWJP"
+      class="StyledPagination-sc-1vd1tt1-0 eldAWD"
     >
       <a
         aria-disabled="true"

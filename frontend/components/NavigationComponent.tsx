@@ -9,7 +9,8 @@ import SignOut from './SignOut';
 
 const NavigationComponent = () => {
 	const user = useUserQuery();
-	const { openCart } = useCartState();
+	const { toggleCart } = useCartState();
+
 	return (
 		<StyledNavigation>
 			<Link href="/products/1">PRODUCTS</Link>
@@ -19,7 +20,7 @@ const NavigationComponent = () => {
 					<Link href="/orders">ORDERS</Link>
 					<Link href="/account">ACCOUNT</Link>
 					<SignOut />
-					<button type="button" onClick={openCart}>
+					<button type="button" onClick={toggleCart}>
 						MY CART
 						<CartCount
 							count={user.cart.reduce(

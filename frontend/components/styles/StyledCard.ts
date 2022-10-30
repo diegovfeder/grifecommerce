@@ -21,11 +21,22 @@ const StyledCard = styled.form`
 		}
 	}
 
+	h2,
+	h3 {
+		margin-top: 0rem;
+		margin-bottom: 1rem;
+	}
+
 	ul {
+		margin-top: 0rem;
+		margin-bottom: 1rem;
+
 		&:before {
 			height: 10px;
 			content: '';
 			display: block;
+			margin-top: 0px;
+			padding: 0;
 			margin-bottom: 20px;
 			background-image: linear-gradient(
 				to right,
