@@ -6,6 +6,10 @@ datasource postgresql {
   provider = "postgresql"
 }
 
+generator erd {
+	provider = "prisma-erd-generator"
+}
+
 generator client {
   provider = "prisma-client-js"
   output   = "node_modules/.prisma/client"
@@ -16,6 +20,17 @@ model User {
   name                    String     @default("")
   email                   String     @unique @default("")
   password                String?
+  fullName                String     @default("")
+  phone                   String     @default("")
+  photo                   Json?
+  altText                 String     @default("")
+  zipCode                 String     @default("")
+  address                 String     @default("")
+  houseNumber             String     @default("")
+  addOn                   String     @default("")
+  city                    String     @default("")
+  neighbourhood           String     @default("")
+  state                   String     @default("")
   cart                    CartItem[] @relation("CartItem_user")
   orders                  Order[]    @relation("Order_user")
   role                    Role?      @relation("User_role", fields: [roleId], references: [id])

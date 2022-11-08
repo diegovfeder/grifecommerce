@@ -8,10 +8,10 @@ export const StyledDot = styled.div`
 	line-height: 2rem;
 	min-width: 3rem;
 	margin-left: 1rem;
+	margin-bottom: 1rem;
 	font-feature-settings: 'tnum';
 	font-variant-numeric: tabular-nums;
 `;
-
 
 export const StyledDotAnimation = styled.span`
 	position: relative;

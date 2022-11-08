@@ -1,9 +1,12 @@
 import { useForm } from 'react-hook-form';
+import { useMutation, useQuery } from '@apollo/client';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { object, string, mixed } from 'yup';
 
-import StyledCard from '../../components/styles/StyledCard';
 import StyledForm from '../../components/styles/StyledForm';
+import { CURRENT_USER_QUERY } from '../../gql/queries';
+import { useEffect } from 'react';
+import { UPDATE_USER_MUTATION } from '../../gql/mutations';
 
 type FormInputs = {
 	name: string;
@@ -33,10 +36,41 @@ const Account = () => {
 		resolver: yupResolver(schema),
 	});
 
+	const { data, loading, error } = useQuery(CURRENT_USER_QUERY);
+	const user = data?.authenticatedItem;
+
+	const [updateUser, { data: updatedUser, loading: updatingUser }] =
+		useMutation(UPDATE_USER_MUTATION, {
+			variables: {
+				id: user?.id,
+				name: user?.name,
+				phone: user?.phone,
+				photo: user?.photo,
+				zipCode: user?.zipCode,
+				address: user?.address,
+				houseNumber: user?.houseNumber,
+				addOn: user?.addOn,
+				city: user?.city,
+				neighbourhood: user?.neighbourhood,
+				state: user?.state,
+			},
+			onCompleted: data => {
+				console.log({ data });
+			},
+			onError: error => {
+				console.error(error);
+			},
+		});
+
 	const onSubmit = async (data: FormInputs) => {
 		console.log(data);
 		// TODO: Handle mutations
 	};
+
+	useEffect(() => {
+		console.log({ data });
+		console.log({ user });
+	}, [data]);
 
 	return (
 		<div>
