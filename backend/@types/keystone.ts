@@ -1,7 +1,5 @@
 import { KeystoneGraphQLAPI, KeystoneListsAPI } from '@keystone-6/core/types';
-import type { Permission } from '../schemas/PermissionFields';
-
-export type { Permission } from '../schemas/PermissionFields';
+import type { IPermissionFields } from '../schemas/PermissionFields';
 
 export type Session = {
 	itemId: string;
@@ -12,7 +10,7 @@ export type Session = {
 			id: string;
 			name: string;
 		} & {
-			[key in Permission]: boolean;
+			[key in IPermissionFields]: boolean;
 		};
 	};
 };

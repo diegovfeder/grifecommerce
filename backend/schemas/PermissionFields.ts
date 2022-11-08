@@ -12,19 +12,19 @@ type PermisstionFieldsTypes =
 export const permissionFields = {
 	canManageCart: checkbox({
 		defaultValue: false,
-		label: 'User can see and manage cart and cart items',
+		label: 'User can CRUD cart and carttems',
 	}),
 	canManageOrderItems: checkbox({
 		defaultValue: false,
-		label: 'User can see and manage order items',
+		label: 'User can CRUD orderItems',
 	}),
 	canManageOrders: checkbox({
 		defaultValue: false,
-		label: 'User can see and manage orders',
+		label: 'User can CRUD orders',
 	}),
 	canManageProducts: checkbox({
 		defaultValue: false,
-		label: 'User can Update and delete any product',
+		label: 'User can CRUD products',
 	}),
 	canManageRoles: checkbox({
 		defaultValue: false,
@@ -32,11 +32,7 @@ export const permissionFields = {
 	}),
 	canManageUsers: checkbox({
 		defaultValue: false,
-		label: 'User can Edit other users',
-	}),
-	canSeeOtherUsers: checkbox({
-		defaultValue: false,
-		label: 'User can query other users',
+		label: 'User can CRUD users',
 	}),
 };
 

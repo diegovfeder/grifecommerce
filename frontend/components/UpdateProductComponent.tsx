@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import ErrorMessage from './error/ErrorMessage';
 import useForm from '../hooks/useForm';
 import StyledForm from './styles/StyledForm';
-import { EventProps, ProductFormInputProps } from '../types/commonTypes';
+import { EventProps, ProductFormInputProps } from '../@types/commonTypes';
 import LoadingLabel from './loading/LoadingLabel';
 import { UPDATE_PRODUCT_MUTATION } from '../gql/mutations';
 

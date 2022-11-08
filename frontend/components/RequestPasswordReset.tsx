@@ -6,7 +6,7 @@ import useForm from '../hooks/useForm';
 import {
 	EventProps,
 	RequestPasswordResetFormInputProps,
-} from '../types/commonTypes';
+} from '../@types/commonTypes';
 import { USER_EMAIL_QUERY } from '../gql/queries';
 import { SEND_USER_PASSWORD_RESET_LINK_MUTATION } from '../gql/mutations';
 import { LoadingSpinner } from './loading';

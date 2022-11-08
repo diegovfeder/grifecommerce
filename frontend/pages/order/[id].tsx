@@ -5,7 +5,7 @@ import Head from 'next/head';
 import ErrorMessage from '../../components/error/ErrorMessage';
 import StyledOrder from '../../components/styles/StyledOrder';
 import formatMoney from '../../utils/formatMoney';
-import { IOrderItem } from '../../types/commonTypes';
+import { IOrderItem } from '../../@types/commonTypes';
 
 interface ISingleOrderPage {
 	query: {

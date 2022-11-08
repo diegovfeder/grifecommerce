@@ -2,7 +2,7 @@ import useCartState from '../hooks/useCartState';
 import useUserQuery from '../hooks/useUserQuery';
 import formatMoney from '../utils/formatMoney';
 import calcTotalPrice from '../utils/calcTotalPrice';
-import { CartItemProps } from '../types/commonTypes';
+import { CartItemProps } from '../@types/commonTypes';
 import Supreme from './styles/Supreme';
 import StyledCart from './styles/StyledCart';
 import StyledCloseButton from './styles/StyledCloseButton';

@@ -4,7 +4,7 @@ import { resetIdCounter, useCombobox } from 'downshift';
 import debounce from 'lodash.debounce';
 
 import { SEARCH_PRODUCTS_QUERY } from '../gql/queries';
-import { ProductProps } from '../types/commonTypes';
+import { ProductProps } from '../@types/commonTypes';
 import {
 	StyledDropDown,
 	StyledDropDownItem,

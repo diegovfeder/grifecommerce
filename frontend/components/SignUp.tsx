@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/client';
 
 import StyledForm from './styles/StyledForm';
 import useForm from '../hooks/useForm';
-import { EventProps, SignUpFormInputProps } from '../types/commonTypes';
+import { EventProps, SignUpFormInputProps } from '../@types/commonTypes';
 import { SIGN_UP_MUTATION } from '../gql/mutations';
 import { CURRENT_USER_QUERY } from '../gql/queries';
 import { LoadingSpinner } from './loading';

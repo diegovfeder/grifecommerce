@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 
 import { NUM_TOTAL_PRODUCTS_PER_PAGE } from '../utils/constants';
-import { ProductProps } from '../types/commonTypes';
+import { ProductProps } from '../@types/commonTypes';
 import PRODUCTS_QUERY from '../gql/queryProducts.gql';
 import { StyledProductGrid } from './styles/StyledProductGrid';
 import { ErrorMessage } from './error';

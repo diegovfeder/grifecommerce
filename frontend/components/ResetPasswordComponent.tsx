@@ -5,7 +5,7 @@ import useForm from '../hooks/useForm';
 import {
 	EventProps,
 	RedeemPasswordResetFormInputProps,
-} from '../types/commonTypes';
+} from '../@types/commonTypes';
 import { RESET_PASSWORD_MUTATION } from '../gql/mutations';
 
 const ResetPasswordComponent = ({ token }: any) => {

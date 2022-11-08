@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import useCartState from '../hooks/useCartState';
 import useUserQuery from '../hooks/useUserQuery';
-import { CartItemProps } from '../types/commonTypes';
+import { CartItemProps } from '../@types/commonTypes';
 import StyledNavigation from './styles/StyledNavigation';
 import CartCount from './CartCount';
 import SignOut from './SignOut';

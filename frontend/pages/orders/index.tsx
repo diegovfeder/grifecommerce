@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import GET_ORDERS_QUERY from '../../gql/queryOrders.gql';
 import formatMoney from '../../utils/formatMoney';
-import { IItem, IOrder } from '../../types/commonTypes';
+import { IItem, IOrder } from '../../@types/commonTypes';
 import { LoadingLabel } from '../../components/loading';
 import { ErrorMessage } from '../../components/error';
 import StyledCard from '../../components/styles/StyledCard';

@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import formatMoney from '../utils/formatMoney';
 import { TEXT_NO_PRODUCT_DESCRIPTION } from '../utils/constants';
-import { ProductProps } from '../types/commonTypes';
+import { ProductProps } from '../@types/commonTypes';
 import StyledItem from './styles/StyledItem';
 import StyledTitle from './styles/StyledTitle';
 import StyledPriceTag from './styles/StyledPriceTag';
@@ -46,13 +46,7 @@ const ProductComponent = ({
 			<StyledPriceTag>{formatMoney(product.price)}</StyledPriceTag>
 			<SupremeDescription>
 				Description:
-				<p
-					style={{
-
-					}}
-				>
-					{product?.description || TEXT_NO_PRODUCT_DESCRIPTION}
-				</p>
+				<p style={{}}>{product?.description || TEXT_NO_PRODUCT_DESCRIPTION}</p>
 			</SupremeDescription>
 			<div className="buttonList">
 				<AddToCartButton id={product.id}>Add To Cart 🛒</AddToCartButton>

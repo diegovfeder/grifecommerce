@@ -1,6 +1,6 @@
 import { graphql } from '@keystone-6/core';
 
-import { ICartItemModel, IProductModel } from '../types/models';
+import { ICartItemModel, IProductModel } from '../@types/models';
 import stripeConfig from '../utils/stripe';
 
 // FIXME: This should be priority

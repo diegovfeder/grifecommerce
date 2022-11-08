@@ -11,7 +11,7 @@ import {
 	TEXT_NO_PRODUCT_DESCRIPTION,
 } from '../utils/constants';
 import { PRODUCT_QUERY } from '../gql/queries';
-import { ProductProps } from '../types/commonTypes';
+import { ProductProps } from '../@types/commonTypes';
 import ErrorMessage from './error/ErrorMessage';
 import { LoadingSkeleton } from './loading';
 import AddToCartButton from './AddToCartButton';

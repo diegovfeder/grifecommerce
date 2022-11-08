@@ -13,7 +13,7 @@ import {
 
 import StyledButton from './styles/StyledButton';
 import useCartState from '../hooks/useCartState';
-import { EventProps } from '../types/commonTypes';
+import { EventProps } from '../@types/commonTypes';
 import { CREATE_ORDER_MUTATION } from '../gql/mutations';
 import { CURRENT_USER_QUERY } from '../gql/queries';
 import { LoadingSpinner } from './loading';
