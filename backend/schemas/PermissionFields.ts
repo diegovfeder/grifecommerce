@@ -6,8 +6,7 @@ type PermisstionFieldsTypes =
 	| 'canManageOrders'
 	| 'canManageProducts'
 	| 'canManageRoles'
-	| 'canManageUsers'
-	| 'canSeeOtherUsers';
+	| 'canManageUsers';
 
 export const permissionFields = {
 	canManageCart: checkbox({

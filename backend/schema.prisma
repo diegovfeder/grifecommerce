@@ -109,6 +109,5 @@ model Role {
   canManageProducts   Boolean @default(false)
   canManageRoles      Boolean @default(false)
   canManageUsers      Boolean @default(false)
-  canSeeOtherUsers    Boolean @default(false)
   assignedTo          User[]  @relation("User_role")
 }

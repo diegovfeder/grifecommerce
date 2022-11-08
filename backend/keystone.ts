@@ -65,12 +65,12 @@ const { withAuth } = createAuth({
 	identityField: 'email',
 	secretField: 'password',
 	sessionData: `id name email role {
-		canManageProducts
-		canSeeOtherUsers
-		canManageUsers
-		canManageRoles
 		canManageCart
+		canManageOrderItems
 		canManageOrders
+		canManageProducts
+		canManageRoles
+		canManageUsers
 	}`,
 	initFirstItem: {
 		fields: ['name', 'email', 'password'],
@@ -84,7 +84,6 @@ const { withAuth } = createAuth({
 					canManageProducts: true,
 					canManageRoles: true,
 					canManageUsers: true,
-					canSeeOtherUsers: true,
 				},
 			},
 		},
