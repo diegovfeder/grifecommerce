@@ -23,6 +23,7 @@ function MyApp({ Component, pageProps, apollo }) {
 	);
 }
 
+// TODO: Refactor getInitialProps to getStaticProps and getServerSideProps
 MyApp.getInitialProps = async function ({ Component, ctx }) {
 	console.log('MyApp, getInitialProps');
 	let pageProps = {};

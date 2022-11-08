@@ -6,10 +6,6 @@ datasource postgresql {
   provider = "postgresql"
 }
 
-generator erd {
-	provider = "prisma-erd-generator"
-}
-
 generator client {
   provider = "prisma-client-js"
   output   = "node_modules/.prisma/client"
