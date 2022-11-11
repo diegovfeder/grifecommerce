@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { object, string, number, mixed } from 'yup';
 
-import { CREATE_PRODUCT_MUTATION } from '../gql/mutations';
+import { CREATE_PRODUCT_IMAGE_MUTATION, CREATE_PRODUCT_MUTATION } from '../gql/mutations';
 import ALL_PRODUCTS_QUERY from '../gql/queryAllProducts.gql';
 import StyledForm from './styles/StyledForm';
 import ErrorMessage from './error/ErrorMessage';
@@ -13,14 +13,14 @@ type FormInputs = {
 	name: string;
 	description: string;
 	price: number;
-	photo: string;
+	photo: FileList;
 };
 
 const schema = object({
 	name: string().required(),
 	description: string().optional(),
 	price: number().positive().integer().required(),
-	photo: mixed().required('You need to provide a file').default(undefined),
+	photo: mixed().default(undefined),
 }).required();
 
 const CreateProduct = () => {
@@ -34,7 +34,7 @@ const CreateProduct = () => {
 	});
 
 	// FIXME:
-	const [createProductImage] = useMutation(CREATE_PRODUCT_MUTATION, {
+	const [createProductImage] = useMutation(CREATE_PRODUCT_IMAGE_MUTATION, {
 		variables: {
 			image: '',
 			altText: 'test',
@@ -51,12 +51,13 @@ const CreateProduct = () => {
 		CREATE_PRODUCT_MUTATION,
 		{
 			variables: {
-				name: 'Cool Shoes',
-				description: 'These are the coolest shoes',
-				price: 5000,
+				name: '',
+				description: '',
+				price: 0,
 				photo: {
-					image: 'cool-shoes.jpg',
-					altText: 'Cool Shoes',
+					connect: {
+						id: '',
+					},
 				},
 				status: 'AVAILABLE',
 			},
@@ -74,12 +75,13 @@ const CreateProduct = () => {
 	);
 
 	// FIXME:
-	const onSubmit = async (data: FormInputs) => {
-		console.log(data);
+	const onSubmit = async (form: FormInputs) => {
+		console.log(form);
+
 		// const productImage = await createProductImage({
 		// 	variables: {
-		// 		image: data.photo,
-		// 		altText: data.name,
+		// 		image: form.photo,
+		// 		altText: form.name,
 		// 		// product: probably create product first? but pass in the id
 		// 	},
 		// });
@@ -87,12 +89,12 @@ const CreateProduct = () => {
 
 		const product = await createProduct({
 			variables: {
-				name: data.name,
-				description: data.description,
-				price: data.price,
+				name: form.name,
+				description: form.description,
+				price: form.price,
 				photo: {
-					image: data.photo[0],
-					altText: data.name,
+					image: form.photo[0],
+					altText: form.name,
 				},
 				status: 'AVAILABLE',
 			},
@@ -113,6 +115,7 @@ const CreateProduct = () => {
 					Name
 					<input
 						{...register('name')}
+						required
 						id="name"
 						type="text"
 						placeholder="Insert a name for your product"
@@ -136,6 +139,7 @@ const CreateProduct = () => {
 					Price
 					<input
 						{...register('price')}
+						required
 						id="price"
 						type="number"
 						placeholder="Insert a price value"

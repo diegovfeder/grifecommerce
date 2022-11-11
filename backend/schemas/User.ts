@@ -37,7 +37,7 @@ export const User = list({
 			cloudinary,
 			label: 'Source',
 		}),
-		altText: text(),
+		altText: text({}),
 		zipCode: text({}),
 		address: text({}),
 		houseNumber: text({}),

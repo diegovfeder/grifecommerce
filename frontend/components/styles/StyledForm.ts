@@ -35,6 +35,7 @@ const StyledForm = styled.form`
 		font-size: 1.8rem;
 		padding: 0.75rem;
 		font-family: 'Montserrat', sans-serif;
+		color: black;
 	}
 
 	textarea {

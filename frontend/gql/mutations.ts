@@ -69,16 +69,16 @@ export const CREATE_PRODUCT_MUTATION = gql`
 	mutation CreateProduct(
 		$name: String!
 		$description: String!
+		$photo: ProductImage
 		$price: Int!
-		$photo: Upload
 		$status: String!
 	) {
 		createProduct(
 			data: {
 				name: $name
 				description: $description
-				price: $price
 				photo: { create: { image: $photo, altText: $name } }
+				price: $price
 				status: $status
 			}
 		) {
@@ -86,6 +86,28 @@ export const CREATE_PRODUCT_MUTATION = gql`
 			name
 			description
 			price
+			photo
+		}
+	}
+`;
+
+export const CREATE_PRODUCT_IMAGE_MUTATION = gql`
+	mutation CreateProduct(
+		$image: CloudinaryImage_File!
+		$altText: String!
+		$product: Product
+	) {
+		createProductImage(
+			data: {
+				image: $image
+				altText: $altText
+				product: $product
+			}
+		) {
+			id
+			image
+			altText
+			product
 			photo
 		}
 	}
