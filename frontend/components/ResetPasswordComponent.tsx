@@ -1,11 +1,11 @@
 import { useMutation } from '@apollo/client';
-import Error from './ErrorMessage';
+import Error from './error/ErrorMessage';
 import StyledForm from './styles/StyledForm';
 import useForm from '../hooks/useForm';
 import {
 	EventProps,
 	RedeemPasswordResetFormInputProps,
-} from '../types/commonTypes';
+} from '../@types/commonTypes';
 import { RESET_PASSWORD_MUTATION } from '../gql/mutations';
 
 const ResetPasswordComponent = ({ token }: any) => {

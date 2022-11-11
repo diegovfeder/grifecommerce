@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
+
 import { resolveMockState } from './utils';
 import { SIGN_UP_MUTATION } from '../gql/mutations';
 import { CURRENT_USER_QUERY } from '../gql/queries';
@@ -127,15 +128,22 @@ describe('<SignUp/>', () => {
 				expect(screen.getByText('Password')).toBeVisible();
 				expect(screen.getByRole('button')).toBeVisible();
 				expect(screen.getByText('Sign Up!')).toBeVisible();
-				await userEvent.type(screen.getByPlaceholderText(/name/i), 'Diego Feder');
-				await userEvent.type(screen.getByPlaceholderText(/email/i), 'diegovfeder@gmail.com');
-				await userEvent.type(screen.getByPlaceholderText(/password/i), '12345678');
+				await userEvent.type(
+					screen.getByPlaceholderText(/name/i),
+					'Diego Feder',
+				);
+				await userEvent.type(
+					screen.getByPlaceholderText(/email/i),
+					'diegovfeder@gmail.com',
+				);
+				await userEvent.type(
+					screen.getByPlaceholderText(/password/i),
+					'12345678',
+				);
 				await userEvent.click(screen.getByText('Sign Up!'));
 				await resolveMockState();
 				expect(screen.queryByText('Please fill in all fields.')).toBe(null);
-				await screen.findByText(
-					`Signed Up with diegovfeder@gmail.com - Please Go Ahead and Sign In!`,
-				);
+				await screen.findByText(/account created/i);
 			});
 		});
 	});

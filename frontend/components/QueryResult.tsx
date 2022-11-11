@@ -1,5 +1,6 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import styled from 'styled-components';
+
 // TODO: Import some loadingSpinner
 // import { LoadingSpinner } from '@apollo/space-kit/Loaders/LoadingSpinner';
 
@@ -7,7 +8,7 @@ interface QueryResultProps {
 	loading: boolean;
 	error: any;
 	data: any;
-	children: React.ReactNode;
+	children: ReactNode;
 }
 
 const QueryResult = ({ loading, error, data, children }: QueryResultProps) => {

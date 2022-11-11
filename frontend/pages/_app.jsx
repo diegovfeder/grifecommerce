@@ -1,7 +1,7 @@
-import React from 'react';
 import Router from 'next/router';
 import { ApolloProvider } from '@apollo/client';
 import NProgress from 'nprogress';
+
 import withData from '../utils/withData';
 import CartStateProvider from '../providers/CartStateProvider';
 import Page from '../components/PageComponent';
@@ -23,13 +23,16 @@ function MyApp({ Component, pageProps, apollo }) {
 	);
 }
 
+// TODO: Refactor getInitialProps to getStaticProps and getServerSideProps
 MyApp.getInitialProps = async function ({ Component, ctx }) {
+	console.log('MyApp, getInitialProps');
 	let pageProps = {};
-	if (Component.getInitialProps) {
+	if (!!Component.getInitialProps) {
 		pageProps = await Component.getInitialProps(ctx);
-		console.log({ pageProps });
 	}
-	pageProps.query = ctx?.query || '';
+	console.log({ pageProps });
+	console.log({ ctx });
+	pageProps.query = ctx?.query || {};
 	return { pageProps };
 };
 

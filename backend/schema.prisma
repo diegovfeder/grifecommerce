@@ -16,10 +16,22 @@ model User {
   name                    String     @default("")
   email                   String     @unique @default("")
   password                String?
+  fullName                String     @default("")
+  phone                   String     @default("")
+  photo                   Json?
+  altText                 String     @default("")
+  zipCode                 String     @default("")
+  address                 String     @default("")
+  houseNumber             String     @default("")
+  addOn                   String     @default("")
+  city                    String     @default("")
+  neighbourhood           String     @default("")
+  state                   String     @default("")
   cart                    CartItem[] @relation("CartItem_user")
   orders                  Order[]    @relation("Order_user")
   role                    Role?      @relation("User_role", fields: [roleId], references: [id])
   roleId                  String?    @map("role") @postgresql.Uuid
+  products                Product[]  @relation("Product_user")
   passwordResetToken      String?
   passwordResetIssuedAt   DateTime?
   passwordResetRedeemedAt DateTime?
@@ -35,7 +47,11 @@ model Product {
   photoId               String?       @unique @map("photo") @postgresql.Uuid
   status                String?       @default("DRAFT")
   price                 Int?
+  user                  User?         @relation("Product_user", fields: [userId], references: [id])
+  userId                String?       @map("user") @postgresql.Uuid
   from_CartItem_product CartItem[]    @relation("CartItem_product")
+
+  @@index([userId])
 }
 
 model ProductImage {
@@ -62,15 +78,15 @@ model OrderItem {
   id          String        @id @default(uuid()) @postgresql.Uuid
   name        String        @default("")
   description String        @default("")
-  photo       ProductImage? @relation("OrderItem_photo", fields: [photoId], references: [id])
-  photoId     String?       @map("photo") @postgresql.Uuid
   price       Int?
   quantity    Int?
   order       Order?        @relation("OrderItem_order", fields: [orderId], references: [id])
   orderId     String?       @map("order") @postgresql.Uuid
+  photo       ProductImage? @relation("OrderItem_photo", fields: [photoId], references: [id])
+  photoId     String?       @map("photo") @postgresql.Uuid
 
-  @@index([photoId])
   @@index([orderId])
+  @@index([photoId])
 }
 
 model Order {
@@ -85,13 +101,13 @@ model Order {
 }
 
 model Role {
-  id                String  @id @default(uuid()) @postgresql.Uuid
-  name              String  @default("")
-  canManageProducts Boolean @default(false)
-  canSeeOtherUsers  Boolean @default(false)
-  canManageUsers    Boolean @default(false)
-  canManageRoles    Boolean @default(false)
-  canManageCart     Boolean @default(false)
-  canManageOrders   Boolean @default(false)
-  assignedTo        User[]  @relation("User_role")
+  id                  String  @id @default(uuid()) @postgresql.Uuid
+  name                String  @default("")
+  canManageCart       Boolean @default(false)
+  canManageOrderItems Boolean @default(false)
+  canManageOrders     Boolean @default(false)
+  canManageProducts   Boolean @default(false)
+  canManageRoles      Boolean @default(false)
+  canManageUsers      Boolean @default(false)
+  assignedTo          User[]  @relation("User_role")
 }

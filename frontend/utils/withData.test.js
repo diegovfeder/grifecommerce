@@ -1,7 +1,7 @@
 import withData from './withData';
 
 describe('withData', () => {
-	it('should return a function', () => {
+	it('returns a function', () => {
 		expect(typeof withData).toBe('function');
 	});
 

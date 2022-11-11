@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
+
 import { resolveMockState } from '../utils';
 import { PRODUCTS_QUERY, PRODUCTS_COUNT_QUERY } from '../../gql/queries';
 import ProductsPage from '../../pages/products';
@@ -42,9 +43,9 @@ const mocks = [
 	},
 ] as MockedResponse[];
 
-describe('products page', () => {
+describe('<ProductsPage>', () => {
 	describe('when user is not signed in', () => {
-		it('should render the products page in loading state', async () => {
+		it('renders the products page', async () => {
 			render(
 				<MockedProvider mocks={mocks} addTypename={false}>
 					<ProductsPage />
@@ -59,33 +60,14 @@ describe('products page', () => {
 			expect(screen.getAllByText(/Page/)[1]).toBeVisible();
 			expect(screen.getAllByText(/Total Products/)[0]).toBeVisible();
 			expect(screen.getAllByText(/Total Products/)[1]).toBeVisible();
-			// TODO: Test header, if in this case we get only PRODUCTS and SIGN IN to click.
-		});
-
-		it('should render the products page data', async () => {
-			render(
-				<MockedProvider mocks={mocks} addTypename={false}>
-					<ProductsPage />
-				</MockedProvider>,
-			);
-
-			expect(screen.getByLabelText(/Loading/)).toBeInTheDocument();
-			await resolveMockState();
-			expect(screen.getAllByText(/Prev/)[0]).toBeVisible();
-			expect(screen.getAllByText(/Prev/)[1]).toBeVisible();
-			expect(screen.getAllByText(/Page/)[0]).toBeVisible();
-			expect(screen.getAllByText(/Page/)[1]).toBeVisible();
-			expect(screen.getAllByText(/Total Products/)[0]).toBeVisible();
-			expect(screen.getAllByText(/Total Products/)[1]).toBeVisible();
-			// TODO: Test header, if in this case we get only PRODUCTS and SIGN IN to click.
 		});
 	});
 
-	describe.skip('When user is Signed In', () => {
+	describe.skip('when the user is signed in', () => {
 		// describe('and has no items in cart', () => {})
 		// describe('and user has admin role', () => {})
 
-		it('should render the Products Page properly', () => {
+		it('renders the products page properly', () => {
 			render(
 				<MockedProvider mocks={mocks} addTypename={false}>
 					<ProductsPage />

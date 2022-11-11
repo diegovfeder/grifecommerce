@@ -1,4 +1,4 @@
-import { CartItemProps } from '../types/commonTypes';
+import { CartItemProps } from '../@types/commonTypes';
 
 export default function calcTotalPrice(cart: CartItemProps[]) {
 	return cart.reduce((tally, cartItem) => {

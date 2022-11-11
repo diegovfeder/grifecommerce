@@ -13,6 +13,7 @@ const StyledButton = styled.button`
 	display: inline-block;
 	transition: all 0.5s;
 	cursor: pointer;
+
 	&[disabled] {
 		opacity: 0.5;
 	}

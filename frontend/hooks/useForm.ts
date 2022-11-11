@@ -8,13 +8,8 @@ interface EventProps {
 	};
 }
 
-// PRIORITY #00
-// TODO: Fix type error for proper deploy
-// interface UseFormProps
-// 	{ [k: string]: string; }
-
 const useForm = <T>(initial: T) => {
-	const [inputs, setInputs] = useState(initial);
+	const [inputs, setInputs] = useState<T>(initial);
 	const initialValues = Object.values(initial).join('');
 
 	useEffect(() => {
@@ -41,13 +36,10 @@ const useForm = <T>(initial: T) => {
 	};
 
 	const clearForm = () => {
-		// TODO: Update any here
 		const blankState: any = Object.fromEntries(
 			Object.entries(inputs).map(([key, _]) => [key, '']),
 		);
 
-		// FIXME: Find out how to clear inputs with Typescript?
-		// -- blankState isn't properly typed
 		setInputs(blankState);
 	};
 

@@ -6,6 +6,17 @@ type User {
   name: String
   email: String
   password: PasswordState
+  fullName: String
+  phone: String
+  photo: CloudinaryImage_File
+  altText: String
+  zipCode: String
+  address: String
+  houseNumber: String
+  addOn: String
+  city: String
+  neighbourhood: String
+  state: String
   cart(
     where: CartItemWhereInput! = {}
     orderBy: [CartItemOrderByInput!]! = []
@@ -21,6 +32,13 @@ type User {
   ): [Order!]
   ordersCount(where: OrderWhereInput! = {}): Int
   role: Role
+  products(
+    where: ProductWhereInput! = {}
+    orderBy: [ProductOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Product!]
+  productsCount(where: ProductWhereInput! = {}): Int
   passwordResetToken: PasswordState
   passwordResetIssuedAt: DateTime
   passwordResetRedeemedAt: DateTime
@@ -28,6 +46,55 @@ type User {
 
 type PasswordState {
   isSet: Boolean!
+}
+
+type CloudinaryImage_File {
+  id: ID
+  filename: String
+  originalFilename: String
+  mimetype: String
+  encoding: String
+  publicUrl: String
+  publicUrlTransformed(transformation: CloudinaryImageFormat): String
+}
+
+"""
+Mirrors the formatting options [Cloudinary provides](https://cloudinary.com/documentation/image_transformation_reference).
+All options are strings as they ultimately end up in a URL.
+"""
+input CloudinaryImageFormat {
+  """
+   Rewrites the filename to be this pretty string. Do not include `/` or `.`
+  """
+  prettyName: String
+  width: String
+  height: String
+  crop: String
+  aspect_ratio: String
+  gravity: String
+  zoom: String
+  x: String
+  y: String
+  format: String
+  fetch_format: String
+  quality: String
+  radius: String
+  angle: String
+  effect: String
+  opacity: String
+  border: String
+  background: String
+  overlay: String
+  underlay: String
+  default_image: String
+  delay: String
+  color: String
+  color_space: String
+  dpr: String
+  page: String
+  density: String
+  flags: String
+  transformation: String
 }
 
 scalar DateTime
@@ -46,9 +113,20 @@ input UserWhereInput {
   name: StringFilter
   email: StringFilter
   password: PasswordFilter
+  fullName: StringFilter
+  phone: StringFilter
+  altText: StringFilter
+  zipCode: StringFilter
+  address: StringFilter
+  houseNumber: StringFilter
+  addOn: StringFilter
+  city: StringFilter
+  neighbourhood: StringFilter
+  state: StringFilter
   cart: CartItemManyRelationFilter
   orders: OrderManyRelationFilter
   role: RoleWhereInput
+  products: ProductManyRelationFilter
   passwordResetToken: PasswordFilter
   passwordResetIssuedAt: DateTimeNullableFilter
   passwordResetRedeemedAt: DateTimeNullableFilter
@@ -115,6 +193,12 @@ input OrderManyRelationFilter {
   none: OrderWhereInput
 }
 
+input ProductManyRelationFilter {
+  every: ProductWhereInput
+  some: ProductWhereInput
+  none: ProductWhereInput
+}
+
 input DateTimeNullableFilter {
   equals: DateTime
   in: [DateTime!]
@@ -130,6 +214,16 @@ input UserOrderByInput {
   id: OrderDirection
   name: OrderDirection
   email: OrderDirection
+  fullName: OrderDirection
+  phone: OrderDirection
+  altText: OrderDirection
+  zipCode: OrderDirection
+  address: OrderDirection
+  houseNumber: OrderDirection
+  addOn: OrderDirection
+  city: OrderDirection
+  neighbourhood: OrderDirection
+  state: OrderDirection
   passwordResetIssuedAt: OrderDirection
   passwordResetRedeemedAt: OrderDirection
 }
@@ -143,13 +237,30 @@ input UserUpdateInput {
   name: String
   email: String
   password: String
+  fullName: String
+  phone: String
+  photo: Upload
+  altText: String
+  zipCode: String
+  address: String
+  houseNumber: String
+  addOn: String
+  city: String
+  neighbourhood: String
+  state: String
   cart: CartItemRelateToManyForUpdateInput
   orders: OrderRelateToManyForUpdateInput
   role: RoleRelateToOneForUpdateInput
+  products: ProductRelateToManyForUpdateInput
   passwordResetToken: String
   passwordResetIssuedAt: DateTime
   passwordResetRedeemedAt: DateTime
 }
+
+"""
+The `Upload` scalar type represents a file upload.
+"""
+scalar Upload
 
 input CartItemRelateToManyForUpdateInput {
   disconnect: [CartItemWhereUniqueInput!]
@@ -171,6 +282,13 @@ input RoleRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
+input ProductRelateToManyForUpdateInput {
+  disconnect: [ProductWhereUniqueInput!]
+  set: [ProductWhereUniqueInput!]
+  create: [ProductCreateInput!]
+  connect: [ProductWhereUniqueInput!]
+}
+
 input UserUpdateArgs {
   where: UserWhereUniqueInput!
   data: UserUpdateInput!
@@ -180,9 +298,21 @@ input UserCreateInput {
   name: String
   email: String
   password: String
+  fullName: String
+  phone: String
+  photo: Upload
+  altText: String
+  zipCode: String
+  address: String
+  houseNumber: String
+  addOn: String
+  city: String
+  neighbourhood: String
+  state: String
   cart: CartItemRelateToManyForCreateInput
   orders: OrderRelateToManyForCreateInput
   role: RoleRelateToOneForCreateInput
+  products: ProductRelateToManyForCreateInput
   passwordResetToken: String
   passwordResetIssuedAt: DateTime
   passwordResetRedeemedAt: DateTime
@@ -203,6 +333,11 @@ input RoleRelateToOneForCreateInput {
   connect: RoleWhereUniqueInput
 }
 
+input ProductRelateToManyForCreateInput {
+  create: [ProductCreateInput!]
+  connect: [ProductWhereUniqueInput!]
+}
+
 type Product {
   id: ID!
   name: String
@@ -210,6 +345,7 @@ type Product {
   photo: ProductImage
   status: String
   price: Int
+  user: User
 }
 
 input ProductWhereUniqueInput {
@@ -226,6 +362,7 @@ input ProductWhereInput {
   photo: ProductImageWhereInput
   status: StringNullableFilter
   price: IntNullableFilter
+  user: UserWhereInput
 }
 
 input StringNullableFilter {
@@ -282,11 +419,18 @@ input ProductUpdateInput {
   photo: ProductImageRelateToOneForUpdateInput
   status: String
   price: Int
+  user: UserRelateToOneForUpdateInput
 }
 
 input ProductImageRelateToOneForUpdateInput {
   create: ProductImageCreateInput
   connect: ProductImageWhereUniqueInput
+  disconnect: Boolean
+}
+
+input UserRelateToOneForUpdateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -301,6 +445,7 @@ input ProductCreateInput {
   photo: ProductImageRelateToOneForCreateInput
   status: String
   price: Int
+  user: UserRelateToOneForCreateInput
 }
 
 input ProductImageRelateToOneForCreateInput {
@@ -308,60 +453,16 @@ input ProductImageRelateToOneForCreateInput {
   connect: ProductImageWhereUniqueInput
 }
 
+input UserRelateToOneForCreateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+}
+
 type ProductImage {
   id: ID!
   image: CloudinaryImage_File
   altText: String
   product: Product
-}
-
-type CloudinaryImage_File {
-  id: ID
-  filename: String
-  originalFilename: String
-  mimetype: String
-  encoding: String
-  publicUrl: String
-  publicUrlTransformed(transformation: CloudinaryImageFormat): String
-}
-
-"""
-Mirrors the formatting options [Cloudinary provides](https://cloudinary.com/documentation/image_transformation_reference).
-All options are strings as they ultimately end up in a URL.
-"""
-input CloudinaryImageFormat {
-  """
-   Rewrites the filename to be this pretty string. Do not include `/` or `.`
-  """
-  prettyName: String
-  width: String
-  height: String
-  crop: String
-  aspect_ratio: String
-  gravity: String
-  zoom: String
-  x: String
-  y: String
-  format: String
-  fetch_format: String
-  quality: String
-  radius: String
-  angle: String
-  effect: String
-  opacity: String
-  border: String
-  background: String
-  overlay: String
-  underlay: String
-  default_image: String
-  delay: String
-  color: String
-  color_space: String
-  dpr: String
-  page: String
-  density: String
-  flags: String
-  transformation: String
 }
 
 input ProductImageWhereUniqueInput {
@@ -387,11 +488,6 @@ input ProductImageUpdateInput {
   altText: String
   product: ProductRelateToOneForUpdateInput
 }
-
-"""
-The `Upload` scalar type represents a file upload.
-"""
-scalar Upload
 
 input ProductRelateToOneForUpdateInput {
   create: ProductCreateInput
@@ -458,12 +554,6 @@ input CartItemUpdateInput {
   user: UserRelateToOneForUpdateInput
 }
 
-input UserRelateToOneForUpdateInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
-  disconnect: Boolean
-}
-
 input CartItemUpdateArgs {
   where: CartItemWhereUniqueInput!
   data: CartItemUpdateInput!
@@ -475,19 +565,14 @@ input CartItemCreateInput {
   user: UserRelateToOneForCreateInput
 }
 
-input UserRelateToOneForCreateInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
-}
-
 type OrderItem {
   id: ID!
   name: String
   description: String
-  photo: ProductImage
   price: Int
   quantity: Int
   order: Order
+  photo: ProductImage
 }
 
 input OrderItemWhereUniqueInput {
@@ -501,10 +586,10 @@ input OrderItemWhereInput {
   id: IDFilter
   name: StringFilter
   description: StringFilter
-  photo: ProductImageWhereInput
   price: IntNullableFilter
   quantity: IntNullableFilter
   order: OrderWhereInput
+  photo: ProductImageWhereInput
 }
 
 input OrderItemOrderByInput {
@@ -518,10 +603,10 @@ input OrderItemOrderByInput {
 input OrderItemUpdateInput {
   name: String
   description: String
-  photo: ProductImageRelateToOneForUpdateInput
   price: Int
   quantity: Int
   order: OrderRelateToOneForUpdateInput
+  photo: ProductImageRelateToOneForUpdateInput
 }
 
 input OrderRelateToOneForUpdateInput {
@@ -538,10 +623,10 @@ input OrderItemUpdateArgs {
 input OrderItemCreateInput {
   name: String
   description: String
-  photo: ProductImageRelateToOneForCreateInput
   price: Int
   quantity: Int
   order: OrderRelateToOneForCreateInput
+  photo: ProductImageRelateToOneForCreateInput
 }
 
 input OrderRelateToOneForCreateInput {
@@ -625,12 +710,12 @@ input OrderItemRelateToManyForCreateInput {
 type Role {
   id: ID!
   name: String
-  canManageProducts: Boolean
-  canSeeOtherUsers: Boolean
-  canManageUsers: Boolean
-  canManageRoles: Boolean
   canManageCart: Boolean
+  canManageOrderItems: Boolean
   canManageOrders: Boolean
+  canManageProducts: Boolean
+  canManageRoles: Boolean
+  canManageUsers: Boolean
   assignedTo(
     where: UserWhereInput! = {}
     orderBy: [UserOrderByInput!]! = []
@@ -650,12 +735,12 @@ input RoleWhereInput {
   NOT: [RoleWhereInput!]
   id: IDFilter
   name: StringFilter
-  canManageProducts: BooleanFilter
-  canSeeOtherUsers: BooleanFilter
-  canManageUsers: BooleanFilter
-  canManageRoles: BooleanFilter
   canManageCart: BooleanFilter
+  canManageOrderItems: BooleanFilter
   canManageOrders: BooleanFilter
+  canManageProducts: BooleanFilter
+  canManageRoles: BooleanFilter
+  canManageUsers: BooleanFilter
   assignedTo: UserManyRelationFilter
 }
 
@@ -673,22 +758,22 @@ input UserManyRelationFilter {
 input RoleOrderByInput {
   id: OrderDirection
   name: OrderDirection
-  canManageProducts: OrderDirection
-  canSeeOtherUsers: OrderDirection
-  canManageUsers: OrderDirection
-  canManageRoles: OrderDirection
   canManageCart: OrderDirection
+  canManageOrderItems: OrderDirection
   canManageOrders: OrderDirection
+  canManageProducts: OrderDirection
+  canManageRoles: OrderDirection
+  canManageUsers: OrderDirection
 }
 
 input RoleUpdateInput {
   name: String
-  canManageProducts: Boolean
-  canSeeOtherUsers: Boolean
-  canManageUsers: Boolean
-  canManageRoles: Boolean
   canManageCart: Boolean
+  canManageOrderItems: Boolean
   canManageOrders: Boolean
+  canManageProducts: Boolean
+  canManageRoles: Boolean
+  canManageUsers: Boolean
   assignedTo: UserRelateToManyForUpdateInput
 }
 
@@ -706,12 +791,12 @@ input RoleUpdateArgs {
 
 input RoleCreateInput {
   name: String
-  canManageProducts: Boolean
-  canSeeOtherUsers: Boolean
-  canManageUsers: Boolean
-  canManageRoles: Boolean
   canManageCart: Boolean
+  canManageOrderItems: Boolean
   canManageOrders: Boolean
+  canManageProducts: Boolean
+  canManageRoles: Boolean
+  canManageUsers: Boolean
   assignedTo: UserRelateToManyForCreateInput
 }
 

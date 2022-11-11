@@ -2,7 +2,6 @@
 // TODO: Pass width and height as props
 // TODO: pass loading state as props?
 // TODO: override styles as props...
-// TODO: ...
 const LoadingSkeleton = () => {
 	return (
 		<div

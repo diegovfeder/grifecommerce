@@ -1,9 +1,10 @@
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import styled from 'styled-components';
+
+import { StyledDot, StyledDotAnimation } from './styles/StyledDot';
 
 const CartCount = ({ count }: { count: number }) => {
 	return (
-		<StyledAnimation>
+		<StyledDotAnimation>
 			<TransitionGroup>
 				<CSSTransition
 					unmountOnExit
@@ -15,44 +16,8 @@ const CartCount = ({ count }: { count: number }) => {
 					<StyledDot>{count}</StyledDot>
 				</CSSTransition>
 			</TransitionGroup>
-		</StyledAnimation>
+		</StyledDotAnimation>
 	);
 };
-
-const StyledDot = styled.div`
-	background: var(--red);
-	color: white;
-	border-radius: 50%;
-	padding: 0.5rem;
-	line-height: 2rem;
-	min-width: 3rem;
-	margin-left: 1rem;
-	font-feature-settings: 'tnum';
-	font-variant-numeric: tabular-nums;
-`;
-
-const StyledAnimation = styled.span`
-	position: relative;
-	.count {
-		display: block;
-		position: relative;
-		transition: transform 0.4s;
-		backface-visibility: hidden;
-	}
-	.count-enter {
-		transform: scale(4) rotateX(0.5turn);
-	}
-	.count-enter-active {
-		transform: rotateX(0);
-	}
-	.count-exit {
-		top: 0;
-		position: absolute;
-		transform: rotateX(0);
-	}
-	.count-exit-active {
-		transform: scale(4) rotateX(0.5turn);
-	}
-`;
 
 export default CartCount;

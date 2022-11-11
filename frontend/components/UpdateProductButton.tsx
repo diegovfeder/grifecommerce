@@ -1,8 +1,10 @@
+import { ReactNode } from 'react';
 import Link from 'next/link';
+import { StyledButtonLink } from './styles/StyledButtonLink';
 
 interface UpdateProductButtonProps {
 	id: string;
-	children: React.ReactNode;
+	children: ReactNode;
 }
 
 const UpdateProductButton = ({ id, children }: UpdateProductButtonProps) => {
@@ -15,9 +17,7 @@ const UpdateProductButton = ({ id, children }: UpdateProductButtonProps) => {
 				},
 			}}
 		>
-			<div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
-				{children}
-			</div>
+			<StyledButtonLink>{children}</StyledButtonLink>
 		</Link>
 	);
 };

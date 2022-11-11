@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Single Product/> renders with proper data 1`] = `
+exports[`<SingleProduct/> renders with proper data 1`] = `
 <div>
   <div
-    class="SingleProduct__ProductStyles-sc-14jd9my-0 jPWReR"
+    class="SingleProduct__ProductStyles-sc-14jd9my-0 NUFoz"
     data-test-id="single-product-component"
   >
     <div
@@ -24,10 +24,32 @@ exports[`<Single Product/> renders with proper data 1`] = `
         style="display: flex; flex: 1; flex-direction: column;"
       >
         <h3
-          class="Supreme__SupremeDescription-sc-2anpcp-1 eSreBk"
+          class="Supreme__SupremeDescription-sc-2anpcp-1 gKpLq"
         >
           - No description available
         </h3>
+      </div>
+      <div
+        class="buttonList"
+      >
+        <button
+          class="StyledButtonLink-sc-zq7nji-0 hcCIHD"
+          type="button"
+        >
+          Add To Cart 🛒
+        </button>
+        <button
+          class="StyledButtonLink-sc-zq7nji-0 hcCIHD"
+        >
+          Update ✏️
+        </button>
+        <button
+          class="StyledButtonLink-sc-zq7nji-0 hcCIHD"
+          type="button"
+        >
+          \`\`\`
+          Delete
+        </button>
       </div>
     </div>
   </div>

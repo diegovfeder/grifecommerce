@@ -1,28 +1,14 @@
-import styled from 'styled-components';
-import { Checkout } from './Checkout';
-import RemoveFromCartButton from './RemoveFromCartButton';
+import useCartState from '../hooks/useCartState';
+import useUserQuery from '../hooks/useUserQuery';
+import formatMoney from '../utils/formatMoney';
+import calcTotalPrice from '../utils/calcTotalPrice';
+import { CartItemProps } from '../@types/commonTypes';
 import Supreme from './styles/Supreme';
 import StyledCart from './styles/StyledCart';
 import StyledCloseButton from './styles/StyledCloseButton';
-import useCartState from '../hooks/useCartState';
-import useUserQuery  from '../hooks/useUserQuery';
-import formatMoney from '../utils/formatMoney';
-import calcTotalPrice from '../utils/calcTotalPrice';
-import { CartItemProps } from '../types/commonTypes';
-
-const StyledCartItem = styled.li`
-	padding: 1rem 0;
-	border-bottom: 1px solid var(--lightGrey);
-	display: grid;
-	grid-template-columns: auto 1fr auto;
-	img {
-		margin-right: 1rem;
-	}
-	h3,
-	p {
-		margin: 0;
-	}
-`;
+import StyledCartItem from './styles/StyledCartItem';
+import Checkout from './Checkout';
+import RemoveFromCartButton from './RemoveFromCartButton';
 
 const CartItem = ({ id, quantity, product }: CartItemProps) => {
 	if (!product) return null;
@@ -30,13 +16,13 @@ const CartItem = ({ id, quantity, product }: CartItemProps) => {
 		<StyledCartItem>
 			<img
 				width="100"
-				src={product.photo.image.publicUrlTransformed}
-				alt={product.name}
+				src={product?.photo?.image?.publicUrlTransformed}
+				alt={product?.name}
 			/>
 			<div>
 				<h3>{product.name}</h3>
 				<p>
-					{formatMoney(product.price * quantity)}-
+					{formatMoney(product.price * quantity)} -{' '}
 					<em>
 						{quantity} &times; {formatMoney(product.price)} each
 					</em>

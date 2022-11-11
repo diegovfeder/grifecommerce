@@ -1,15 +1,15 @@
-import React from 'react';
-import gql from 'graphql-tag';
-import debounce from 'lodash.debounce';
-import { useLazyQuery } from '@apollo/client';
-import { resetIdCounter, useCombobox } from 'downshift';
 import { useRouter } from 'next/dist/client/router';
+import { useLazyQuery, gql } from '@apollo/client';
+import { resetIdCounter, useCombobox } from 'downshift';
+import debounce from 'lodash.debounce';
+
+import { SEARCH_PRODUCTS_QUERY } from '../gql/queries';
+import { ProductProps } from '../@types/commonTypes';
 import {
 	StyledDropDown,
 	StyledDropDownItem,
 	StyledSearch,
 } from './styles/StyledSearch';
-import { ProductProps } from '../types/commonTypes';
 
 interface ISelectedItem {
 	id: string;
@@ -20,27 +20,6 @@ interface IItem {
 }
 
 // TODO: searchTerm shouldn't care about letter case (upper or lower)
-const SEARCH_PRODUCTS_QUERY = gql`
-	query SEARCH_PRODUCTS_QUERY($searchTerm: String!) {
-		searchTerms: products(
-			where: {
-				OR: [
-					{ name: { contains: $searchTerm } }
-					{ description: { contains: $searchTerm } }
-				]
-			}
-		) {
-			id
-			name
-			photo {
-				image {
-					publicUrlTransformed
-				}
-			}
-		}
-	}
-`;
-
 // TODO: Properly type any's
 const SearchComponent = () => {
 	const router = useRouter();

@@ -6,7 +6,6 @@ const { MAIL_USER, MAIL_PASS, FRONTEND_URL } = process.env;
 const transporter = createTransport({
 	host: 'smtp.ethereal.email',
 	port: 587,
-	secure: false,
 	auth: {
 		user: MAIL_USER || 'username',
 		pass: MAIL_PASS || 'password',
@@ -29,6 +28,8 @@ const makeANiceEmail = (text: string): string => {
 	`;
 };
 
+// FIXME: Not receiving email
+// Could be nodemailer service issue, maybe update to another service?..
 const sendPasswordResetEmail = async (
 	token: string,
 	identity: string,

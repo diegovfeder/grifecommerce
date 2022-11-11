@@ -1,10 +1,11 @@
 import { useQuery } from '@apollo/client';
 import { useRouter } from 'next/dist/client/router';
+
 import { LoadingLabel } from '../../components/loading';
 import PaginationComponent from '../../components/PaginationComponent';
 import ProductsGridComponent from '../../components/ProductsGridComponent';
+import ErrorMessage from '../../components/error/ErrorMessage';
 import { PRODUCTS_COUNT_QUERY } from '../../gql/queries';
-import ErrorMessage from '../../components/ErrorMessage';
 
 const ProductsPage = () => {
 	const { query } = useRouter() || { query: { page: 1 } };
@@ -17,11 +18,16 @@ const ProductsPage = () => {
 	const queryPageNumber = !!query?.page ? Number(query.page) : 1;
 
 	return (
-		<div>
-			<PaginationComponent
-				page={queryPageNumber || 1}
-				productsCount={data?.productsCount || 0}
-			/>
+		<div
+			style={{
+				display: 'flex',
+				flex: 1,
+				justifyContent: 'center',
+				alignItems: 'center',
+				flexDirection: 'column',
+			}}
+		>
+			<div style={{ height: '200px' }}></div>
 			<ProductsGridComponent page={queryPageNumber || 1} />
 			<PaginationComponent
 				page={queryPageNumber || 1}

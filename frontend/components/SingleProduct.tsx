@@ -1,10 +1,9 @@
-import { useState } from 'react';
 import { ApolloError, useQuery } from '@apollo/client';
-import styled from 'styled-components';
+import { useState } from 'react';
 import Image from 'next/image';
 import Head from 'next/head';
-import ErrorMessage from './ErrorMessage';
-import { LoadingSkeleton } from './loading';
+import styled from 'styled-components';
+
 import Supreme, { SupremeDescription } from './styles/Supreme';
 import formatMoney from '../utils/formatMoney';
 import {
@@ -12,7 +11,12 @@ import {
 	TEXT_NO_PRODUCT_DESCRIPTION,
 } from '../utils/constants';
 import { PRODUCT_QUERY } from '../gql/queries';
-import { ProductProps } from '../types/commonTypes';
+import { ProductProps } from '../@types/commonTypes';
+import ErrorMessage from './error/ErrorMessage';
+import { LoadingSkeleton } from './loading';
+import AddToCartButton from './AddToCartButton';
+import DeleteProduct from './DeleteProduct';
+import UpdateProductButton from './UpdateProductButton';
 
 interface SingleProductProps {
 	id: string;
@@ -79,6 +83,11 @@ const SingleProduct = ({ id }: SingleProductProps) => {
 						{product?.description || TEXT_NO_PRODUCT_DESCRIPTION}
 					</SupremeDescription>
 				</div>
+				<div className="buttonList">
+					<AddToCartButton id={product.id}>Add To Cart 🛒</AddToCartButton>
+					<UpdateProductButton id={product.id}>Update ✏️</UpdateProductButton>
+					<DeleteProduct id={product.id}>Delete</DeleteProduct>
+				</div>
 			</div>
 		</ProductStyles>
 	);
@@ -92,9 +101,34 @@ const ProductStyles = styled.div`
 	justify-content: center;
 	align-items: top;
 	gap: 2rem;
+
 	img {
 		width: 100%;
 		object-fit: contain;
+	}
+
+	&:hover {
+		font-size: 1.5rem;
+		cursor: pointer;
+		text-decoration: underline;
+	}
+
+	.buttonList {
+		color: #393939;
+		display: grid;
+		width: 100%;
+		border-top: 1px solid var(--lightGrey);
+		grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+		grid-gap: 1px;
+		background: var(--lightGrey);
+
+		& > * {
+			background: white;
+			border: 0;
+			font-size: 1rem;
+			padding: 1rem;
+			cursor: pointer;
+		}
 	}
 `;
 

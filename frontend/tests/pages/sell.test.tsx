@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { MockedProvider } from '@apollo/client/testing';
-import { MockedResponse } from '@apollo/client/testing';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
+
 import { CURRENT_USER_QUERY } from '../../hooks/useUserQuery';
 import SellPage from '../../pages/sell';
 
@@ -22,15 +22,15 @@ const mocks: MockedResponse[] = [
 	},
 ];
 
-describe('Sell Page', () => {
+describe('<SellPage/>', () => {
 	test('use jsdom in this test file', () => {
 		const element = document.createElement('div');
 		expect(element).not.toBeNull();
 	});
 
 	// TODO: Define roles/permissions and then test this back
-	describe('When user is not Signed In', () => {
-		it('should render the Sign In page', () => {
+	describe('when user is not signed in', () => {
+		it('renders the sign in page', () => {
 			render(
 				<MockedProvider mocks={mocks} addTypename={false}>
 					<SellPage />
@@ -44,8 +44,8 @@ describe('Sell Page', () => {
 		});
 	});
 
-	describe.skip('When user is Signed In', () => {
-		it('should render the Sell Page', () => {
+	describe.skip('when user is signed in', () => {
+		it('renders the sell page', () => {
 			render(
 				<MockedProvider mocks={mocks} addTypename={false}>
 					<SellPage />

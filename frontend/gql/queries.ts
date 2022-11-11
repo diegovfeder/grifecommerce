@@ -1,5 +1,7 @@
 import gql from 'graphql-tag';
 
+
+// User
 export const USER_EMAIL_QUERY = gql`
 	query UserEmail($email: String!) {
 		user(where: { email: $email }) {
@@ -9,6 +11,34 @@ export const USER_EMAIL_QUERY = gql`
 	}
 `;
 
+export const CURRENT_USER_QUERY = gql`
+	query CurrentUser {
+		authenticatedItem {
+			... on User {
+				id
+				email
+				name
+				cart {
+					id
+					quantity
+					product {
+						id
+						price
+						name
+						description
+						photo {
+							image {
+								publicUrlTransformed
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+`;
+
+// Product
 export const PRODUCT_QUERY = gql`
 	query Product($id: ID!) {
 		product(where: { id: $id }) {
@@ -67,27 +97,23 @@ export const PRODUCTS_COUNT_QUERY = gql`
 	}
 `;
 
-export const CURRENT_USER_QUERY = gql`
-	query CurrentUser {
-		authenticatedItem {
-			... on User {
-				id
-				email
-				name
-				cart {
-					id
-					quantity
-					product {
-						id
-						price
-						name
-						description
-						photo {
-							image {
-								publicUrlTransformed
-							}
-						}
-					}
+
+
+export const SEARCH_PRODUCTS_QUERY = gql`
+	query SEARCH_PRODUCTS_QUERY($searchTerm: String!) {
+		searchTerms: products(
+			where: {
+				OR: [
+					{ name: { contains: $searchTerm } }
+					{ description: { contains: $searchTerm } }
+				]
+			}
+		) {
+			id
+			name
+			photo {
+				image {
+					publicUrlTransformed
 				}
 			}
 		}

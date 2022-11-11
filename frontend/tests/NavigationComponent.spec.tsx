@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
+
 import NavigationComponent from '../components/NavigationComponent';
 import { CURRENT_USER_QUERY } from '../hooks/useUserQuery';
 import { fakeUser, fakeCartItem } from '../utils/testUtils';
@@ -33,7 +34,7 @@ const signedInMocksWithCartItems = [
 ];
 
 describe('<NavigationComponent/>', () => {
-	it('Renders and minimal nav when signed out', () => {
+	it('renders navigation when signed out', () => {
 		const { container, debug } = render(
 			<CartStateProvider>
 				<MockedProvider mocks={notSignedInMocks}>
@@ -50,7 +51,7 @@ describe('<NavigationComponent/>', () => {
 		expect(productsLink).toHaveAttribute('href', '/products/1');
 	});
 
-	it('renders a full nav when signed in', async () => {
+	it('renders navigation when signed in', async () => {
 		const { container, debug } = render(
 			<CartStateProvider>
 				<MockedProvider mocks={signedInMocks}>
@@ -64,7 +65,7 @@ describe('<NavigationComponent/>', () => {
 		expect(container).toHaveTextContent(/my cart/i);
 	});
 
-	it('rendres the amount of items in the cart', async () => {
+	it('renders the amount of items in the cart', async () => {
 		const { container, debug } = render(
 			<CartStateProvider>
 				<MockedProvider mocks={signedInMocksWithCartItems}>

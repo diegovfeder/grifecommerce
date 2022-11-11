@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 import userEvent from '@testing-library/user-event';
+
 import { resolveMockState } from './utils';
 import { USER_EMAIL_QUERY } from '../gql/queries';
 import { SEND_USER_PASSWORD_RESET_LINK_MUTATION } from '../gql/mutations';
@@ -46,7 +47,7 @@ describe('<RequestPasswordReset/>', () => {
 	});
 
 	it('calls the mutation when submitted', async () => {
-		const { container, debug } = render(
+		render(
 			<MockedProvider mocks={mocks} addTypename={false}>
 				<RequestPasswordReset />
 			</MockedProvider>,
@@ -54,7 +55,7 @@ describe('<RequestPasswordReset/>', () => {
 		userEvent.type(screen.getByPlaceholderText(/email/i), email);
 		userEvent.click(screen.getByText(/Request Reset/));
 		await resolveMockState();
-		const success = await screen.findByText(/Success/i);
+		const success = await screen.findByText(/Password reset/i);
 		expect(success).toBeInTheDocument();
 	});
 });

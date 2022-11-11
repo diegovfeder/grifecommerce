@@ -1,21 +1,14 @@
-import React, { ReactNode } from 'react';
-import styled from 'styled-components';
-import gql from 'graphql-tag';
+import { ReactNode } from 'react';
 import { useMutation } from '@apollo/client';
+import gql from 'graphql-tag';
+
 import { CURRENT_USER_QUERY } from '../hooks/useUserQuery';
+import { StyledButtonLink } from './styles/StyledButtonLink';
 
 interface AddToCartButtonProps {
 	id: String;
 	children?: ReactNode;
 }
-
-const StyledButtonLink = styled.button`
-	color: #393939;
-	&:hover {
-		cursor: pointer;
-		text-decoration: underline;
-	}
-`;
 
 export const ADD_TO_CART_MUTATION = gql`
 	mutation ADD_TO_CART_MUTATION($id: ID!) {
@@ -31,7 +24,6 @@ const AddToCartButton = ({ id, children }: AddToCartButtonProps) => {
 		refetchQueries: [{ query: CURRENT_USER_QUERY }],
 	});
 
-	// TODO: Style these buttons better.
 	return (
 		<StyledButtonLink
 			type="button"

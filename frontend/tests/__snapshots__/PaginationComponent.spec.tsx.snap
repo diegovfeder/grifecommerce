@@ -1,17 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<PaginationComponent/> renders pagination for 36 products 1`] = `
+exports[`<PaginationComponent/> renders pagination, multiple products 1`] = `
 <div>
   <div
-    class="StyledPaginationContainer-sc-nom4q0-0 ckpGyi"
+    class="StyledPaginationContainer-sc-nom4q0-0 fJUohV"
     data-test-id="pagination"
   >
     <div
-      class="StyledPagination-sc-1vd1tt1-0 fzpZhX"
+      class="StyledPagination-sc-1vd1tt1-0 eldAWD"
     >
       <a
         aria-disabled="true"
         href="/products/0"
+        style="white-space: nowrap;"
       >
         ← Prev
       </a>
@@ -21,7 +22,7 @@ exports[`<PaginationComponent/> renders pagination for 36 products 1`] = `
         Page 
         1
          of 
-        9
+        6
       </p>
       <p>
         Total Products: 

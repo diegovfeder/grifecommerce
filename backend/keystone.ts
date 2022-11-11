@@ -9,31 +9,85 @@ import type {
 	GraphQLConfig,
 	KeystoneConfig,
 	ServerConfig,
-	SessionStrategy,
 } from '@keystone-6/core/types';
+
 import { lists } from './schema';
-import { permissionsList } from './schemas/Fields';
 import { extendGraphqlSchema } from './mutations/index';
 import { sendPasswordResetEmail } from './utils/mail';
 
-const { COOKIE_SECRET, DATABASE_URL, FRONTEND_URL, PORT, NODE_ENV } =
-	process.env;
+type StatelessSessionsOptions = {
+	secret: string;
+	maxAge?: number;
+	secure?: boolean;
+	path?: string;
+	domain?: string;
+	sameSite?: true | false | 'lax' | 'strict' | 'none';
+};
 
-const sessionConfig = {
+const {
+	CLOUDINARY_CLOUD_NAME,
+	CLOUDINARY_API_KEY,
+	CLOUDINARY_API_SECRET,
+	COOKIE_SECRET,
+	DATABASE_URL,
+	FRONTEND_URL,
+	MAIL_USER,
+	MAIL_PASS,
+	NODE_ENV,
+	PORT,
+	STRIPE_SECRET,
+} = process.env;
+
+if (NODE_ENV !== 'production') {
+	console.log({
+		CLOUDINARY_CLOUD_NAME,
+		CLOUDINARY_API_KEY,
+		CLOUDINARY_API_SECRET,
+		COOKIE_SECRET,
+		DATABASE_URL,
+		FRONTEND_URL,
+		MAIL_USER,
+		MAIL_PASS,
+		NODE_ENV,
+		PORT,
+		STRIPE_SECRET,
+	});
+}
+
+const sessionConfig: StatelessSessionsOptions = {
 	secret: COOKIE_SECRET,
 	maxAge: 60 * 60 * 24 * 360,
-	secure: true,
+	secure: NODE_ENV === 'production',
 };
 
 const { withAuth } = createAuth({
 	listKey: 'User',
 	identityField: 'email',
 	secretField: 'password',
-	sessionData: `id name email role { ${permissionsList.join(' ')} }`,
+	sessionData: `id name email role {
+		canManageCart
+		canManageOrderItems
+		canManageOrders
+		canManageProducts
+		canManageRoles
+		canManageUsers
+	}`,
 	initFirstItem: {
 		fields: ['name', 'email', 'password'],
-		itemData: { isAdmin: true },
-		skipKeystoneWelcome: false,
+		itemData: {
+			role: {
+				create: {
+					name: 'Owner',
+					canManageCart: true,
+					canManageOrderItems: true,
+					canManageOrders: true,
+					canManageProducts: true,
+					canManageRoles: true,
+					canManageUsers: true,
+				},
+			},
+		},
+		skipKeystoneWelcome: true,
 	},
 	passwordResetLink: {
 		sendToken: async ({ token, identity }: any) =>
@@ -53,7 +107,6 @@ export default withAuth(
 			idField: { kind: 'uuid' },
 		} as DatabaseConfig<BaseKeystoneTypeInfo>,
 		ui: {
-			// isAccessAllowed: async context => true,
 			isAccessAllowed: async context => {
 				console.log({ context });
 				return !!context.session?.data;
@@ -61,7 +114,6 @@ export default withAuth(
 		} as AdminUIConfig<BaseKeystoneTypeInfo>,
 		server: {
 			cors: {
-				// origin: false,
 				origin: [FRONTEND_URL, 'http://localhost:7777', /\.grife\.app$/],
 				credentials: true,
 			},
@@ -69,9 +121,7 @@ export default withAuth(
 			maxFileSize: 200 * 1024 * 1024,
 			healthCheck: true,
 		} as ServerConfig<BaseKeystoneTypeInfo>,
-		session: statelessSessions(
-			sessionConfig,
-		) as SessionStrategy<BaseKeystoneTypeInfo>,
+		session: statelessSessions(sessionConfig),
 		graphql: {
 			debug: NODE_ENV !== 'production',
 			queryLimits: { maxTotalResults: 100 },

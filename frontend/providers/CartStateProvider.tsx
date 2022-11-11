@@ -1,4 +1,5 @@
-import React, {
+import {
+	ReactNode,
 	createContext,
 	useState,
 	Dispatch,
@@ -11,6 +12,10 @@ interface LocalCartStateProps {
 	closeCart: () => void;
 	openCart: () => void;
 	toggleCart: () => void;
+	cartStyles: {
+		opacity: number;
+		pointerEvents: string;
+	};
 }
 
 export const LocalCartStateContext = createContext<LocalCartStateProps>({
@@ -19,10 +24,14 @@ export const LocalCartStateContext = createContext<LocalCartStateProps>({
 	closeCart: () => {},
 	openCart: () => {},
 	toggleCart: () => {},
+	cartStyles: {
+		opacity: 0,
+		pointerEvents: 'none',
+	},
 });
 const LocalCartStateProvider = LocalCartStateContext.Provider;
 
-const CartStateProvider = ({ children }: { children: React.ReactNode }) => {
+const CartStateProvider = ({ children }: { children: ReactNode }) => {
 	const [cartOpen, setCartOpen] = useState(false);
 
 	const closeCart = () => {
@@ -37,9 +46,21 @@ const CartStateProvider = ({ children }: { children: React.ReactNode }) => {
 		setCartOpen(!cartOpen);
 	};
 
+	const cartStyles = {
+		opacity: cartOpen ? 1 : 0,
+		pointerEvents: cartOpen ? 'all' : 'none',
+	};
+
 	return (
 		<LocalCartStateProvider
-			value={{ cartOpen, setCartOpen, closeCart, openCart, toggleCart }}
+			value={{
+				cartOpen,
+				setCartOpen,
+				closeCart,
+				openCart,
+				toggleCart,
+				cartStyles,
+			}}
 		>
 			{children}
 		</LocalCartStateProvider>

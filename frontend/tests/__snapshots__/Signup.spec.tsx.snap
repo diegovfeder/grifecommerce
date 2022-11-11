@@ -3,7 +3,8 @@
 exports[`<SignUp/> renders component and matches snapshot 1`] = `
 <div>
   <form
-    class="StyledForm-sc-44wenk-0 gkQMPk"
+    autocomplete="new-password"
+    class="StyledForm-sc-44wenk-0 iUkmmK"
     method="POST"
   >
     <h2>
@@ -16,7 +17,7 @@ exports[`<SignUp/> renders component and matches snapshot 1`] = `
         Name
         <input
           aria-label="name"
-          autocomplete="name"
+          autocomplete="new-password"
           name="name"
           placeholder="Your Name"
           type="text"
@@ -29,7 +30,7 @@ exports[`<SignUp/> renders component and matches snapshot 1`] = `
         Email
         <input
           aria-label="email"
-          autocomplete="email"
+          autocomplete="new-password"
           name="email"
           placeholder="Your Email Address"
           type="email"
@@ -42,7 +43,7 @@ exports[`<SignUp/> renders component and matches snapshot 1`] = `
         Password
         <input
           aria-label="password"
-          autocomplete="password"
+          autocomplete="new-password"
           name="password"
           placeholder="Password"
           type="password"

@@ -10,6 +10,7 @@ interface IUpdateProductPage {
 const UpdateProductPage = ({ query }: IUpdateProductPage) => {
 	return (
 		<div>
+			<div style={{ height: '200px' }}></div>
 			<UpdateProductComponent id={query.id} />
 		</div>
 	);

@@ -1,9 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
-import ProductComponent from '../components/ProductComponent';
+
 import { fakeItem } from '../utils/testUtils';
-import mockQueries from '../mocks/queries';
-import mockMutations from '../mocks/mutations';
+import mockedMutations from '../mocks/mutations';
+import mockedQueries from '../mocks/queries';
+import ProductComponent from '../components/ProductComponent';
 
 const product = fakeItem();
 
@@ -12,9 +13,9 @@ describe('<ProductComponent/>', () => {
 		const { container, debug } = render(
 			<MockedProvider
 				mocks={[
-					mockQueries.currentUser,
-					mockMutations.addToCart,
-					mockMutations.deleteProduct,
+					mockedQueries.currentUser,
+					mockedMutations.addToCart,
+					mockedMutations.deleteProduct,
 				]}
 				addTypename={false}
 			>
@@ -24,13 +25,13 @@ describe('<ProductComponent/>', () => {
 		expect(container).toMatchSnapshot();
 	});
 
-	it('renders out the price tag and title', () => {
-		const { container, debug } = render(
+	it('renders the price tag and title', () => {
+		const { container } = render(
 			<MockedProvider
 				mocks={[
-					mockQueries.currentUser,
-					mockMutations.addToCart,
-					mockMutations.deleteProduct,
+					mockedQueries.currentUser,
+					mockedMutations.addToCart,
+					mockedMutations.deleteProduct,
 				]}
 				addTypename={false}
 			>
@@ -51,9 +52,9 @@ describe('<ProductComponent/>', () => {
 		render(
 			<MockedProvider
 				mocks={[
-					mockQueries.currentUser,
-					mockMutations.addToCart,
-					mockMutations.deleteProduct,
+					mockedQueries.currentUser,
+					mockedMutations.addToCart,
+					mockedMutations.deleteProduct,
 				]}
 				addTypename={false}
 			>

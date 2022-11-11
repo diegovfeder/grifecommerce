@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 import { GraphQLError } from 'graphql';
+
 import { resolveMockState } from './utils';
 import { PRODUCT_QUERY } from '../gql/queries';
 import SingleProduct from '../components/SingleProduct';
@@ -34,7 +35,7 @@ const mocks = [
 	},
 ];
 
-describe('<Single Product/>', () => {
+describe('<SingleProduct/>', () => {
 	it('renders with proper data', async () => {
 		const { container } = render(
 			<MockedProvider mocks={mocks} addTypename={false}>
@@ -48,7 +49,7 @@ describe('<Single Product/>', () => {
 		expect(container).toMatchSnapshot();
 	});
 
-	it('Errors out when an item is no found', async () => {
+	it('errors out when an item is not found', async () => {
 		const errorMock = [
 			{
 				request: {

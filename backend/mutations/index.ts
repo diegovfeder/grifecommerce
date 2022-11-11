@@ -1,7 +1,9 @@
 import { graphql } from '@keystone-6/core';
-import { ICartItemModel, IProductModel } from '../types/models';
+
+import { ICartItemModel, IProductModel } from '../@types/models';
 import stripeConfig from '../utils/stripe';
 
+// FIXME: This should be priority
 export const extendGraphqlSchema = graphql.extend(base => {
 	return {
 		// query: {}
@@ -112,7 +114,7 @@ export const extendGraphqlSchema = graphql.extend(base => {
 							payment_method: token,
 						})
 						.catch(err => {
-							console.log(err);
+							console.error(err);
 							throw new Error(err.message);
 						});
 					console.log(charge);
