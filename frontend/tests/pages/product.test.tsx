@@ -3,7 +3,7 @@ import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { ApolloError } from '@apollo/client';
 import { resolveMockState } from '../utils';
 import { PRODUCT_QUERY } from '../../gql/queries';
-import SingleProductPage from '../../pages/product/[id]';
+import ProductDetailsPage from '../../pages/product/[id]';
 
 const mocks = [
 	{
@@ -63,7 +63,7 @@ describe('product/[id] page', () => {
 		it('renders page with error', async () => {
 			render(
 				<MockedProvider mocks={mocks} addTypename={false}>
-					<SingleProductPage query={{ id: '' }} />
+					<ProductDetailsPage query={{ id: '' }} />
 				</MockedProvider>,
 			);
 			expect(screen.queryByText('Loading...')).toBe(null);
@@ -72,7 +72,9 @@ describe('product/[id] page', () => {
 			expect(screen.getByText('Error:')).toBeVisible();
 			expect(screen.getByText('Product not found.')).toBeVisible();
 			expect(screen.queryByTestId('single-product-component')).toBe(null);
-			expect(screen.queryByTestId('single-product-component-null')).toBeVisible();
+			expect(
+				screen.queryByTestId('single-product-component-null'),
+			).toBeVisible();
 		});
 	});
 
@@ -80,7 +82,7 @@ describe('product/[id] page', () => {
 		it('renders page with error', async () => {
 			render(
 				<MockedProvider mocks={mocks} addTypename={false}>
-					<SingleProductPage query={{ id: 'invalid-id' }} />
+					<ProductDetailsPage query={{ id: 'invalid-id' }} />
 				</MockedProvider>,
 			);
 			expect(screen.getByLabelText('Loading...')).toBeInTheDocument();
@@ -99,7 +101,7 @@ describe('product/[id] page', () => {
 		it('renders the single product page properly', async () => {
 			render(
 				<MockedProvider mocks={mocks} addTypename={false}>
-					<SingleProductPage
+					<ProductDetailsPage
 						query={{ id: '718b7ac6-7cf1-47e7-b1de-c4a13ca92f2d' }}
 					/>
 				</MockedProvider>,

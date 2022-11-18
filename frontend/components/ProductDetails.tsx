@@ -17,12 +17,23 @@ import { LoadingSkeleton } from './loading';
 import AddToCartButton from './AddToCartButton';
 import DeleteProduct from './DeleteProduct';
 import UpdateProductButton from './UpdateProductButton';
+import SpaceContainer from './SpaceContainer';
+import { ProductStyles } from './styles/StyledProductDetails';
 
-interface SingleProductProps {
+interface ProductDetailsProps {
 	id: string;
 }
 
-const SingleProduct = ({ id }: SingleProductProps) => {
+const StyledImage = styled(Image)`
+	border: 1px solid black;
+	background-color: var(--lightestGrey);
+
+	@media (max-width: 768px) {
+		width: 100%;
+	}
+`;
+
+const ProductDetails = ({ id }: ProductDetailsProps) => {
 	const [product, setProduct] = useState<ProductProps | null>(null);
 	const { loading, error } = useQuery(PRODUCT_QUERY, {
 		variables: {
@@ -63,26 +74,38 @@ const SingleProduct = ({ id }: SingleProductProps) => {
 				<title>GRIFE | {product?.name || TEXT_NO_PRODUCT_NAME}</title>
 			</Head>
 			<div style={{ display: 'flex', flex: 1, flexDirection: 'column' }}>
-				<h1 style={{ borderBottom: '4px solid gray', fontWeight: '100' }}>
+				<SpaceContainer />
+				<h1
+					style={{
+						borderBottom: '4px solid gray',
+						fontWeight: '100',
+						textTransform: 'capitalize',
+					}}
+				>
 					{product.name}
 				</h1>
 				<Supreme>{formatMoney(product?.price)}</Supreme>
 				{isPhotoImageUrlDefined ? (
-					<Image
+					<StyledImage
 						src={product?.photo?.image?.publicUrlTransformed || ''}
 						alt={product?.photo?.altText || ''}
-						width="80%"
-						height="80%"
+						width="auto"
+						height="400px"
 						loading="eager"
 					/>
 				) : (
 					<LoadingSkeleton />
 				)}
-				<div style={{ display: 'flex', flex: 1, flexDirection: 'column' }}>
-					<SupremeDescription>
-						{product?.description || TEXT_NO_PRODUCT_DESCRIPTION}
-					</SupremeDescription>
-				</div>
+				<SupremeDescription>
+					Description: {product?.description || TEXT_NO_PRODUCT_DESCRIPTION}
+				</SupremeDescription>
+				<div
+					style={{
+						display: 'flex',
+						flex: 1,
+						flexDirection: 'column',
+					}}
+				></div>
 				<div className="buttonList">
 					<AddToCartButton id={product.id}>Add To Cart 🛒</AddToCartButton>
 					<UpdateProductButton id={product.id}>Update ✏️</UpdateProductButton>
@@ -93,43 +116,4 @@ const SingleProduct = ({ id }: SingleProductProps) => {
 	);
 };
 
-const ProductStyles = styled.div`
-	display: grid;
-	grid-auto-columns: 1fr;
-	grid-auto-flow: column;
-	max-width: var(--maxWidth);
-	justify-content: center;
-	align-items: top;
-	gap: 2rem;
-
-	img {
-		width: 100%;
-		object-fit: contain;
-	}
-
-	&:hover {
-		font-size: 1.5rem;
-		cursor: pointer;
-		text-decoration: underline;
-	}
-
-	.buttonList {
-		color: #393939;
-		display: grid;
-		width: 100%;
-		border-top: 1px solid var(--lightGrey);
-		grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-		grid-gap: 1px;
-		background: var(--lightGrey);
-
-		& > * {
-			background: white;
-			border: 0;
-			font-size: 1rem;
-			padding: 1rem;
-			cursor: pointer;
-		}
-	}
-`;
-
-export default SingleProduct;
+export default ProductDetails;

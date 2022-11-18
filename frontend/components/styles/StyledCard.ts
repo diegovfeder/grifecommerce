@@ -44,9 +44,9 @@ const StyledCard = styled.form`
 			margin-bottom: 20px;
 			background-image: linear-gradient(
 				to right,
-				#ff3019 0%,
-				#e2b04a 50%,
-				#ff3019 100%
+				var(--primary) 0%,
+				var(--darkGrey) 50%,
+				var(--primary) 100%
 			);
 		}
 	}

@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<SingleProduct/> renders with proper data 1`] = `
+exports[`<ProductDetails/> renders with proper data 1`] = `
 <div>
   <div
-    class="SingleProduct__ProductStyles-sc-14jd9my-0 NUFoz"
+    class="ProductDetails__ProductStyles-sc-14jd9my-0 NUFoz"
     data-test-id="single-product-component"
   >
     <div
