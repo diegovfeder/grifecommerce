@@ -1,7 +1,8 @@
 import { relationship, text } from '@keystone-6/core/fields';
 import { list } from '@keystone-6/core';
-import { permissionFields } from './PermissionFields';
+
 import { permissions } from '../access';
+import { permissionFields } from './RoleFields';
 
 export const Role = list({
 	access: {

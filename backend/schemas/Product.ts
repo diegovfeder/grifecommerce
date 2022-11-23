@@ -1,19 +1,15 @@
 import { integer, relationship, select, text } from '@keystone-6/core/fields';
 import { list } from '@keystone-6/core';
 
-import { isSignedIn, rules } from '../access';
+import { isSignedIn, permissions } from '../access';
 
-// FIXME: access control / operation
 export const Product = list({
 	access: {
 		operation: {
 			create: isSignedIn,
 			query: isSignedIn,
-			// query: rules.canReadProducts,
 			update: isSignedIn,
-			// update: () => rules.canManageProducts,
 			delete: isSignedIn,
-			// delete: () => rules.canManageProducts,
 		},
 	},
 	fields: {
@@ -28,7 +24,7 @@ export const Product = list({
 			ui: {
 				displayMode: 'cards',
 				cardFields: ['image', 'altText'],
-				
+
 				inlineCreate: {
 					fields: ['image', 'altText'],
 				},

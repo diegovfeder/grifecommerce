@@ -6,7 +6,9 @@ type PermisstionFieldsTypes =
 	| 'canManageOrders'
 	| 'canManageProducts'
 	| 'canManageRoles'
-	| 'canManageUsers';
+	| 'canManageUsers'
+	| 'canOrder'
+	| 'canReadProducts';
 
 export const permissionFields = {
 	canManageCart: checkbox({
@@ -32,6 +34,14 @@ export const permissionFields = {
 	canManageUsers: checkbox({
 		defaultValue: false,
 		label: 'User can CRUD users',
+	}),
+	canOrder: checkbox({
+		defaultValue: false,
+		label: 'User can order products',
+	}),
+	canReadProducts: checkbox({
+		defaultValue: false,
+		label: 'User can read/query products',
 	}),
 };
 

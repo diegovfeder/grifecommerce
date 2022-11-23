@@ -1,15 +1,15 @@
 import { list } from '@keystone-6/core';
 import { integer, relationship } from '@keystone-6/core/fields';
 
-import { rules, isSignedIn } from '../access';
+import { permissions, isSignedIn } from '../access';
 
 export const CartItem = list({
 	access: {
 		operation: {
-			query: rules.canOrder,
-			// 		create: isSignedIn,
-			// 		update: rules.canOrder,
-			// 		delete: rules.canOrder,
+			query: permissions.canOrder,
+			create: isSignedIn,
+			update: permissions.canOrder,
+			delete: permissions.canOrder,
 		},
 	},
 	ui: {

@@ -5,85 +5,62 @@ export function isSignedIn({ session }: ListAccessArgs) {
 }
 
 export const permissions = {
-	canManageCart: ({ session }: ListAccessArgs) =>
-		!!session?.data.role?.canManageCart,
-	canManageOrderItems: ({ session }: ListAccessArgs) =>
-		!!session?.data.role?.canManageOrderItems,
-	canManageOrders: ({ session }: ListAccessArgs) =>
-		!!session?.data.role?.canManageOrders,
-	canManageProducts: ({ session }: ListAccessArgs) =>
-		!!session?.data.role?.canManageProducts,
-	canManageRoles: ({ session }: ListAccessArgs) =>
-		!!session?.data.role?.canManageRoles,
-	canManageUsers: ({ session }: ListAccessArgs) =>
-		!!session?.data.role?.canManageUsers,
-};
+	canManageCart: ({ session }: ListAccessArgs) => {
+		if (!isSignedIn({ session })) {
+			return false;
+		}
 
-export const rules = {
-	canManageCart({ session }: ListAccessArgs) {
-		if (!isSignedIn({ session })) {
-			return false;
-		}
-		return true;
+		return !!session?.data.role?.canManageCart;
 	},
-	canManageOrderItems({ session }: ListAccessArgs) {
+	canManageOrderItems: ({ session }: ListAccessArgs) => {
 		if (!isSignedIn({ session })) {
 			return false;
 		}
-		if (permissions.canManageCart({ session })) {
-			return true;
-		}
-		return { order: { user: { id: session.itemId } } };
+
+		return !!session?.data.role?.canManageOrderItems;
+		// return { order: { user: { id: session.itemId } } };
 	},
-	canManageOrders({ session }: ListAccessArgs) {
+	canManageOrders: ({ session }: ListAccessArgs) => {
 		if (!isSignedIn({ session })) {
 			return false;
 		}
-		return true;
+
+		return !!session?.data.role?.canManageOrders;
 	},
-	canManageProducts({ session }: ListAccessArgs) {
+	canManageProducts: ({ session }: ListAccessArgs) => {
 		if (!isSignedIn({ session })) {
 			return false;
 		}
-		if (permissions.canManageProducts({ session })) {
-			return true;
-		}
-		return { user: { id: session.itemId } };
+
+		return !!session?.data.role?.canManageProducts;
+		// return { user: { id: session.itemId } };
 	},
-	canManageRoles({ session }: ListAccessArgs) {
+	canManageRoles: ({ session }: ListAccessArgs) => {
 		if (!isSignedIn({ session })) {
 			return false;
 		}
-		if (permissions.canManageRoles({ session })) {
-			return true;
-		}
-		return { user: { id: session.itemId } };
+
+		return !!session?.data.role?.canManageRoles;
+		// return { user: { id: session.itemId } };
 	},
-	canManageUsers({ session }: ListAccessArgs) {
+	canManageUsers: ({ session }: ListAccessArgs) => {
 		if (!isSignedIn({ session })) {
 			return false;
 		}
-		if (permissions.canManageUsers({ session })) {
-			return true;
-		}
-		return { id: session.itemId };
+
+		return !!session?.data.role?.canManageUsers;
+		// return { id: session.itemId };
 	},
-	canOrder({ session }: ListAccessArgs) {
+	canOrder: ({ session }: ListAccessArgs) => {
 		if (!isSignedIn({ session })) {
 			return false;
 		}
-		if (permissions.canManageCart({ session })) {
-			return true;
-		}
-		return { user: { id: session.itemId } };
+
+		return !!session?.data.role?.canOrder;
+		// return { user: { id: session.itemId } };
 	},
-	canReadProducts({ session }: ListAccessArgs) {
-		if (!isSignedIn({ session })) {
-			return false;
-		}
-		if (permissions.canManageProducts({ session })) {
-			return true;
-		}
-		return { status: 'AVAILABLE' };
+	canReadProducts: ({ session }: ListAccessArgs) => {
+		return !!session?.data.role?.canReadProducts;
+		// return { status: 'AVAILABLE' };
 	},
 };

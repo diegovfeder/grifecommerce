@@ -716,6 +716,8 @@ type Role {
   canManageProducts: Boolean
   canManageRoles: Boolean
   canManageUsers: Boolean
+  canOrder: Boolean
+  canReadProducts: Boolean
   assignedTo(
     where: UserWhereInput! = {}
     orderBy: [UserOrderByInput!]! = []
@@ -741,6 +743,8 @@ input RoleWhereInput {
   canManageProducts: BooleanFilter
   canManageRoles: BooleanFilter
   canManageUsers: BooleanFilter
+  canOrder: BooleanFilter
+  canReadProducts: BooleanFilter
   assignedTo: UserManyRelationFilter
 }
 
@@ -764,6 +768,8 @@ input RoleOrderByInput {
   canManageProducts: OrderDirection
   canManageRoles: OrderDirection
   canManageUsers: OrderDirection
+  canOrder: OrderDirection
+  canReadProducts: OrderDirection
 }
 
 input RoleUpdateInput {
@@ -774,6 +780,8 @@ input RoleUpdateInput {
   canManageProducts: Boolean
   canManageRoles: Boolean
   canManageUsers: Boolean
+  canOrder: Boolean
+  canReadProducts: Boolean
   assignedTo: UserRelateToManyForUpdateInput
 }
 
@@ -797,6 +805,8 @@ input RoleCreateInput {
   canManageProducts: Boolean
   canManageRoles: Boolean
   canManageUsers: Boolean
+  canOrder: Boolean
+  canReadProducts: Boolean
   assignedTo: UserRelateToManyForCreateInput
 }
 
