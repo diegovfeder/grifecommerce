@@ -59,8 +59,8 @@ export const permissions = {
 		return !!session?.data.role?.canOrder;
 		// return { user: { id: session.itemId } };
 	},
-	canReadProducts: ({ session }: ListAccessArgs) => {
-		return !!session?.data.role?.canReadProducts;
+	canReadProducts: () => {
+		return true;
 		// return { status: 'AVAILABLE' };
 	},
 };

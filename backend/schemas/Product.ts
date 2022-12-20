@@ -7,7 +7,7 @@ export const Product = list({
 	access: {
 		operation: {
 			create: isSignedIn,
-			query: isSignedIn,
+			query: permissions.canReadProducts,
 			update: isSignedIn,
 			delete: isSignedIn,
 		},
