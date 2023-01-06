@@ -1,9 +1,10 @@
 import { render, screen } from '@testing-library/react';
-import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { ApolloError } from '@apollo/client';
-import { resolveMockState } from '../utils';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
+
 import { PRODUCT_QUERY } from '../../gql/queries';
 import ProductDetailsPage from '../../pages/product/[id]';
+import { resolveMockState } from '../utils';
 
 const mocks = [
 	{
@@ -113,7 +114,7 @@ describe('product/[id] page', () => {
 			expect(screen.getByText('Sample Pack')).toBeVisible();
 			expect(screen.getByText('R$ 20,00')).toBeVisible();
 			expect(screen.getByText('next/image stub')).toBeVisible();
-			expect(screen.getByText('- No description available')).toBeVisible();
+			expect(screen.getByText(/No description available/i)).toBeVisible();
 		});
 	});
 });

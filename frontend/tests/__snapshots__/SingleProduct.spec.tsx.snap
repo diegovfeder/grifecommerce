@@ -3,32 +3,35 @@
 exports[`<ProductDetails/> renders with proper data 1`] = `
 <div>
   <div
-    class="ProductDetails__ProductStyles-sc-14jd9my-0 NUFoz"
+    class="StyledProductDetails__ProductStyles-sc-1h68jv5-0 KIVje"
     data-test-id="single-product-component"
   >
     <div
       style="display: flex; flex: 1; flex-direction: column;"
     >
+      <div
+        style="height: 200px;"
+      />
       <h1
-        style="border-bottom: 4px solid gray; font-weight: 100;"
+        style="border-bottom: 4px solid gray; font-weight: 100; text-transform: capitalize;"
       >
         Sample Pack
       </h1>
       <h3
-        class="Supreme-sc-2anpcp-0 cenBAL"
+        class="Supreme-sc-2anpcp-0 ifSuSS"
       >
         R$ 20,00
       </h3>
       next/image stub
+      <h3
+        class="Supreme__SupremeDescription-sc-2anpcp-1 WMeja"
+      >
+        Description: 
+        - No description available
+      </h3>
       <div
         style="display: flex; flex: 1; flex-direction: column;"
-      >
-        <h3
-          class="Supreme__SupremeDescription-sc-2anpcp-1 gKpLq"
-        >
-          - No description available
-        </h3>
-      </div>
+      />
       <div
         class="buttonList"
       >

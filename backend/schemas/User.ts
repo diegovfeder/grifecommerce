@@ -8,15 +8,18 @@ import { cloudinary } from '../utils/cloudinary';
 export const User = list({
 	access: {
 		operation: {
+			// FIXME: A user should only be able to create other users if isAdmin is true
 			create: () => true,
+			// FIXME: A user should only be able to query other users if isAdmin is true
 			query: () => true,
+			// FIXME: A user should only be able to update their own user record
 			update: permissions.canManageUsers,
 			delete: permissions.canManageUsers,
 		},
 	},
 	ui: {
-		hideCreate: args => !permissions.canManageUsers(args),
-		hideDelete: args => !permissions.canManageUsers(args),
+		hideCreate: ({ session }) => !permissions.canManageUsers({ session }),
+		hideDelete: ({ session }) => !permissions.canManageUsers({ session }),
 	},
 	fields: {
 		name: text({

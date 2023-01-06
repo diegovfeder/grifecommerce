@@ -1,8 +1,7 @@
 import Router from 'next/router';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import wait from 'waait';
 
 import { fakeItem } from '../utils/testUtils';
 import { PRODUCTS_QUERY, PRODUCTS_COUNT_QUERY } from '../gql/queries';
@@ -154,15 +153,12 @@ describe('<CreateProduct/>', () => {
 			screen.getByPlaceholderText(/description/i),
 			item.description,
 		);
+
+		expect(Router.push).not.toHaveBeenCalled();
+
 		await userEvent.click(screen.getByText(/add product/i));
 
-		// FIXME: Test
-		await waitFor(() => wait(0));
-
 		expect(Router.push).toHaveBeenCalled();
-		// expect(jest.fn()).toHaveBeenCalled()
-		// Expected number of calls: >= 1
-		// Received number of calls:    0
 		expect(Router.push).toHaveBeenCalledWith({ pathname: '/product/abc123' });
 	});
 });

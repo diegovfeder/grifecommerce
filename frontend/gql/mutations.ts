@@ -11,7 +11,6 @@ import gql from 'graphql-tag';
 // 	}
 // `;
 
-// Sign Up
 export const SIGN_UP_MUTATION = gql`
 	mutation SignUp($email: String!, $name: String!, $password: String!) {
 		createUser(data: { email: $email, name: $name, password: $password }) {
@@ -22,7 +21,6 @@ export const SIGN_UP_MUTATION = gql`
 	}
 `;
 
-// User
 export const UPDATE_USER_MUTATION = gql`
 	mutation UpdateUser(
 		$id: ID!
@@ -64,7 +62,6 @@ export const UPDATE_USER_MUTATION = gql`
 	}
 `;
 
-// Product
 export const CREATE_PRODUCT_MUTATION = gql`
 	mutation CreateProduct(
 		$name: String!
@@ -92,7 +89,7 @@ export const CREATE_PRODUCT_MUTATION = gql`
 `;
 
 export const CREATE_PRODUCT_IMAGE_MUTATION = gql`
-	mutation CreateProduct(
+	mutation CreateProductImage(
 		$image: CloudinaryImage_File!
 		$altText: String!
 		$product: Product
@@ -113,7 +110,6 @@ export const CREATE_PRODUCT_IMAGE_MUTATION = gql`
 	}
 `;
 
-// Order
 export const CREATE_ORDER_MUTATION = gql`
 	mutation CreateOrder($token: String!) {
 		checkout(token: $token) {
@@ -147,7 +143,6 @@ export const UPDATE_PRODUCT_MUTATION = gql`
 	}
 `;
 
-// Password Reset
 export const SEND_USER_PASSWORD_RESET_LINK_MUTATION = gql`
 	mutation SendUserPasswordResetLink($email: String!) {
 		sendUserPasswordResetLink(email: $email)

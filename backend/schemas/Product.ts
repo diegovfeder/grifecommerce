@@ -24,7 +24,6 @@ export const Product = list({
 			ui: {
 				displayMode: 'cards',
 				cardFields: ['image', 'altText'],
-
 				inlineCreate: {
 					fields: ['image', 'altText'],
 				},
@@ -46,12 +45,9 @@ export const Product = list({
 			},
 		}),
 		price: integer(),
-		// FIXME: defaultValue to relationship
 		user: relationship({
 			ref: 'User.products',
-			// defaultValue: ({ context }) => ({
-			// 	connect: { id: context.session.itemId },
-			// }),
+			// FIMXE: Remove log statement before release
 			hooks: {
 				resolveInput: async ({
 					listKey,

@@ -3,7 +3,7 @@
 exports[`<NavigationComponent/> renders navigation when signed in 1`] = `
 <div>
   <ul
-    class="StyledNavigation-sc-hq3jod-0 fKhkjQ"
+    class="StyledNavigation-sc-hq3jod-0 eiayEn"
   >
     <a
       href="/products/1"
@@ -39,7 +39,7 @@ exports[`<NavigationComponent/> renders navigation when signed in 1`] = `
       >
         <div>
           <div
-            class="StyledDot-sc-1qhuump-0 kUTmxG count"
+            class="StyledDot-sc-1qhuump-0 jErVQi count"
           >
             0
           </div>
@@ -53,7 +53,7 @@ exports[`<NavigationComponent/> renders navigation when signed in 1`] = `
 exports[`<NavigationComponent/> renders navigation when signed out 1`] = `
 <div>
   <ul
-    class="StyledNavigation-sc-hq3jod-0 fKhkjQ"
+    class="StyledNavigation-sc-hq3jod-0 eiayEn"
   >
     <a
       href="/products/1"
