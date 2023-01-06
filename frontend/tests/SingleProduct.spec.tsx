@@ -4,7 +4,7 @@ import { GraphQLError } from 'graphql';
 
 import { resolveMockState } from './utils';
 import { PRODUCT_QUERY } from '../gql/queries';
-import SingleProduct from '../components/SingleProduct';
+import ProductDetails from '../components/ProductDetails';
 
 const mocks = [
 	{
@@ -35,11 +35,11 @@ const mocks = [
 	},
 ];
 
-describe('<SingleProduct/>', () => {
+describe('<ProductDetails/>', () => {
 	it('renders with proper data', async () => {
 		const { container } = render(
 			<MockedProvider mocks={mocks} addTypename={false}>
-				<SingleProduct id="718b7ac6-7cf1-47e7-b1de-c4a13ca92f2d" />
+				<ProductDetails id="718b7ac6-7cf1-47e7-b1de-c4a13ca92f2d" />
 			</MockedProvider>,
 		);
 		await screen.getByLabelText('Loading...');
@@ -65,7 +65,7 @@ describe('<SingleProduct/>', () => {
 		];
 		const { container } = render(
 			<MockedProvider mocks={errorMock} addTypename={false}>
-				<SingleProduct id="123" />
+				<ProductDetails id="123" />
 			</MockedProvider>,
 		);
 		await screen.findByTestId('graphql-error');

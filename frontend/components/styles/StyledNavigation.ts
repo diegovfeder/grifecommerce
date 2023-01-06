@@ -50,7 +50,7 @@ const StyledNavigation = styled.ul`
 
 		&:after {
 			height: 2px;
-			background: red;
+			background: var(--primary);
 			content: '';
 			width: 0;
 			position: absolute;

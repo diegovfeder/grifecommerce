@@ -1,5 +1,5 @@
 import { KeystoneGraphQLAPI, KeystoneListsAPI } from '@keystone-6/core/types';
-import type { IPermissionFields } from '../schemas/PermissionFields';
+import type { IPermissionFields } from '../fields/RoleFields';
 
 export type Session = {
 	itemId: string;

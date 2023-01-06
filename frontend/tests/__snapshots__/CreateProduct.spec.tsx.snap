@@ -3,7 +3,7 @@
 exports[`<CreateProduct/> renders component and matches snapshot 1`] = `
 <div>
   <form
-    class="StyledForm-sc-44wenk-0 iUkmmK"
+    class="StyledForm-sc-44wenk-0 iDfrDU"
   >
     <h2>
       Sell Product
@@ -20,6 +20,7 @@ exports[`<CreateProduct/> renders component and matches snapshot 1`] = `
           id="name"
           name="name"
           placeholder="Insert a name for your product"
+          required=""
           type="text"
         />
       </label>
@@ -48,6 +49,7 @@ exports[`<CreateProduct/> renders component and matches snapshot 1`] = `
           id="price"
           name="price"
           placeholder="Insert a price value"
+          required=""
           type="number"
         />
       </label>

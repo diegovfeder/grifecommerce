@@ -4,23 +4,26 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { object, string, number, mixed } from 'yup';
 
-import { CREATE_PRODUCT_MUTATION } from '../gql/mutations';
-import ALL_PRODUCTS_QUERY from '../gql/queryAllProducts.gql';
-import StyledForm from './styles/StyledForm';
+import {
+	CREATE_PRODUCT_IMAGE_MUTATION,
+	// CREATE_PRODUCT_MUTATION,
+} from '../gql/mutations';
+// import ALL_PRODUCTS_QUERY from '../gql/queryAllProducts.gql';
 import ErrorMessage from './error/ErrorMessage';
+import StyledForm from './styles/StyledForm';
 
 type FormInputs = {
 	name: string;
 	description: string;
 	price: number;
-	photo: string;
+	photo: FileList;
 };
 
 const schema = object({
 	name: string().required(),
 	description: string().optional(),
 	price: number().positive().integer().required(),
-	photo: mixed().required('You need to provide a file').default(undefined),
+	photo: mixed().default(undefined),
 }).required();
 
 const CreateProduct = () => {
@@ -33,35 +36,13 @@ const CreateProduct = () => {
 		resolver: yupResolver(schema),
 	});
 
-	// FIXME:
-	const [createProductImage] = useMutation(CREATE_PRODUCT_MUTATION, {
-		variables: {
-			image: '',
-			altText: 'test',
-		},
-		onCompleted: data => {
-			console.log({ data });
-		},
-		onError: err => {
-			console.error({ err });
-		},
-	});
-
-	const [createProduct, { loading, error }] = useMutation(
-		CREATE_PRODUCT_MUTATION,
+	const [createProductImage, { loading, error }] = useMutation(
+		CREATE_PRODUCT_IMAGE_MUTATION,
 		{
-			variables: {
-				name: 'Cool Shoes',
-				description: 'These are the coolest shoes',
-				price: 5000,
-				photo: {
-					image: 'cool-shoes.jpg',
-					altText: 'Cool Shoes',
-				},
-				status: 'AVAILABLE',
-			},
-			refetchQueries: [{ query: ALL_PRODUCTS_QUERY }],
+			// FIXME:
+			// refetchQueries: [{ query: ALL_PRODUCTS_QUERY }],
 			onCompleted: data => {
+				console.log({ data });
 				reset();
 				Router.push({
 					pathname: `/product/${data?.createProduct?.id || ''}`,
@@ -73,31 +54,39 @@ const CreateProduct = () => {
 		},
 	);
 
-	// FIXME:
-	const onSubmit = async (data: FormInputs) => {
-		console.log(data);
-		// const productImage = await createProductImage({
-		// 	variables: {
-		// 		image: data.photo,
-		// 		altText: data.name,
-		// 		// product: probably create product first? but pass in the id
-		// 	},
-		// });
-		// console.log({ productImage });
+	const onSubmit = async (form: FormInputs) => {
+		console.log({ form });
 
-		const product = await createProduct({
+		let imageString = '';
+
+		const reader = new FileReader();
+		reader.onloadend = () => {
+			console.log({ reader });
+			imageString = reader.result as string;
+		};
+		reader.readAsDataURL(form.photo[0]);
+
+		console.log({ imageString });
+
+		const productImage = await createProductImage({
 			variables: {
-				name: data.name,
-				description: data.description,
-				price: data.price,
-				photo: {
-					image: data.photo[0],
-					altText: data.name,
+				image: imageString,
+				altText: form.name,
+				product: {
+					name: form.name,
+					description: form.description,
+					price: form.price,
+					// photo: {
+					// 	connect: {
+					// 		id: productImage?.data?.createProductImage?.id || '',
+					// 	},
+					// },
+					status: 'AVAILABLE',
 				},
-				status: 'AVAILABLE',
 			},
 		});
-		console.log({ product });
+
+		console.log({ productImage });
 	};
 
 	return (
@@ -113,6 +102,7 @@ const CreateProduct = () => {
 					Name
 					<input
 						{...register('name')}
+						required
 						id="name"
 						type="text"
 						placeholder="Insert a name for your product"
@@ -136,6 +126,7 @@ const CreateProduct = () => {
 					Price
 					<input
 						{...register('price')}
+						required
 						id="price"
 						type="number"
 						placeholder="Insert a price value"
@@ -151,7 +142,7 @@ const CreateProduct = () => {
 						id="photo"
 						type="file"
 						placeholder="Photo"
-						accept=".jpg, .png, .gif, .jpeg"
+						accept="image/*"
 					/>
 				</label>
 				<button type="submit">+ Add Product</button>

@@ -5,8 +5,9 @@ export const StyledLogo = styled.h1`
 	margin-left: 2rem;
 	position: relative;
 	z-index: 2;
-	background: red;
+	background: var(--primary);
 	transform: skew(-7deg);
+
 	a {
 		color: white;
 		text-decoration: none;

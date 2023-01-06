@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledDot = styled.div`
-	background: var(--red);
+	background: var(--grey);
 	color: white;
 	border-radius: 50%;
 	padding: 0.5rem;

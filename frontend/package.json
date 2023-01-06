@@ -11,8 +11,8 @@
     "sb:dev": "start-storybook -p 6006",
     "sb:build": "build-storybook",
     "test": "NODE_ENV=test jest",
-    "test-cov": "NODE_ENV=test jest --coverage",
-    "test-w": "NODE_ENV=test jest --watch",
+    "test:cov": "NODE_ENV=test jest --coverage",
+    "test:w": "NODE_ENV=test jest --watch",
     "lint": "next lint"
   },
   "dependencies": {

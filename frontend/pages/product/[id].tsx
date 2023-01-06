@@ -1,13 +1,13 @@
-import SingleProduct from '../../components/SingleProduct';
+import ProductDetails from '../../components/ProductDetails';
 
-interface ISingleProductPage {
+interface IProductDetailsPage {
 	query: {
 		id: string;
 	};
 }
 
-const SingleProductPage = ({ query }: ISingleProductPage) => {
-	return <SingleProduct id={query?.id || ''} />;
+const ProductDetailsPage = ({ query }: IProductDetailsPage) => {
+	return <ProductDetails id={query?.id || ''} />;
 };
 
-export default SingleProductPage;
+export default ProductDetailsPage;

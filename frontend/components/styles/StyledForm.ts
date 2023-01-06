@@ -24,7 +24,7 @@ const StyledForm = styled.form`
 
 		&:focus {
 			outline: 0;
-			border-color: var(--red);
+			border-color: var(--secondary);
 		}
 	}
 
@@ -35,6 +35,7 @@ const StyledForm = styled.form`
 		font-size: 1.8rem;
 		padding: 0.75rem;
 		font-family: 'Montserrat', sans-serif;
+		color: black;
 	}
 
 	textarea {
@@ -46,7 +47,7 @@ const StyledForm = styled.form`
 		cursor: pointer;
 		white-space: nowrap;
 		width: auto;
-		background: red;
+		background: var(--primary);
 		color: white;
 		border: 0;
 		font-size: 2rem;
@@ -85,9 +86,9 @@ const StyledForm = styled.form`
 			margin-bottom: 20px;
 			background-image: linear-gradient(
 				to right,
-				#ff3019 0%,
-				#e2b04a 50%,
-				#ff3019 100%
+				var(--primary) 0%,
+				var(--offWhite) 50%,
+				var(--primary) 100%
 			);
 		}
 

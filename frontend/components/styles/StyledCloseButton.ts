@@ -15,7 +15,7 @@ const StyledCloseButton = styled.button`
 
 	&:hover {
 		color: white;
-		background: red;
+		background: var(--primary);
 		cursor: pointer;
 	}
 `;

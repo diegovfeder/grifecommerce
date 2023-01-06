@@ -4,7 +4,7 @@ import LoadingLabel from './LoadingLabel';
 
 const StyledLoadingSpinner = styled.div`
 	border: 8px solid pink;
-	border-top: 8px red solid;
+	border-top: 8px var(--primary) solid;
 	border-radius: 50%;
 	height: 48px;
 	width: 48px;

@@ -1,7 +1,8 @@
 import { relationship, text } from '@keystone-6/core/fields';
 import { list } from '@keystone-6/core';
-import { permissionFields } from './PermissionFields';
+
 import { permissions } from '../access';
+import { permissionFields } from '../fields/RoleFields';
 
 export const Role = list({
 	access: {
@@ -13,9 +14,9 @@ export const Role = list({
 		},
 	},
 	ui: {
-		hideCreate: args => !permissions.canManageRoles(args),
-		hideDelete: args => !permissions.canManageRoles(args),
-		isHidden: args => !permissions.canManageRoles(args),
+		isHidden: ({ session }) => !permissions.canManageRoles({ session }),
+		hideCreate: ({ session }) => !permissions.canManageRoles({ session }),
+		hideDelete: ({ session }) => !permissions.canManageRoles({ session }),
 	},
 	fields: {
 		name: text({ validation: { isRequired: true } }),

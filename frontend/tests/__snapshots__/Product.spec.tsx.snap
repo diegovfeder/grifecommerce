@@ -7,7 +7,7 @@ exports[`<ProductComponent/> renders component and matches the snapshot 1`] = `
   >
     next/image stub
     <h3
-      class="StyledTitle-sc-xu1dk-0 dcnXgl"
+      class="StyledTitle-sc-xu1dk-0 bOVygu"
     >
       <a
         href="/product/718b7ac6-7cf1-47e7-b1de-c4a13ca92f2d"
@@ -16,12 +16,12 @@ exports[`<ProductComponent/> renders component and matches the snapshot 1`] = `
       </a>
     </h3>
     <span
-      class="StyledPriceTag-sc-hnq0ox-0 bXelVj"
+      class="StyledPriceTag-sc-hnq0ox-0 gcEJAc"
     >
       R$ 50,00
     </span>
     <h3
-      class="Supreme__SupremeDescription-sc-2anpcp-1 gKpLq"
+      class="Supreme__SupremeDescription-sc-2anpcp-1 WMeja"
     >
       Description:
       <p>
